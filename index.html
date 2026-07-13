@@ -1327,6 +1327,107 @@
     .timeline-row { grid-template-columns: 100px 1fr; gap: 8px; }
   }
 
+  /* === Full-year heatmap (flagship) === */
+  .heatmap-flagship {
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+  }
+  html[data-theme="dark"] .heatmap-flagship { background: rgba(15, 23, 42, 0.4); }
+  .hf-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .hf-title { font-size: 18px; font-weight: 700; color: var(--slate); }
+  html[data-theme="dark"] .hf-title { color: white; }
+  .hf-sub { font-size: 12px; color: var(--slate-3); margin-top: 2px; }
+  .hf-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hf-stat { text-align: center; padding: 0 12px; border-left: 2px solid var(--bg-2); }
+  .hf-stat:first-child { border-left: none; }
+  .hf-val { font-size: 22px; font-weight: 800; color: var(--pink); }
+  .hf-lbl { font-size: 10px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.3px; }
+  .hf-heatmap-wrap {
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .hf-months {
+    display: flex; gap: 0; font-size: 10px; color: var(--slate-3);
+    padding-left: 32px; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .hf-months span { flex-shrink: 0; }
+  .hf-body { display: flex; gap: 0; }
+  .hf-days {
+    display: flex; flex-direction: column; gap: 3px; padding-right: 6px;
+    font-size: 9px; color: var(--slate-3); padding-top: 2px;
+  }
+  .hf-days div { height: 12px; line-height: 12px; }
+  .hf-heatmap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(7, 12px);
+    gap: 3px;
+  }
+  .hf-cell {
+    width: 12px; height: 12px; border-radius: 2px;
+    background: var(--bg-2);
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+  .hf-cell:hover { transform: scale(1.4); z-index: 2; position: relative; outline: 2px solid var(--pink); }
+  .hf-cell.l1 { background: #fce7f3; }
+  .hf-cell.l2 { background: #f9a8d4; }
+  .hf-cell.l3 { background: #ec4899; }
+  .hf-cell.l4 { background: #be185d; box-shadow: 0 0 4px rgba(236, 72, 153, 0.5); }
+  html[data-theme="dark"] .hf-cell.l1 { background: rgba(236, 72, 153, 0.2); }
+  html[data-theme="dark"] .hf-cell.l2 { background: rgba(236, 72, 153, 0.4); }
+  html[data-theme="dark"] .hf-cell.l3 { background: rgba(236, 72, 153, 0.7); }
+  html[data-theme="dark"] .hf-cell.l4 { background: var(--pink); }
+  .hf-legend {
+    display: flex; align-items: center; gap: 4px;
+    justify-content: flex-end; margin-top: 12px;
+    font-size: 10px; color: var(--slate-3);
+  }
+  .hf-legend .hf-cell { cursor: default; }
+  .hf-legend .hf-cell:hover { transform: none; outline: none; }
+
+  /* === Month-over-month === */
+  .mom-compare {
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+  }
+  html[data-theme="dark"] .mom-compare { background: rgba(15, 23, 42, 0.4); }
+  .mom-title { font-size: 16px; font-weight: 700; color: var(--slate); margin-bottom: 12px; }
+  html[data-theme="dark"] .mom-title { color: white; }
+  .mom-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .mom-card {
+    background: var(--bg-1);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .mom-card .metric { font-size: 11px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; }
+  .mom-card .values { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+  .mom-card .this { font-size: 24px; font-weight: 800; color: var(--slate); }
+  .mom-card .last { font-size: 14px; color: var(--slate-3); }
+  html[data-theme="dark"] .mom-card .this { color: white; }
+  .mom-card .change {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 12px; font-weight: 700;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .mom-card .change.up { background: rgba(16, 185, 129, 0.15); color: var(--mint); }
+  .mom-card .change.down { background: rgba(244, 63, 94, 0.15); color: var(--coral); }
+  .mom-card .change.same { background: var(--bg-2); color: var(--slate-3); }
+
   /* === Theme tweaks per category === */
   [data-cat="3d-game"] { --cat-color: #a855f7; --cat-bg: rgba(168, 85, 247, 0.12); }
   [data-cat="2d-game"] { --cat-color: #f43f5e; --cat-bg: rgba(244, 63, 94, 0.12); }
@@ -1451,6 +1552,52 @@
         <div id="mhRepoChart" class="mh-repo-list"></div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Full-Year Contribution Heatmap -->
+<div class="container" style="margin-top: 24px; margin-bottom: 8px;">
+  <div class="heatmap-flagship">
+    <div class="hf-head">
+      <div>
+        <div class="hf-title">🔥 365-day contribution heatmap</div>
+        <div class="hf-sub" id="hfSub">All 60 repos · 175 commits · Sep 2025 → Jul 2026</div>
+      </div>
+      <div class="hf-stats">
+        <div class="hf-stat"><div class="hf-val" id="hfTotalDays">68</div><div class="hf-lbl">active days</div></div>
+        <div class="hf-stat"><div class="hf-val" id="hfLongestStreak">6</div><div class="hf-lbl">longest streak</div></div>
+        <div class="hf-stat"><div class="hf-val" id="hfCurrentStreak">6</div><div class="hf-lbl">current</div></div>
+        <div class="hf-stat"><div class="hf-val" id="hfMaxDay">48</div><div class="hf-lbl">peak day</div></div>
+      </div>
+    </div>
+    <div class="hf-heatmap-wrap">
+      <div class="hf-months" id="hfMonths"></div>
+      <div class="hf-body">
+        <div class="hf-days">
+          <div>Mon</div><div></div><div>Wed</div><div></div><div>Fri</div><div></div><div>Sun</div>
+        </div>
+        <div id="hfHeatmap" class="hf-heatmap"></div>
+      </div>
+    </div>
+    <div class="hf-legend">
+      <span>Less</span>
+      <div class="hf-cell l0"></div>
+      <div class="hf-cell l1"></div>
+      <div class="hf-cell l2"></div>
+      <div class="hf-cell l3"></div>
+      <div class="hf-cell l4"></div>
+      <span>More</span>
+    </div>
+  </div>
+</div>
+
+<!-- Month-over-Month Comparison -->
+<div class="container" style="margin-top: 24px; margin-bottom: 8px;">
+  <div class="mom-compare">
+    <div class="mom-title">📈 Month-over-Month</div>
+    <div class="mom-row" id="momRow"></div>
+  </div>
+</div>
   </div>
 </div>
 
@@ -1965,6 +2112,122 @@
         <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
       </div>`;
     }).join('');
+
+    // Also render flagship heatmap + MoM
+    renderFullYearHeatmap();
+    renderMonthOverMonth();
+  }
+
+  /* === Full-Year Heatmap (Phase 20) === */
+  function renderFullYearHeatmap() {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages;
+    const byDay = {};
+    msgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
+    const today = new Date();
+    const endDate = new Date(today);
+    endDate.setDate(today.getDate() + (6 - today.getDay()));
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - 52 * 7 + 1);
+    const totalDays = Object.keys(byDay).length;
+    const maxC = Math.max(...Object.values(byDay), 1);
+    const cells = [];
+    const monthLabels = [];
+    let lastMonth = -1;
+    for (let w = 0; w < 52; w++) {
+      const col = [];
+      for (let d = 0; d < 7; d++) {
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + w * 7 + d);
+        const dateStr = date.toISOString().substring(0, 10);
+        const c = byDay[dateStr] || 0;
+        let lvl = '';
+        if (c > 0) {
+          if (c >= maxC) lvl = 'l4';
+          else if (c >= maxC * 0.6) lvl = 'l3';
+          else if (c >= maxC * 0.3) lvl = 'l2';
+          else lvl = 'l1';
+        }
+        const isFuture = date > today;
+        col.push(`<div class="hf-cell ${lvl}"${isFuture ? ' style="opacity:0.15"' : ''} title="${dateStr}: ${c} commit${c !== 1 ? 's' : ''}"></div>`);
+      }
+      cells.push(col.join(''));
+      const firstDayOfWeek = new Date(startDate);
+      firstDayOfWeek.setDate(startDate.getDate() + w * 7);
+      if (firstDayOfWeek.getMonth() !== lastMonth) {
+        const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        monthLabels.push(`<span style="width: 15px;">${monthNames[firstDayOfWeek.getMonth()]}</span>`);
+        lastMonth = firstDayOfWeek.getMonth();
+      } else {
+        monthLabels.push('<span style="width: 15px;"></span>');
+      }
+    }
+    document.getElementById('hfHeatmap').innerHTML = cells.join('');
+    document.getElementById('hfMonths').innerHTML = monthLabels.join('');
+    document.getElementById('hfTotalDays').textContent = totalDays;
+    document.getElementById('hfMaxDay').textContent = maxC;
+    let longest = 0, run = 0;
+    const allDates = Object.keys(byDay).sort();
+    for (const d of allDates) {
+      if (byDay[d] > 0) { run++; longest = Math.max(longest, run); }
+      else { run = 0; }
+    }
+    let current = 0;
+    const now = new Date();
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      const ds = d.toISOString().substring(0, 10);
+      if (byDay[ds] > 0) current++;
+      else if (i > 0) break;
+    }
+    document.getElementById('hfLongestStreak').textContent = longest;
+    document.getElementById('hfCurrentStreak').textContent = current;
+    const minDate = allDates[0] || '\u2014';
+    const maxDate = allDates[allDates.length - 1] || '\u2014';
+    document.getElementById('hfSub').textContent =
+      `All 60 repos \u00b7 ${msgs.length} commits \u00b7 ${minDate} \u2192 ${maxDate}`;
+  }
+
+  /* === Month-over-Month (Phase 21) === */
+  function renderMonthOverMonth() {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages;
+    const byMonth = {};
+    msgs.forEach(m => {
+      const ym = m.date.substring(0, 7);
+      if (!byMonth[ym]) byMonth[ym] = { commits: 0, repos: new Set(), authors: new Set(), lnwsj: 0 };
+      byMonth[ym].commits++;
+      byMonth[ym].repos.add(m.repo);
+      byMonth[ym].authors.add(m.author || 'unknown');
+      if (m.is_lnwsj) byMonth[ym].lnwsj++;
+    });
+    const months = Object.keys(byMonth).sort();
+    if (months.length < 2) return;
+    const thisM = byMonth[months[months.length - 1]];
+    const lastM = byMonth[months[months.length - 2]];
+    const cards = [
+      { metric: 'Commits', cur: thisM.commits, last: lastM.commits },
+      { metric: 'Repos touched', cur: thisM.repos.size, last: lastM.repos.size },
+      { metric: 'Active authors', cur: thisM.authors.size, last: lastM.authors.size },
+      { metric: 'lnwsj commits', cur: thisM.lnwsj, last: lastM.lnwsj },
+    ];
+    const html = cards.map(c => {
+      let change = 0, cls = 'same', arrow = '\u27a1\ufe0f';
+      if (c.last > 0) change = Math.round((c.cur - c.last) / c.last * 100);
+      if (change > 0) { cls = 'up'; arrow = '\u2191'; }
+      else if (change < 0) { cls = 'down'; arrow = '\u2193'; }
+      const changeText = change === 0 ? 'same' : (change > 0 ? '+' : '') + change + '%';
+      return `<div class="mom-card">
+        <div class="metric">${c.metric}</div>
+        <div class="values">
+          <div class="this">${c.cur}</div>
+          <div class="last">vs ${c.last}</div>
+          <div class="change ${cls}">${arrow} ${changeText}</div>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('momRow').innerHTML = html;
   }
 
   function renderStats() {
