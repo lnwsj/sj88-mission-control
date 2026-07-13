@@ -276,6 +276,100 @@
   }
   .repo-stats { display: flex; gap: 12px; }
   .repo-stat { display: flex; align-items: center; gap: 3px; }
+
+  /* === Action buttons (Bug Hunter / Recommend) === */
+  .repo-actions {
+    display: flex; gap: 6px; padding: 0 20px 12px;
+  }
+  .action-btn {
+    flex: 1; padding: 8px 10px;
+    border: 1px solid var(--card-border);
+    background: white;
+    border-radius: 10px;
+    font: inherit; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    color: var(--slate-2);
+  }
+  .action-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .action-btn.bugs { color: var(--coral); border-color: rgba(244, 63, 94, 0.3); }
+  .action-btn.bugs:hover { background: rgba(244, 63, 94, 0.08); border-color: var(--coral); }
+  .action-btn.recommend { color: var(--gold-deep); border-color: rgba(245, 158, 11, 0.3); }
+  .action-btn.recommend:hover { background: rgba(245, 158, 11, 0.08); border-color: var(--gold); }
+  .action-btn.loading {
+    opacity: 0.6; pointer-events: none;
+  }
+  .action-btn.loading::after {
+    content: '⏳';
+  }
+
+  /* === Live API indicator === */
+  .api-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 999px;
+    background: rgba(16, 185, 129, 0.12); color: var(--mint-deep);
+    font-size: 11px; font-weight: 600;
+  }
+  .api-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--mint);
+  }
+  .api-pill .dot.offline { background: var(--gold); }
+  .api-pill .dot.error { background: var(--coral); }
+
+  /* === Bug/Recommend result modal === */
+  .result-section { margin-bottom: 16px; }
+  .result-section h4 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--slate-3); font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .result-item {
+    background: var(--bg-1); border-radius: 12px; padding: 12px 14px;
+    margin-bottom: 8px; border-left: 3px solid var(--cat-color);
+  }
+  .result-item.severity-high { border-left-color: var(--coral); }
+  .result-item.severity-medium { border-left-color: var(--gold); }
+  .result-item.severity-low { border-left-color: var(--mint); }
+  .result-item.priority-high { border-left-color: var(--coral); }
+  .result-item.priority-medium { border-left-color: var(--gold); }
+  .result-item.priority-low { border-left-color: var(--mint); }
+  .result-item-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .result-item-meta {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+  .result-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .result-badge.severity-high, .result-badge.priority-high { background: rgba(244, 63, 94, 0.12); color: var(--coral); }
+  .result-badge.severity-medium, .result-badge.priority-medium { background: rgba(245, 158, 11, 0.12); color: var(--gold-deep); }
+  .result-badge.severity-low, .result-badge.priority-low { background: rgba(16, 185, 129, 0.12); color: var(--mint-deep); }
+  .result-badge.effort, .result-badge.impact { background: var(--bg-2); color: var(--slate-2); }
+  .result-item-detail { font-size: 13px; color: var(--slate-2); line-height: 1.5; }
+  .result-item-fix { font-size: 12px; color: var(--slate-2); margin-top: 6px; }
+  .result-item-fix pre {
+    background: var(--slate); color: #e2e8f0; padding: 8px 10px;
+    border-radius: 6px; font-size: 11px; overflow-x: auto; margin-top: 4px;
+  }
+  .score-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 12px;
+    font-weight: 700; font-size: 16px;
+  }
+  .score-badge.good { background: rgba(16, 185, 129, 0.15); color: var(--mint-deep); }
+  .score-badge.ok { background: rgba(245, 158, 11, 0.15); color: var(--gold-deep); }
+  .score-badge.bad { background: rgba(244, 63, 94, 0.15); color: var(--coral); }
+  .checklist { list-style: none; padding: 0; margin: 6px 0; }
+  .checklist li {
+    font-size: 12px; padding: 3px 0 3px 20px; position: relative;
+    color: var(--slate-2);
+  }
+  .checklist li::before {
+    content: '☐'; position: absolute; left: 0; color: var(--pink);
+    font-size: 14px;
+  }
+  .empty-result { text-align: center; padding: 30px; color: var(--slate-3); }
+  .empty-result .emoji { font-size: 48px; margin-bottom: 8px; }
   .size-bar {
     height: 3px; background: var(--bg-1); border-radius: 2px;
     overflow: hidden; margin-top: 8px;
@@ -511,6 +605,10 @@
     <div class="hero-eyebrow">
       <span class="pulse"></span>
       <span>🚀 MISSION CONTROL · Last updated <strong>2026-07-13</strong></span>
+      <span class="api-pill" id="apiPill" style="margin-left: 8px;">
+        <span class="dot" id="apiDot"></span>
+        <span id="apiStatus">connecting...</span>
+      </span>
     </div>
     <h1>SJ88 Mission Control</h1>
     <p>59 repositories shipped by a single AI agent — from a cozy Tokyo slice-of-life to a DirectAdmin clone, from Babylon.js tycoons to single-file Thai booking apps. Welcome to the bridge.</p>
@@ -814,6 +912,14 @@
         <div class="size-bar">
           <div class="size-bar-fill" style="width: ${Math.min(100, r.size_kb / maxSize * 100)}%"></div>
         </div>
+        <div class="repo-actions">
+          <button class="action-btn bugs" data-action="bugs" data-name="${r.name}" title="Run Bug Hunter">
+            🐛 Bug Hunter
+          </button>
+          <button class="action-btn recommend" data-action="recommend" data-name="${r.name}" title="Recommend features">
+            💡 Recommend
+          </button>
+        </div>
         <div class="repo-foot">
           <div class="repo-stats">
             <span class="repo-stat">💾 ${fmtSize(r.size_kb)}</span>
@@ -930,11 +1036,174 @@
 
   function attachCardHandlers() {
     document.querySelectorAll('.repo-card').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        // Don't trigger card click when clicking action button or live link
+        if (e.target.closest('.action-btn') || e.target.closest('a')) return;
         const repo = REPOS.find(r => r.name === card.dataset.name);
         if (repo) showModal(repo);
       });
     });
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = btn.dataset.action;
+        const name = btn.dataset.name;
+        btn.classList.add('loading');
+        btn.disabled = true;
+        if (action === 'bugs') runBugHunter(name, btn);
+        else if (action === 'recommend') runRecommend(name, btn);
+      });
+    });
+  }
+
+  /* === API calls === */
+  const API_BASE = 'https://git88.sj88ai.com/api';
+
+  async function runBugHunter(name, btn) {
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/bugs`, { method: 'POST' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      showBugResult(name, data);
+    } catch (e) {
+      showError('Bug Hunter', name, e.message);
+    } finally {
+      if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    }
+  }
+
+  async function runRecommend(name, btn) {
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/recommend`, { method: 'POST' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      showRecommendResult(name, data);
+    } catch (e) {
+      showError('Recommend', name, e.message);
+    } finally {
+      if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    }
+  }
+
+  /* === Result modals === */
+  function showBugResult(name, data) {
+    const scoreClass = data.score >= 80 ? 'good' : data.score >= 50 ? 'ok' : 'bad';
+    const improvements = data.improvements || [];
+    const bugs = data.bugs || [];
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🐛</div>
+        <div class="modal-title">${name}</div>
+        <div class="modal-cat" style="color: var(--coral);">Bug Hunter Report</div>
+      </div>
+      <div class="modal-body">
+        <div class="result-section">
+          <div class="score-badge ${scoreClass}">
+            Health Score: ${data.score}/100
+            <span style="font-size: 12px; font-weight: 500; opacity: 0.8;">${data.summary || ''}</span>
+          </div>
+        </div>
+        ${bugs.length > 0 ? `
+          <div class="result-section">
+            <h4>🔴 Bugs Found (${bugs.length})</h4>
+            ${bugs.map(b => `
+              <div class="result-item severity-${b.severity || 'medium'}">
+                <div class="result-item-title">${b.title}</div>
+                <div class="result-item-meta">
+                  <span class="result-badge severity-${b.severity || 'medium'}">${b.severity || 'medium'}</span>
+                </div>
+                <div class="result-item-detail">${b.detail || ''}</div>
+                ${b.fix ? `<div class="result-item-fix"><strong>Fix:</strong>${b.fix.startsWith('<') ? b.fix : '<pre>' + escapeHtml(b.fix) + '</pre>'}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+        ${improvements.length > 0 ? `
+          <div class="result-section">
+            <h4>🛠️ Improvements (${improvements.length})</h4>
+            ${improvements.map(i => `
+              <div class="result-item priority-${i.priority || 'medium'}">
+                <div class="result-item-title">${i.title}</div>
+                <div class="result-item-meta">
+                  <span class="result-badge priority-${i.priority || 'medium'}">priority: ${i.priority || 'medium'}</span>
+                </div>
+                ${i.detail ? `<div class="result-item-detail">${i.detail}</div>` : ''}
+                ${i.impact ? `<div class="result-item-detail" style="margin-top:4px;"><strong>Impact:</strong> ${i.impact}</div>` : ''}
+                ${i.fix ? `<div class="result-item-fix">${i.fix.startsWith('<') ? i.fix : '<pre>' + escapeHtml(i.fix) + '</pre>'}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="empty-result">
+            <div class="emoji">✅</div>
+            <div>ไม่พบ issues! Repo นี้ดูแลดี</div>
+          </div>
+        `}
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function showRecommendResult(name, data) {
+    const recs = data.recommendations || [];
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">💡</div>
+        <div class="modal-title">${name}</div>
+        <div class="modal-cat" style="color: var(--gold-deep);">${data.summary || 'Feature Recommendations'}</div>
+      </div>
+      <div class="modal-body">
+        ${recs.length === 0 ? `
+          <div class="empty-result">
+            <div class="emoji">🤔</div>
+            <div>No recommendations available</div>
+          </div>
+        ` : recs.map(r => `
+          <div class="result-item priority-${r.priority || 'medium'}">
+            <div class="result-item-title">${r.title}</div>
+            <div class="result-item-meta">
+              <span class="result-badge priority-${r.priority || 'medium'}">${r.priority || 'medium'}</span>
+              ${r.effort ? `<span class="result-badge effort">⏱️ ${r.effort}</span>` : ''}
+              ${r.impact ? `<span class="result-badge impact">📈 ${r.impact}</span>` : ''}
+            </div>
+            ${r.rationale ? `<div class="result-item-detail" style="margin-bottom: 6px;"><strong>Why:</strong> ${r.rationale}</div>` : ''}
+            ${r.suggestions && r.suggestions.length ? `
+              <ul class="checklist">${r.suggestions.map(s => `<li>${s}</li>`).join('')}</ul>
+            ` : ''}
+            ${r.checklist && r.checklist.length ? `
+              <ul class="checklist">${r.checklist.map(s => `<li>${s}</li>`).join('')}</ul>
+            ` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function showError(title, name, msg) {
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">⚠️</div>
+        <div class="modal-title">${title} Error</div>
+        <div class="modal-cat" style="color: var(--coral);">${name}</div>
+      </div>
+      <div class="modal-body">
+        <div class="empty-result">
+          <div class="emoji">🔌</div>
+          <div style="font-size: 16px; color: var(--coral); font-weight: 600;">${msg}</div>
+          <div style="margin-top: 12px; color: var(--slate-2);">ลอง refresh หน้านี้ หรือตรวจ API ที่ <code>https://git88.sj88ai.com/api/health</code></div>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function escapeHtml(s) {
+    if (typeof s !== 'string') return s;
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
   /* =========================================================
@@ -1052,6 +1321,27 @@
       }
     };
     tick();
+    // Ping API in background
+    pingAPI();
+  }
+
+  async function pingAPI() {
+    const dot = document.getElementById('apiDot');
+    const text = document.getElementById('apiStatus');
+    try {
+      const r = await fetch(`${API_BASE}/health`);
+      if (r.ok) {
+        const d = await r.json();
+        text.textContent = `API live · ${(d.ts || '').substring(11, 19)}`;
+        dot.classList.remove('offline', 'error');
+      } else {
+        text.textContent = `API ${r.status}`;
+        dot.classList.add('error');
+      }
+    } catch (e) {
+      text.textContent = 'API offline';
+      dot.classList.add('offline');
+    }
   }
   // Wait for fonts then boot
   if (document.readyState === 'complete') boot();

@@ -24,6 +24,10 @@ It's a **single-file** dashboard — `index.html` is 63 KB. Open it directly in 
 - 📅 **Timeline view** — see when each repo was created, dot size scales with repo size, color = category
 - 📂 **Category view** — repos grouped and sorted by category size
 - 🪟 **Detail modal** — click any card → description, highlights, stats, GitHub link, live URL
+- 🐛 **Bug Hunter** (per repo) — health score + improvements (OG tags, PWA, CSP, favicon, lazy load, TypeScript, topics...)
+- 💡 **Recommend** (per repo) — feature ideas with priority/effort/impact (mobile 3D, save/load, payment, PWA, AI, i18n...)
+- 🤖 **Auto-categorization** — backend detects category from language + name patterns + keywords
+- 📡 **Live API status pill** — pings `/api/health` on load
 - 📱 **Responsive** — works on mobile (single column < 768px)
 - ⚡ **Loader animation** with progress bar on first load
 - ⌨️ **Keyboard support** — ESC closes modal, click-outside dismisses
@@ -85,6 +89,27 @@ sj88-mission-control/
 ├── README.md    # You are here
 └── .gitignore
 ```
+
+
+## 🔌 Backend API
+
+The dashboard is powered by a **FastAPI backend** at `https://git88.sj88ai.com/api/`:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check |
+| `/api/repos` | GET | List all 60 repos (auto-categorized) |
+| `/api/repos/{name}` | GET | Single repo details |
+| `/api/repos/{name}/refresh` | POST | Re-fetch from GitHub |
+| `/api/repos/{name}/bugs` | POST | 🐛 Run Bug Hunter analysis |
+| `/api/repos/{name}/recommend` | POST | 💡 Generate feature recommendations |
+| `/api/categorize` | POST | Re-categorize all repos |
+| `/api/stats` | GET | System stats |
+| `/docs` | GET | Swagger API docs |
+
+**Stack**: FastAPI 0.139 + httpx + SQLite cache, runs as systemd service `sj88-mission-control-api` on port 8200 (proxied via nginx).
+
+**Source**: `/opt/sj88-mission-control/` on the VPS
 
 ## 🏷️ How categories are derived
 
