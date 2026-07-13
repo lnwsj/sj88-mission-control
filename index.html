@@ -524,6 +524,18 @@
     border-radius: 999px; font-size: 10px; font-weight: 700;
     letter-spacing: 0.5px;
   }
+  .mh-range-picker {
+    padding: 4px 10px; background: white;
+    border: 1px solid var(--card-border);
+    border-radius: 999px; font-size: 11px; font-weight: 600;
+    color: var(--slate); cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .mh-range-picker:hover { border-color: var(--pink); }
+  .mh-range-picker:focus { outline: 2px solid var(--pink-glow); outline-offset: 1px; }
+  html[data-theme="dark"] .mh-range-picker { background: rgba(15, 23, 42, 0.6); color: white; }
+  html[data-theme="neon"] .mh-range-picker { background: rgba(20, 5, 40, 0.8); color: var(--slate-2); }
   .mh-title { font-size: 24px; font-weight: 700; color: var(--slate); }
   .mh-sub { font-size: 13px; color: var(--slate-3); margin-left: auto; }
   .mh-grid {
@@ -1725,8 +1737,19 @@
 <div class="container" id="thisMonthSection" style="margin-top: 24px; margin-bottom: 8px;">
   <div class="month-highlight">
     <div class="mh-head">
-      <span class="mh-badge">📅 THIS MONTH</span>
-      <span class="mh-title">July 2026</span>
+      <span class="mh-badge">📅</span>
+      <select id="mhRangePicker" class="mh-range-picker" onchange="onMonthRangeChange(this.value)">
+        <option value="auto">Latest month (auto)</option>
+        <option value="2026-07">July 2026</option>
+        <option value="2026-06">June 2026</option>
+        <option value="2026-02">February 2026</option>
+        <option value="2025-09">September 2025</option>
+        <option value="all">All time (lifetime)</option>
+        <option value="last7">Last 7 days</option>
+        <option value="last30">Last 30 days</option>
+        <option value="last90">Last 90 days</option>
+      </select>
+      <span class="mh-title" id="mhTitle">July 2026</span>
       <span class="mh-sub" id="mhDateRange">Jul 8 — Jul 13 · 6 days</span>
     </div>
     <div class="mh-grid">
@@ -2348,32 +2371,89 @@
    * STATS
    * ========================================================= */
   /* === This Month Highlight (Phase 19) === */
+  function getCurrentRange() {
+    const picker = document.getElementById('mhRangePicker');
+    return picker ? picker.value : 'auto';
+  }
+
+  function getRangeFilter(range, msgs) {
+    const today = new Date();
+    if (range === 'auto') {
+      const latest = msgs.reduce((a, b) => a.date > b.date ? a : b);
+      return { from: latest.date.substring(0, 7) + '-01', to: latest.date.substring(0, 7) + '-31', label: 'Latest month' };
+    } else if (range === 'all') {
+      return { from: '2025-01-01', to: '2099-12-31', label: 'All time' };
+    } else if (range.startsWith('last')) {
+      const days = parseInt(range.replace('last', ''));
+      const from = new Date(today);
+      from.setDate(today.getDate() - days);
+      return { from: from.toISOString().substring(0, 10), to: today.toISOString().substring(0, 10), label: `Last ${days} days` };
+    } else {
+      // YYYY-MM
+      return { from: range + '-01', to: range + '-31', label: range };
+    }
+  }
+
+  function onMonthRangeChange(value) {
+    localStorage.setItem('sj88-mh-range', value);
+    renderMonthHighlight();
+  }
+
   function renderMonthHighlight() {
     if (!commitsData || !commitsData.messages) return;
     const msgs = commitsData.messages;
-    // Get this month (YYYY-MM from latest message)
-    const latest = msgs.reduce((a, b) => a.date > b.date ? a : b);
-    const month = latest.date.substring(0, 7); // "2026-07"
-    const monthMsgs = msgs.filter(m => m.date.startsWith(month));
-    if (!monthMsgs.length) return;
-    const totalCommits = monthMsgs.length;
-    const repos = new Set(monthMsgs.map(m => m.repo)).size;
+    // Restore saved range
+    const saved = localStorage.getItem('sj88-mh-range');
+    if (saved) {
+      const picker = document.getElementById('mhRangePicker');
+      if (picker) picker.value = saved;
+    }
+    const range = getCurrentRange();
+    const filter = getRangeFilter(range, msgs);
+    const rangeMsgs = msgs.filter(m => m.date >= filter.from && m.date <= filter.to);
+    // Title
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let titleText = filter.label;
+    if (range === 'auto' || /^\d{4}-\d{2}$/.test(range)) {
+      const ym = range === 'auto'
+        ? msgs.reduce((a, b) => a.date > b.date ? a : b).date.substring(0, 7)
+        : range;
+      const [y, m] = ym.split('-');
+      titleText = `${monthNames[parseInt(m) - 1]} ${y}`;
+    }
+    document.getElementById('mhTitle').textContent = titleText;
+    if (!rangeMsgs.length) {
+      // Empty state
+      document.getElementById('mhCommits').textContent = '0';
+      document.getElementById('mhRepos').textContent = '0';
+      document.getElementById('mhAuthors').textContent = '0';
+      document.getElementById('mhPeak').textContent = '0';
+      document.getElementById('mhShare').innerHTML = '0<span class="suffix">%</span>';
+      document.getElementById('mhAvg').textContent = '0';
+      document.getElementById('mhDateRange').textContent = 'No data in this range';
+      document.getElementById('mhDayChart').innerHTML = '<div style="color: var(--slate-3); padding: 20px; text-align: center; font-size: 12px;">No commits in this range</div>';
+      document.getElementById('mhAuthorChart').innerHTML = '';
+      document.getElementById('mhRepoChart').innerHTML = '';
+      return;
+    }
+    const totalCommits = rangeMsgs.length;
+    const repos = new Set(rangeMsgs.map(m => m.repo)).size;
     const authors = new Set();
     const authorCounts = {};
-    monthMsgs.forEach(m => {
+    rangeMsgs.forEach(m => {
       const a = m.author || 'unknown';
       authors.add(a);
       authorCounts[a] = (authorCounts[a] || 0) + 1;
     });
     // Per day
     const byDay = {};
-    monthMsgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
+    rangeMsgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
     const days = Object.keys(byDay).sort();
     const maxDay = Math.max(...Object.values(byDay));
     const peakDay = days.reduce((a, b) => byDay[a] >= byDay[b] ? a : b);
     const avg = (totalCommits / days.length).toFixed(1);
     // lnwsj share
-    const lnwsjShare = monthMsgs.filter(m => m.is_lnwsj).length;
+    const lnwsjShare = rangeMsgs.filter(m => m.is_lnwsj).length;
     const lnwsjPct = Math.round(lnwsjShare / totalCommits * 100);
     // Update top numbers
     document.getElementById('mhCommits').textContent = totalCommits;
@@ -2411,7 +2491,7 @@
     }).join('');
     // Repo chart (top 5 by commits)
     const repoCounts = {};
-    monthMsgs.forEach(m => { repoCounts[m.repo] = (repoCounts[m.repo] || 0) + 1; });
+    rangeMsgs.forEach(m => { repoCounts[m.repo] = (repoCounts[m.repo] || 0) + 1; });
     const repoSorted = Object.entries(repoCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
     const maxRepo = repoSorted[0][1];
     const repoList = document.getElementById('mhRepoChart');
