@@ -1639,6 +1639,51 @@
   .mom-card .change.down { background: rgba(244, 63, 94, 0.15); color: var(--coral); }
   .mom-card .change.same { background: var(--bg-2); color: var(--slate-3); }
 
+  /* === Drilldown modal === */
+  .drill-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px; margin-bottom: 16px;
+  }
+  .drill-stat {
+    background: var(--bg-1); border-radius: 10px;
+    padding: 10px 12px; text-align: center;
+    border-left: 3px solid var(--pink);
+  }
+  .drill-stat-val {
+    font-size: 18px; font-weight: 800; color: var(--slate);
+    line-height: 1.1;
+  }
+  .drill-stat-lbl {
+    font-size: 10px; color: var(--slate-3);
+    text-transform: uppercase; letter-spacing: 0.3px;
+    margin-top: 2px; font-weight: 600;
+  }
+  html[data-theme="dark"] .drill-stat { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .drill-stat-val { color: white; }
+  html[data-theme="neon"] .drill-stat { background: rgba(20, 5, 40, 0.6); }
+  html[data-theme="neon"] .drill-stat-val { color: var(--slate); }
+  .drill-heat .hf-cell { width: 14px; height: 14px; }
+  .drill-commits { display: flex; flex-direction: column; gap: 6px; }
+  .drill-commit {
+    padding: 8px 10px; background: var(--bg-1);
+    border-radius: 8px; border-left: 3px solid var(--indigo);
+  }
+  .drill-commit-msg {
+    font-size: 12px; color: var(--slate); line-height: 1.4;
+    font-family: monospace;
+  }
+  .drill-commit-meta {
+    font-size: 10px; color: var(--slate-3);
+    margin-top: 4px; font-weight: 600;
+  }
+  html[data-theme="dark"] .drill-commit { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .drill-commit-msg { color: white; }
+  html[data-theme="neon"] .drill-commit { background: rgba(20, 5, 40, 0.6); }
+  .mh-author-row { cursor: pointer; transition: background 0.2s; padding: 4px; border-radius: 6px; }
+  .mh-author-row:hover { background: var(--bg-1); }
+  .mh-repo-row { cursor: pointer; transition: background 0.2s; padding: 4px; border-radius: 6px; }
+  .mh-repo-row:hover { background: var(--bg-1); }
+
   /* === Theme picker === */
   .theme-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
@@ -2050,6 +2095,214 @@
     document.getElementById('modal').classList.add('active');
   }
 
+  /* === Author Drilldown (Phase 24) === */
+  function showAuthorDrilldown(authorName) {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages.filter(m => (m.author || 'unknown') === authorName);
+    if (!msgs.length) return;
+    // Stats
+    const repos = new Set(msgs.map(m => m.repo));
+    const dates = msgs.map(m => m.date).sort();
+    const firstDate = dates[0];
+    const lastDate = dates[dates.length - 1];
+    const lnwsjCount = msgs.filter(m => m.is_lnwsj).length;
+    // Per-repo breakdown
+    const repoCounts = {};
+    msgs.forEach(m => { repoCounts[m.repo] = (repoCounts[m.repo] || 0) + 1; });
+    const repoSorted = Object.entries(repoCounts).sort((a, b) => b[1] - a[1]);
+    const isHuman = authorName === 'lnwsj';
+    const isUnknown = authorName === 'unknown';
+    const emoji = isHuman ? '👤' : isUnknown ? '❓' : '🤖';
+    const role = isHuman ? 'Owner / Human' : isUnknown ? 'Unknown' : 'AI Agent';
+    // Mini activity by day
+    const byDay = {};
+    msgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
+    const allDays = Object.keys(byDay).sort();
+    const maxC = Math.max(...Object.values(byDay));
+    // Activity heatmap (last 30 days)
+    const today = new Date();
+    const startDate = new Date(today);
+    startDate.setDate(today.getDate() - 30);
+    const cells = [];
+    for (let d = new Date(startDate); d <= today; d.setDate(d.getDate() + 1)) {
+      const ds = d.toISOString().substring(0, 10);
+      const c = byDay[ds] || 0;
+      let lvl = '';
+      if (c > 0) {
+        if (c >= maxC) lvl = 'l4';
+        else if (c >= maxC * 0.6) lvl = 'l3';
+        else if (c >= maxC * 0.3) lvl = 'l2';
+        else lvl = 'l1';
+      }
+      cells.push(`<div class="hf-cell ${lvl}" title="${ds}: ${c} commit${c !== 1 ? 's' : ''}"></div>`);
+    }
+    // Repo HTML
+    const repoList = repoSorted.slice(0, 20).map(([name, count]) => {
+      const pct = count / repoSorted[0][1] * 100;
+      return `<div class="mh-repo-row" data-repo="${name}">
+        <div class="name">${name}</div>
+        <div class="val">${count}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+      </div>`;
+    }).join('');
+    // Recent commit messages
+    const recentCommits = msgs.slice(0, 8).map(m => `
+      <div class="drill-commit">
+        <div class="drill-commit-msg">${escapeHtml(m.message.substring(0, 100))}${m.message.length > 100 ? '...' : ''}</div>
+        <div class="drill-commit-meta">${m.date} · ${m.repo}</div>
+      </div>
+    `).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${emoji}</div>
+        <div class="modal-title">${authorName}</div>
+        <div class="modal-cat" style="color: var(--indigo);">${role} · ${msgs.length} commits</div>
+      </div>
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+        <div class="drill-stats">
+          <div class="drill-stat">
+            <div class="drill-stat-val">${msgs.length}</div>
+            <div class="drill-stat-lbl">total commits</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${repos.size}</div>
+            <div class="drill-stat-lbl">repos touched</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${lnwsjCount}</div>
+            <div class="drill-stat-lbl">lnwsj commits</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${Math.round(lnwsjCount / msgs.length * 100)}%</div>
+            <div class="drill-stat-lbl">lnwsj share</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${firstDate}</div>
+            <div class="drill-stat-lbl">first commit</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${lastDate}</div>
+            <div class="drill-stat-lbl">last commit</div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">📅 Activity (last 30 days)</div>
+          <div class="drill-heat" style="display: flex; gap: 2px; margin-top: 8px; flex-wrap: wrap;">${cells.join('')}</div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">📦 Repos (${repos.size} total · top ${Math.min(20, repos.size)} shown)</div>
+          <div style="margin-top: 8px;">${repoList}</div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">💬 Recent commits</div>
+          <div class="drill-commits" style="margin-top: 8px;">${recentCommits}</div>
+        </div>
+        <div style="margin-top: 12px; display: flex; gap: 8px;">
+          ${authorName === 'lnwsj' ? '<a href="https://github.com/lnwsj" target="_blank" class="btn btn-secondary" style="text-decoration: none;">↗ GitHub Profile</a>' : ''}
+          <button class="btn btn-secondary" onclick="filterByAuthor('${authorName.replace(/'/g, "\\'")}')">🔍 Show only this author's repos</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    // Wire up repo rows inside the modal too
+    document.querySelectorAll('#modalContent .mh-repo-row').forEach(row => {
+      row.addEventListener('click', () => showRepoDrilldown(row.dataset.repo));
+    });
+  }
+
+  function filterByAuthor(authorName) {
+    closeModal();
+    // Switch to grid view and filter
+    state.view = 'grid';
+    state.authorFilter = authorName;
+    document.querySelectorAll('.view-tab').forEach(t => t.classList.toggle('active', t.dataset.view === 'grid'));
+    render();
+    showToast(`🔍 Filtered to author: ${authorName}`, 'success');
+  }
+
+  /* === Repo Drilldown (Phase 24 bonus) === */
+  function showRepoDrilldown(repoName) {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages.filter(m => m.repo === repoName);
+    if (!msgs.length) return;
+    const authors = new Set(msgs.map(m => m.author || 'unknown'));
+    const dates = msgs.map(m => m.date).sort();
+    const firstDate = dates[0];
+    const lastDate = dates[dates.length - 1];
+    const authorCounts = {};
+    msgs.forEach(m => { authorCounts[m.author || 'unknown'] = (authorCounts[m.author || 'unknown'] || 0) + 1; });
+    const authorSorted = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const maxAuth = authorSorted[0][1];
+    const repo = REPOS.find(r => r.name === repoName);
+    const emoji = repo?.emoji || '📦';
+    const desc = repo?.desc || '';
+    const isLive = repo?.live;
+    const authorList = authorSorted.map(([name, count]) => {
+      const pct = count / maxAuth * 100;
+      return `<div class="mh-author-row">
+        <div class="name">${name === 'lnwsj' ? '👤 ' : '🤖 '}${name}</div>
+        <div class="val">${count}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+      </div>`;
+    }).join('');
+    const recentCommits = msgs.slice(0, 8).map(m => `
+      <div class="drill-commit">
+        <div class="drill-commit-msg">${escapeHtml(m.message.substring(0, 100))}${m.message.length > 100 ? '...' : ''}</div>
+        <div class="drill-commit-meta">${m.date} · ${m.author || 'unknown'}</div>
+      </div>
+    `).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">${emoji}</div>
+        <div class="modal-title">${repoName}</div>
+        <div class="modal-cat" style="color: var(--indigo);">${desc}</div>
+      </div>
+      <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+        <div class="drill-stats">
+          <div class="drill-stat">
+            <div class="drill-stat-val">${msgs.length}</div>
+            <div class="drill-stat-lbl">commits</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${authors.size}</div>
+            <div class="drill-stat-lbl">contributors</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${firstDate}</div>
+            <div class="drill-stat-lbl">first</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${lastDate}</div>
+            <div class="drill-stat-lbl">last</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${repo?.size_kb ? Math.round(repo.size_kb / 1024 * 10) / 10 + ' MB' : '?'}</div>
+            <div class="drill-stat-lbl">size</div>
+          </div>
+          <div class="drill-stat">
+            <div class="drill-stat-val">${isLive ? '✓ Live' : '—'}</div>
+            <div class="drill-stat-lbl">deployed</div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">👥 Contributors</div>
+          <div style="margin-top: 8px;">${authorList}</div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">💬 Recent commits</div>
+          <div class="drill-commits" style="margin-top: 8px;">${recentCommits}</div>
+        </div>
+        <div style="margin-top: 12px; display: flex; gap: 8px;">
+          <a href="https://github.com/lnwsj/${repoName}" target="_blank" class="btn btn-secondary" style="text-decoration: none;">↗ Open on GitHub</a>
+          <button class="btn btn-secondary" onclick="showModal('${repoName}')">📋 Full details</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
   async function showAchievements() {
     document.getElementById('modalContent').innerHTML = `<div class="commits-loading"><div class="emoji">🏆</div>Loading achievements...</div>`;
     document.getElementById('modal').classList.add('active');
@@ -2341,7 +2594,8 @@
   const state = {
     filter: 'all',
     search: '',
-    view: 'grid'
+    view: 'grid',
+    authorFilter: null
   };
 
   /* =========================================================
@@ -2483,12 +2737,16 @@
     const authorList = document.getElementById('mhAuthorChart');
     authorList.innerHTML = authorSorted.map(([name, count]) => {
       const pct = count / maxAuth * 100;
-      return `<div class="mh-author-row">
+      return `<div class="mh-author-row" data-author="${name}" title="Click to see all commits by ${name}">
         <div class="name">${name === 'lnwsj' ? '👤 ' : '🤖 '}${name}</div>
         <div class="val">${count}</div>
         <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
       </div>`;
     }).join('');
+    // Wire up author click → drilldown modal
+    authorList.querySelectorAll('.mh-author-row').forEach(row => {
+      row.addEventListener('click', () => showAuthorDrilldown(row.dataset.author));
+    });
     // Repo chart (top 5 by commits)
     const repoCounts = {};
     rangeMsgs.forEach(m => { repoCounts[m.repo] = (repoCounts[m.repo] || 0) + 1; });
@@ -2497,12 +2755,15 @@
     const repoList = document.getElementById('mhRepoChart');
     repoList.innerHTML = repoSorted.map(([name, count]) => {
       const pct = count / maxRepo * 100;
-      return `<div class="mh-repo-row">
+      return `<div class="mh-repo-row" data-repo="${name}" title="Click to see all commits in ${name}">
         <div class="name">${name}</div>
         <div class="val">${count}</div>
         <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
       </div>`;
     }).join('');
+    repoList.querySelectorAll('.mh-repo-row').forEach(row => {
+      row.addEventListener('click', () => showRepoDrilldown(row.dataset.repo));
+    });
 
     // Also render flagship heatmap + MoM
     renderFullYearHeatmap();
@@ -2775,11 +3036,17 @@
       ...Object.entries(CATEGORIES).map(([key, info]) => ({ key, label: info.label, emoji: info.emoji, count: counts[key] || 0 }))
     ];
 
-    document.getElementById('filterChips').innerHTML = chips.map(c => `
+    const chipsHtml = chips.map(c => `
       <button class="chip ${state.filter === c.key ? 'active' : ''}" data-cat="${c.key}">
         ${c.emoji} ${c.label} <span class="chip-count">${c.count}</span>
       </button>
     `).join('');
+    const authorChip = state.authorFilter
+      ? `<button class="chip active" data-author-clear style="background: var(--gold); color: white; border-color: var(--gold);">
+          👤 Author: ${state.authorFilter} ✕
+        </button>`
+      : '';
+    document.getElementById('filterChips').innerHTML = chipsHtml + authorChip;
 
     document.querySelectorAll('.chip').forEach(c => {
       c.addEventListener('click', () => {
@@ -2788,6 +3055,16 @@
         render();
       });
     });
+    // Author clear chip
+    const authorClear = document.querySelector('[data-author-clear]');
+    if (authorClear) {
+      authorClear.addEventListener('click', () => {
+        state.authorFilter = null;
+        renderChips();
+        render();
+        showToast('🔍 Author filter cleared', 'success');
+      });
+    }
   }
 
   /* =========================================================
@@ -2804,6 +3081,12 @@
         const q = state.search.toLowerCase();
         const hay = `${r.name} ${r.desc} ${r.desc_full} ${r.stack} ${r.lang}`.toLowerCase();
         if (!hay.includes(q)) return false;
+      }
+      if (state.authorFilter && commitsData) {
+        const authorHas = commitsData.messages.some(m =>
+          m.repo === r.name && (m.author || 'unknown') === state.authorFilter
+        );
+        if (!authorHas) return false;
       }
       return true;
     });
