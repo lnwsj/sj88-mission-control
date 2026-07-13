@@ -78,6 +78,135 @@
   html[data-theme="dark"] mark { background: rgba(251, 191, 36, 0.4); color: var(--gold); }
   html[data-theme="dark"] code { background: rgba(15, 23, 42, 0.6); color: #fbbf24; padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
   html[data-theme="dark"] pre { background: #0f172a; color: #cbd5e1; }
+
+  /* === Ocean theme (cyan + teal, watery) === */
+  html[data-theme="ocean"] {
+    --pink: #06b6d4;
+    --pink-deep: #0891b2;
+    --pink-soft: #cffafe;
+    --pink-glow: rgba(6, 182, 212, 0.25);
+    --indigo: #0ea5e9;
+    --indigo-deep: #0284c7;
+    --mint: #14b8a6;
+    --mint-deep: #0d9488;
+    --gold: #fbbf24;
+    --gold-deep: #f59e0b;
+    --coral: #f97316;
+    --slate: #0c4a6e;
+    --slate-2: #075985;
+    --slate-3: #0369a1;
+    --bg-1: #ecfeff;
+    --bg-2: #cffafe;
+    --bg-3: #a5f3fc;
+    --card: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(6, 182, 212, 0.2);
+    --shadow-sm: 0 1px 3px rgba(6, 182, 212, 0.06);
+    --shadow-md: 0 4px 12px rgba(6, 182, 212, 0.1);
+    --shadow-lg: 0 12px 40px rgba(6, 182, 212, 0.18);
+    --shadow-xl: 0 20px 60px rgba(14, 165, 233, 0.22);
+  }
+  html[data-theme="ocean"] body {
+    background: linear-gradient(135deg, #ecfeff 0%, #cffafe 30%, #a5f3fc 70%, #e0f2fe 100%) !important;
+  }
+  html[data-theme="ocean"] .orb-1 { background: var(--pink); opacity: 0.5; }
+  html[data-theme="ocean"] .orb-2 { background: var(--indigo); opacity: 0.5; }
+  html[data-theme="ocean"] .orb-3 { background: var(--mint); opacity: 0.5; }
+  html[data-theme="ocean"] .hf-cell.l1 { background: #cffafe; }
+  html[data-theme="ocean"] .hf-cell.l2 { background: #a5f3fc; }
+  html[data-theme="ocean"] .hf-cell.l3 { background: #06b6d4; }
+  html[data-theme="ocean"] .hf-cell.l4 { background: #0e7490; box-shadow: 0 0 4px rgba(6, 182, 212, 0.5); }
+  html[data-theme="ocean"] .repo-card { background: rgba(255, 255, 255, 0.92); }
+
+  /* === Sunset theme (orange + pink, warm) === */
+  html[data-theme="sunset"] {
+    --pink: #f97316;
+    --pink-deep: #ea580c;
+    --pink-soft: #fed7aa;
+    --pink-glow: rgba(249, 115, 22, 0.25);
+    --indigo: #ec4899;
+    --indigo-deep: #db2777;
+    --mint: #fbbf24;
+    --mint-deep: #f59e0b;
+    --gold: #f43f5e;
+    --gold-deep: #e11d48;
+    --coral: #dc2626;
+    --slate: #7c2d12;
+    --slate-2: #9a3412;
+    --slate-3: #c2410c;
+    --bg-1: #fff7ed;
+    --bg-2: #ffedd5;
+    --bg-3: #fed7aa;
+    --card: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(249, 115, 22, 0.2);
+    --shadow-sm: 0 1px 3px rgba(249, 115, 22, 0.06);
+    --shadow-md: 0 4px 12px rgba(249, 115, 22, 0.1);
+    --shadow-lg: 0 12px 40px rgba(249, 115, 22, 0.18);
+    --shadow-xl: 0 20px 60px rgba(236, 72, 153, 0.22);
+  }
+  html[data-theme="sunset"] body {
+    background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 30%, #fecaca 70%, #fce7f3 100%) !important;
+  }
+  html[data-theme="sunset"] .orb-1 { background: var(--pink); opacity: 0.5; }
+  html[data-theme="sunset"] .orb-2 { background: var(--gold); opacity: 0.5; }
+  html[data-theme="sunset"] .orb-3 { background: var(--indigo); opacity: 0.5; }
+  html[data-theme="sunset"] .hf-cell.l1 { background: #fed7aa; }
+  html[data-theme="sunset"] .hf-cell.l2 { background: #fb923c; }
+  html[data-theme="sunset"] .hf-cell.l3 { background: #f97316; }
+  html[data-theme="sunset"] .hf-cell.l4 { background: #ea580c; box-shadow: 0 0 4px rgba(249, 115, 22, 0.5); }
+  html[data-theme="sunset"] .repo-card { background: rgba(255, 255, 255, 0.92); }
+
+  /* === Neon theme (dark + bright magenta/cyan, cyberpunk) === */
+  html[data-theme="neon"] {
+    --pink: #f0abfc;
+    --pink-deep: #e879f9;
+    --pink-soft: rgba(240, 171, 252, 0.2);
+    --pink-glow: rgba(240, 171, 252, 0.4);
+    --indigo: #67e8f9;
+    --indigo-deep: #22d3ee;
+    --mint: #86efac;
+    --mint-deep: #4ade80;
+    --gold: #fde047;
+    --gold-deep: #facc15;
+    --coral: #fb7185;
+    --slate: #f0abfc;
+    --slate-2: #c4b5fd;
+    --slate-3: #a5f3fc;
+    --bg-1: #0a0118;
+    --bg-2: #1e0b3b;
+    --bg-3: #2e1065;
+    --card: rgba(20, 5, 40, 0.85);
+    --card-border: rgba(240, 171, 252, 0.3);
+    --shadow-sm: 0 1px 3px rgba(240, 171, 252, 0.1);
+    --shadow-md: 0 4px 12px rgba(240, 171, 252, 0.2);
+    --shadow-lg: 0 0 40px rgba(240, 171, 252, 0.3);
+    --shadow-xl: 0 0 60px rgba(103, 232, 249, 0.4);
+  }
+  html[data-theme="neon"] body {
+    background: linear-gradient(135deg, #0a0118 0%, #1e0b3b 30%, #2e1065 70%, #0a0118 100%) !important;
+    color: var(--slate-2);
+  }
+  html[data-theme="neon"] .orb-1 { background: var(--pink); opacity: 0.7; }
+  html[data-theme="neon"] .orb-2 { background: var(--indigo); opacity: 0.7; }
+  html[data-theme="neon"] .orb-3 { background: var(--mint); opacity: 0.7; }
+  html[data-theme="neon"] .repo-card { background: rgba(20, 5, 40, 0.7); color: var(--slate-2); border: 1px solid var(--card-border); }
+  html[data-theme="neon"] .stat-card { background: rgba(20, 5, 40, 0.8); color: var(--slate-2); }
+  html[data-theme="neon"] .month-highlight { background: linear-gradient(135deg, rgba(240, 171, 252, 0.1) 0%, rgba(103, 232, 249, 0.1) 100%); border: 1px solid var(--card-border); }
+  html[data-theme="neon"] .mh-num, html[data-theme="neon"] .mh-chart-block { background: rgba(20, 5, 40, 0.8); }
+  html[data-theme="neon"] .heatmap-flagship { background: rgba(20, 5, 40, 0.7); border: 1px solid var(--card-border); }
+  html[data-theme="neon"] .mom-compare { background: rgba(20, 5, 40, 0.7); }
+  html[data-theme="neon"] .goal-tracker { background: linear-gradient(135deg, rgba(240, 171, 252, 0.1) 0%, rgba(103, 232, 249, 0.1) 100%); border: 1px solid var(--card-border); }
+  html[data-theme="neon"] .gt-goal { background: rgba(20, 5, 40, 0.8); }
+  html[data-theme="neon"] .gt-overall { background: rgba(20, 5, 40, 0.8); }
+  html[data-theme="neon"] .hf-cell.l0 { background: rgba(240, 171, 252, 0.05); }
+  html[data-theme="neon"] .hf-cell.l1 { background: rgba(240, 171, 252, 0.3); }
+  html[data-theme="neon"] .hf-cell.l2 { background: rgba(240, 171, 252, 0.5); }
+  html[data-theme="neon"] .hf-cell.l3 { background: rgba(240, 171, 252, 0.8); box-shadow: 0 0 4px rgba(240, 171, 252, 0.5); }
+  html[data-theme="neon"] .hf-cell.l4 { background: var(--pink); box-shadow: 0 0 8px rgba(240, 171, 252, 0.8); }
+  html[data-theme="neon"] h1, html[data-theme="neon"] .stat-value, html[data-theme="neon"] .stat-emoji { color: var(--slate); }
+  html[data-theme="neon"] h1 { background: linear-gradient(135deg, var(--pink) 0%, var(--indigo) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  html[data-theme="neon"] .repo-name a, html[data-theme="neon"] .repo-desc, html[data-theme="neon"] .hero-sub, html[data-theme="neon"] .repo-head { color: var(--slate-2); }
+  html[data-theme="neon"] .stat-label { color: var(--slate-3); }
+
   :root {
     --pink: #ec4899;
     --pink-deep: #db2777;
@@ -1498,6 +1627,29 @@
   .mom-card .change.down { background: rgba(244, 63, 94, 0.15); color: var(--coral); }
   .mom-card .change.same { background: var(--bg-2); color: var(--slate-3); }
 
+  /* === Theme picker === */
+  .theme-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .theme-grid { grid-template-columns: 1fr; } }
+  .theme-card {
+    border-radius: 14px; padding: 18px 16px; text-align: center;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; min-height: 140px;
+  }
+  .theme-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .theme-card .theme-icon { font-size: 32px; line-height: 1; margin-bottom: 8px; }
+  .theme-card .theme-name { font-size: 14px; font-weight: 700; color: var(--slate); margin-bottom: 4px; }
+  html[data-theme="neon"] .theme-card .theme-name { color: white; }
+  .theme-card .theme-desc { font-size: 11px; color: var(--slate-2); line-height: 1.4; }
+  .theme-card .theme-active {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--pink); color: white;
+    padding: 2px 8px; border-radius: 999px;
+    font-size: 9px; font-weight: 700;
+  }
+
   /* === Theme tweaks per category === */
   [data-cat="3d-game"] { --cat-color: #a855f7; --cat-bg: rgba(168, 85, 247, 0.12); }
   [data-cat="2d-game"] { --cat-color: #f43f5e; --cat-bg: rgba(244, 63, 94, 0.12); }
@@ -1551,6 +1703,7 @@
       <button id="achievementsBtn" class="hero-tool-btn" title="Achievements (press A)">🏆</button>
       <button id="chatBtn" class="hero-tool-btn" title="Chat with Mavis (press C)">💬</button>
       <button id="shareBtn" class="hero-tool-btn" title="Copy link to this view">🔗</button>
+      <button id="themeBtn" class="hero-tool-btn" title="Switch theme (press T)">🎨</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
       <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
@@ -1737,11 +1890,14 @@
    * ========================================================= */
   const globalState = {
     darkMode: localStorage.getItem('sj88-dark') === '1',
+    theme: localStorage.getItem('sj88-theme') || '',
     favorites: JSON.parse(localStorage.getItem('sj88-favs') || '[]'),
     compareSelection: null,
     repoMeta: {}  // cached issues/PRs/commits per repo
   };
-  if (globalState.darkMode) {
+  if (globalState.theme) {
+    document.documentElement.setAttribute('data-theme', globalState.theme);
+  } else if (globalState.darkMode) {
     document.documentElement.setAttribute('data-theme', 'dark');
   }
 
@@ -1779,6 +1935,67 @@
 
   function isFavorite(name) {
     return globalState.favorites.includes(name);
+  }
+
+  /* === Theme Picker (Phase 23) === */
+  const THEMES = [
+    { id: '', name: 'Kawaii (default)', icon: '🌸', desc: 'Pink + indigo, the original SJ88 vibe', gradient: 'linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%)' },
+    { id: 'ocean', name: 'Ocean', icon: '🌊', desc: 'Cyan + teal, calm and watery', gradient: 'linear-gradient(135deg, #ecfeff 0%, #a5f3fc 100%)' },
+    { id: 'sunset', name: 'Sunset', icon: '🌅', desc: 'Orange + pink, warm and energetic', gradient: 'linear-gradient(135deg, #fff7ed 0%, #fecaca 100%)' },
+    { id: 'neon', name: 'Neon', icon: '⚡', desc: 'Magenta + cyan, cyberpunk night mode', gradient: 'linear-gradient(135deg, #0a0118 0%, #2e1065 50%, #67e8f9 100%)' },
+    { id: 'dark', name: 'Dark', icon: '🌙', desc: 'Subtle dark, easy on the eyes', gradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }
+  ];
+
+  function setTheme(id) {
+    if (id) {
+      document.documentElement.setAttribute('data-theme', id);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('sj88-theme', id || '');
+    globalState.theme = id;
+    // Update theme button icon
+    const theme = THEMES.find(t => t.id === id);
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.textContent = theme ? theme.icon : '🎨';
+  }
+
+  function showThemePicker() {
+    const currentId = globalState.theme || '';
+    const cardsHtml = THEMES.map(t => `
+      <div class="theme-card" data-theme-id="${t.id}" style="background: ${t.gradient}; ${currentId === t.id ? 'border: 2px solid var(--pink-deep); box-shadow: 0 0 0 4px var(--pink-glow);' : 'border: 2px solid transparent;'}">
+        <div class="theme-icon">${t.icon}</div>
+        <div class="theme-name">${t.name}</div>
+        <div class="theme-desc">${t.desc}</div>
+        ${currentId === t.id ? '<div class="theme-active">✓ Active</div>' : ''}
+      </div>
+    `).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🎨</div>
+        <div class="modal-title">Choose Theme</div>
+        <div class="modal-cat" style="color: var(--indigo);">5 themes · click to apply</div>
+      </div>
+      <div class="modal-body">
+        <div class="theme-grid">
+          ${cardsHtml}
+        </div>
+        <div style="margin-top: 16px; padding: 10px; background: var(--bg-1); border-radius: 10px; font-size: 12px; color: var(--slate-3); text-align: center;">
+          🎯 Press <strong>T</strong> to toggle · Theme saved in localStorage
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    // Wire up clicks
+    document.querySelectorAll('.theme-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const themeId = card.dataset.themeId;
+        setTheme(themeId);
+        showToast(`🎨 Theme: ${THEMES.find(t => t.id === themeId)?.name}`, 'success');
+        setTimeout(showThemePicker, 200);
+      });
+    });
   }
 
   function showShortcuts() {
@@ -1861,6 +2078,7 @@
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     const key = e.key.toLowerCase();
     if (key === 'd') toggleDarkMode();
+    else if (key === 't') showThemePicker();
     else if (key === 'a') showAchievements();
     else if (key === 'c' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); showChat(); return; }
     else if (key === 's') shareCurrentView();
@@ -1981,6 +2199,12 @@
     if (shBtn) shBtn.addEventListener('click', shareCurrentView);
     const chatBtn = document.getElementById('chatBtn');
     if (chatBtn) chatBtn.addEventListener('click', showChat);
+    const themeBtn = document.getElementById('themeBtn');
+    if (themeBtn) {
+      const t = THEMES.find(x => x.id === (globalState.theme || ''));
+      if (t) themeBtn.textContent = t.icon;
+      themeBtn.addEventListener('click', showThemePicker);
+    }
   }
   initHeroButtons();
 
