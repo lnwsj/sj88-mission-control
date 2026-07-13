@@ -1806,6 +1806,46 @@
   [data-cat="portfolio"] { --cat-color: #ec4899; --cat-bg: rgba(236, 72, 153, 0.12); }
 
   /* === Loader === */
+
+  /* v16: Tag chips */
+  .tag-mini {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--bg-2);
+    color: var(--slate-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tag-mini:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .tag-chip {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    color: var(--slate-2);
+  }
+  .tag-chip:hover { background: var(--bg-2); border-color: var(--accent); }
+  .tag-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .activity-feed {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .stat-mini {
+    text-align: center;
+    padding: 10px;
+    background: var(--bg-2);
+    border-radius: 8px;
+  }
+
 </style>
 </head>
 <body>
@@ -1846,6 +1886,7 @@
       <button id="chatBtn" class="hero-tool-btn" title="Chat with Mavis (press C)">💬</button>
       <button id="shareBtn" class="hero-tool-btn" title="Copy link to this view">🔗</button>
       <button id="themeBtn" class="hero-tool-btn" title="Switch theme (press T)">🎨</button>
+      <button id="accentBtn" class="hero-tool-btn" title="Custom accent (press Z)">🌈</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
       <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
@@ -2000,6 +2041,14 @@
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Search 59 repos... 🔍" />
     </div>
+    <section class="section" id="activityFeedSection">
+      <div class="section-head">
+        <h2>📡 Activity Feed</h2>
+        <span class="section-sub">Real-time commits · auto-refresh 60s</span>
+      </div>
+      <div class="activity-feed" id="activityFeed"></div>
+    </section>
+
     <div class="filter-chips" id="filterChips"></div>
     <div class="view-toggle">
       <button class="view-btn active" data-view="grid">▦ Grid</button>
@@ -2441,6 +2490,7 @@
     const key = e.key.toLowerCase();
     if (key === 'd') toggleDarkMode();
     else if (key === 't') showThemePicker();
+    else if (key === 'z') showCustomAccent();
     else if (key === 'a') showAchievements();
     else if (key === 'c' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); showChat(); return; }
     else if (key === 's') shareCurrentView();
@@ -2568,6 +2618,8 @@
       if (t) themeBtn.textContent = t.icon;
       themeBtn.addEventListener('click', showThemePicker);
     }
+    const accentBtn = document.getElementById('accentBtn');
+    if (accentBtn) accentBtn.addEventListener('click', showCustomAccent);
   }
   initHeroButtons();
 
@@ -2590,89 +2642,148 @@
 
   const REPOS = [
     // === 3D Games (7) ===
-    { name: 'Tokyo-Student-Life-', cat: '3d-game', stack: 'Three.js', lang: 'JavaScript', size_kb: 11215, created: '2026-07-12', stars: 0, is_fork: false, live: 'https://r2633qqnal4d.space.minimax.io', desc: 'Ghibli-pastel Tokyo slice-of-life walking sim', desc_full: 'เกมเดินเล่น 5 โซนในโตเกียว พร้อม NPC 5 แบบ procedural character, day/night cycle, save/load, achievements, outfits, bicycle + moving train, bilingual TH/EN/JA', highlights: ['15 phases shipped', '11.2 MB total · 16 MB v1', 'Procedural schoolgirl (no GLB)', 'Web Audio synthesis (0 files)', '5 zones · 5 NPC types', '8 achievements + 5 outfits'], emoji: '🌸' },
-    { name: 'SJ88-Wonder-Park', cat: '3d-game', stack: 'Babylon.js v9.15', lang: 'HTML', size_kb: 9115, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://sj88wonderpark.sj88ai.com', desc: 'Theme park tycoon with 5-star rating flywheel', desc_full: '3D theme park — 6 rides (Ferris, Carousel, Drop Tower, Bumper Cars, Roller Coaster, Food Stall), 3-slot save/load, weather system, staff with patrol AI, 12 flickering lanterns', highlights: ['6 fully animated rides', '5-star rating flywheel', 'Weather: sunny/rain/snow/storm', 'Staff: Janitor/Mechanic/Mascot', 'HTTPS Let\'s Encrypt', '76KB single file'], emoji: '🎢' },
-    { name: 'sj88-street-fighter-thai', cat: '3d-game', stack: '?', lang: 'HTML', size_kb: 3465, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/street-fighter-thai/', desc: 'Street Fighter Thai — fighting game', desc_full: 'เกมต่อสู้แบบ Street Fighter ฉบับภาษาไทย', highlights: ['ไฟต์สตรีทแบบไทย', '3.5 MB · ใหญ่กว่า 3D flagship หลายตัว', 'Asset-heavy'], emoji: '🥊' },
-    { name: 'fitcheck-studio', cat: '3d-game', stack: 'Babylon.js 9.15', lang: 'HTML', size_kb: 2360, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fitcheck/', desc: '3D dress-up with AI Fashion Advisor', desc_full: 'แต่งตัวให้ mannequin 3D ตามธีมงาน — 7 themes, 64+ items, 8 hats, AI Fashion Advisor (real-time tips), Outfit Comparison, Daily Challenge, Photo Avatar', highlights: ['7 themes + Halloween', '64+ wardrobe items', 'AI Fashion Advisor', 'Daily Challenge + share link', '6 bugs documented as lessons', 'Score algorithm: 5 dimensions'], emoji: '👗' },
-    { name: 'sj88-fps-cops-vs-robbers', cat: '3d-game', stack: '?', lang: 'HTML', size_kb: 152, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fps-cops-vs-robbers/', desc: 'FPS Battle · ตำรวจ vs โจร · ยิงในเมือง', desc_full: 'เกมยิงปืน FPS ฝ่ายตำรวจ vs โจร ในเมือง — pistol/rifle, ammo, reload, recoil, raycast hit detection, enemy spawn, score, round system', highlights: ['FPS with raycast', 'Pistol + rifle + ammo/reload', 'Round system + score'], emoji: '🔫' },
-    { name: 'stronghold-3d', cat: '3d-game', stack: 'Babylon.js', lang: 'HTML', size_kb: 74, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stronghold-3d/', desc: 'Kingdom builder + Campaign + Boss Battle', desc_full: '3D เกมสร้างอาณาจักร — 5 building types, 5-mission campaign, 3-phase Red Dragon boss, 3 hero classes (Knight/Mage/Archer), 3 difficulty (Normal/Hell/Inferno)', highlights: ['3 modes in 1 file', '3-phase Red Dragon boss', 'Hero ultimates: Divine/Meteor/Volley', 'localStorage v1.0→v1.3 migration'], emoji: '🏰' },
-    { name: 'SJ88-RPG-Idle-3D', cat: '3d-game', stack: 'Babylon.js', lang: 'HTML', size_kb: 37, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://sj88rpg.sj88ai.com', desc: '3D idle RPG with PBR materials', desc_full: '3D idle RPG — 6 maps × 15 monsters × 6 BOSS, 12 classes × 3 tiers, 12 active skills, daily login 7-day cycle, 12 achievements, localStorage + offline progress', highlights: ['6 maps · 15 mobs · 6 BOSS', '12 classes × 3 tiers', '12 active skills', 'HTTPS Let\'s Encrypt', '37KB only'], emoji: '⚔️' },
+    { name: 'Tokyo-Student-Life-',
+      tags: ['3d', '3d-engine', 'babylon', 'game', 'javascript', 'large', 'live', 'three.js'], cat: '3d-game', stack: 'Three.js', lang: 'JavaScript', size_kb: 11215, created: '2026-07-12', stars: 0, is_fork: false, live: 'https://r2633qqnal4d.space.minimax.io', desc: 'Ghibli-pastel Tokyo slice-of-life walking sim', desc_full: 'เกมเดินเล่น 5 โซนในโตเกียว พร้อม NPC 5 แบบ procedural character, day/night cycle, save/load, achievements, outfits, bicycle + moving train, bilingual TH/EN/JA', highlights: ['15 phases shipped', '11.2 MB total · 16 MB v1', 'Procedural schoolgirl (no GLB)', 'Web Audio synthesis (0 files)', '5 zones · 5 NPC types', '8 achievements + 5 outfits'], emoji: '🌸' },
+    { name: 'SJ88-Wonder-Park',
+      tags: ['3d', '3d-engine', 'babylon', 'game', 'html', 'large', 'live', 'three.js'], cat: '3d-game', stack: 'Babylon.js v9.15', lang: 'HTML', size_kb: 9115, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://sj88wonderpark.sj88ai.com', desc: 'Theme park tycoon with 5-star rating flywheel', desc_full: '3D theme park — 6 rides (Ferris, Carousel, Drop Tower, Bumper Cars, Roller Coaster, Food Stall), 3-slot save/load, weather system, staff with patrol AI, 12 flickering lanterns', highlights: ['6 fully animated rides', '5-star rating flywheel', 'Weather: sunny/rain/snow/storm', 'Staff: Janitor/Mechanic/Mascot', 'HTTPS Let\'s Encrypt', '76KB single file'], emoji: '🎢' },
+    { name: 'sj88-street-fighter-thai',
+      tags: ['3d', 'babylon', 'game', 'html', 'live', 'medium', 'three.js'], cat: '3d-game', stack: '?', lang: 'HTML', size_kb: 3465, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/street-fighter-thai/', desc: 'Street Fighter Thai — fighting game', desc_full: 'เกมต่อสู้แบบ Street Fighter ฉบับภาษาไทย', highlights: ['ไฟต์สตรีทแบบไทย', '3.5 MB · ใหญ่กว่า 3D flagship หลายตัว', 'Asset-heavy'], emoji: '🥊' },
+    { name: 'fitcheck-studio',
+      tags: ['3d', '3d-engine', 'babylon', 'game', 'html', 'live', 'medium', 'three.js'], cat: '3d-game', stack: 'Babylon.js 9.15', lang: 'HTML', size_kb: 2360, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fitcheck/', desc: '3D dress-up with AI Fashion Advisor', desc_full: 'แต่งตัวให้ mannequin 3D ตามธีมงาน — 7 themes, 64+ items, 8 hats, AI Fashion Advisor (real-time tips), Outfit Comparison, Daily Challenge, Photo Avatar', highlights: ['7 themes + Halloween', '64+ wardrobe items', 'AI Fashion Advisor', 'Daily Challenge + share link', '6 bugs documented as lessons', 'Score algorithm: 5 dimensions'], emoji: '👗' },
+    { name: 'sj88-fps-cops-vs-robbers',
+      tags: ['3d', 'babylon', 'game', 'html', 'live', 'small', 'three.js'], cat: '3d-game', stack: '?', lang: 'HTML', size_kb: 152, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fps-cops-vs-robbers/', desc: 'FPS Battle · ตำรวจ vs โจร · ยิงในเมือง', desc_full: 'เกมยิงปืน FPS ฝ่ายตำรวจ vs โจร ในเมือง — pistol/rifle, ammo, reload, recoil, raycast hit detection, enemy spawn, score, round system', highlights: ['FPS with raycast', 'Pistol + rifle + ammo/reload', 'Round system + score'], emoji: '🔫' },
+    { name: 'stronghold-3d',
+      tags: ['3d', '3d-engine', 'babylon', 'game', 'html', 'live', 'small', 'three.js'], cat: '3d-game', stack: 'Babylon.js', lang: 'HTML', size_kb: 74, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stronghold-3d/', desc: 'Kingdom builder + Campaign + Boss Battle', desc_full: '3D เกมสร้างอาณาจักร — 5 building types, 5-mission campaign, 3-phase Red Dragon boss, 3 hero classes (Knight/Mage/Archer), 3 difficulty (Normal/Hell/Inferno)', highlights: ['3 modes in 1 file', '3-phase Red Dragon boss', 'Hero ultimates: Divine/Meteor/Volley', 'localStorage v1.0→v1.3 migration'], emoji: '🏰' },
+    { name: 'SJ88-RPG-Idle-3D',
+      tags: ['3d', '3d-engine', 'babylon', 'game', 'html', 'live', 'three.js', 'tiny'], cat: '3d-game', stack: 'Babylon.js', lang: 'HTML', size_kb: 37, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://sj88rpg.sj88ai.com', desc: '3D idle RPG with PBR materials', desc_full: '3D idle RPG — 6 maps × 15 monsters × 6 BOSS, 12 classes × 3 tiers, 12 active skills, daily login 7-day cycle, 12 achievements, localStorage + offline progress', highlights: ['6 maps · 15 mobs · 6 BOSS', '12 classes × 3 tiers', '12 active skills', 'HTTPS Let\'s Encrypt', '37KB only'], emoji: '⚔️' },
 
     // === 2D / Sim Games (8) ===
-    { name: 'sj88-rpg-idle-th', cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 47, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/rpg-idle-th/', desc: 'Idle RPG ภาษาไทย — ตำนานยุทธภพ v3.0', desc_full: 'เกม idle RPG ฉบับภาษาไทย ตำนานยุทธภพ', highlights: ['ภาษาไทยทั้งหมด', '47KB single file'], emoji: '⚔️' },
-    { name: 'sj88-rpg-idle', cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 24, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/rpg-idle/', desc: 'Idle RPG · ยุทธภพสามมิติ (3D Babylon)', desc_full: 'Idle RPG English version · 3D Babylon.js edition', highlights: ['English version', '3D Babylon.js'], emoji: '⚔️' },
-    { name: 'sj88-football-code', cat: '2d-game', stack: '3D + Code Editor', lang: 'HTML', size_kb: 31, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/football-code/', desc: 'เกมสอนเขียนโค้ด (Blocks + Python) ในสนาม 3D', desc_full: 'สนาม 3D + sprites + ball + goal — สอน concepts: sequence, loop, function ผ่าน 15 levels/missions ด้วย visual Blocks และ Python text', highlights: ['15 coding levels', 'Blocks + Python dual syntax', '3D stadium + ball physics'], emoji: '⚽' },
-    { name: 'sj88-stronghold', cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 13, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stronghold/', desc: 'Stronghold Lite v1.2 — Growing Kingdom', desc_full: 'Kingdom builder 2D เวอร์ชั่น lite', highlights: ['2D version (vs stronghold-3d 3D)', 'Lite'], emoji: '🏰' },
-    { name: 'sj88-noodle-shop', cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 15, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/noodle-shop/', desc: 'ร้านก๋วยเตี๋ยว · 7 เมนูไทย · ระบบคิวและทิป', desc_full: 'Restaurant tycoon — 7 Thai noodle menus, queue system, tip mechanic', highlights: ['7 Thai menus', 'Queue + tip system'], emoji: '🍜' },
-    { name: 'sj88-mars-colony', cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 8, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/mars-colony/', desc: 'Mars Colony — บริหารอาณานิคมดาวอังคาร', desc_full: 'Colony sim — 20 modules, manage resources: oxygen, water, food, energy, colonists, day cycle, survive', highlights: ['20 modules', '5 resources: O2/H2O/Food/Energy/Colonist'], emoji: '🚀' },
-    { name: 'sj88-color-clicker', cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 2, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/color-clicker/', desc: 'Color Clicker — idle clicker', desc_full: 'Idle clicker game — click colors', highlights: ['Idle clicker'], emoji: '🎨' },
-    { name: 'sj88-click-counter', cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 1, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/click-counter/', desc: 'Click Counter · นับคลิกอย่างง่าย · ทดสอบ ship.py', desc_full: 'Counter ง่ายๆ — ใช้ทดสอบ ship.py pipeline', highlights: ['Test app for ship.py', '1KB minimal'], emoji: '🖱️' },
+    { name: 'sj88-rpg-idle-th',
+      tags: ['2d', 'canvas', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 47, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/rpg-idle-th/', desc: 'Idle RPG ภาษาไทย — ตำนานยุทธภพ v3.0', desc_full: 'เกม idle RPG ฉบับภาษาไทย ตำนานยุทธภพ', highlights: ['ภาษาไทยทั้งหมด', '47KB single file'], emoji: '⚔️' },
+    { name: 'sj88-rpg-idle',
+      tags: ['2d', 'canvas', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 24, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/rpg-idle/', desc: 'Idle RPG · ยุทธภพสามมิติ (3D Babylon)', desc_full: 'Idle RPG English version · 3D Babylon.js edition', highlights: ['English version', '3D Babylon.js'], emoji: '⚔️' },
+    { name: 'sj88-football-code',
+      tags: ['2d', '3d-engine', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: '3D + Code Editor', lang: 'HTML', size_kb: 31, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/football-code/', desc: 'เกมสอนเขียนโค้ด (Blocks + Python) ในสนาม 3D', desc_full: 'สนาม 3D + sprites + ball + goal — สอน concepts: sequence, loop, function ผ่าน 15 levels/missions ด้วย visual Blocks และ Python text', highlights: ['15 coding levels', 'Blocks + Python dual syntax', '3D stadium + ball physics'], emoji: '⚽' },
+    { name: 'sj88-stronghold',
+      tags: ['2d', 'canvas', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 13, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stronghold/', desc: 'Stronghold Lite v1.2 — Growing Kingdom', desc_full: 'Kingdom builder 2D เวอร์ชั่น lite', highlights: ['2D version (vs stronghold-3d 3D)', 'Lite'], emoji: '🏰' },
+    { name: 'sj88-noodle-shop',
+      tags: ['2d', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 15, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/noodle-shop/', desc: 'ร้านก๋วยเตี๋ยว · 7 เมนูไทย · ระบบคิวและทิป', desc_full: 'Restaurant tycoon — 7 Thai noodle menus, queue system, tip mechanic', highlights: ['7 Thai menus', 'Queue + tip system'], emoji: '🍜' },
+    { name: 'sj88-mars-colony',
+      tags: ['2d', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 8, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/mars-colony/', desc: 'Mars Colony — บริหารอาณานิคมดาวอังคาร', desc_full: 'Colony sim — 20 modules, manage resources: oxygen, water, food, energy, colonists, day cycle, survive', highlights: ['20 modules', '5 resources: O2/H2O/Food/Energy/Colonist'], emoji: '🚀' },
+    { name: 'sj88-color-clicker',
+      tags: ['2d', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 2, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/color-clicker/', desc: 'Color Clicker — idle clicker', desc_full: 'Idle clicker game — click colors', highlights: ['Idle clicker'], emoji: '🎨' },
+    { name: 'sj88-click-counter',
+      tags: ['2d', 'game', 'html', 'live', 'sim', 'tiny'], cat: '2d-game', stack: 'HTML', lang: 'HTML', size_kb: 1, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/click-counter/', desc: 'Click Counter · นับคลิกอย่างง่าย · ทดสอบ ship.py', desc_full: 'Counter ง่ายๆ — ใช้ทดสอบ ship.py pipeline', highlights: ['Test app for ship.py', '1KB minimal'], emoji: '🖱️' },
 
     // === Booking Apps (11) ===
-    { name: 'sj88-bookinghub', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 43, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/bookinghub/', desc: 'BookingHub - ทุกการจองในที่เดียว', desc_full: 'ศูนย์รวมการจอง 11 แอป · ครบทุกหมวด', highlights: ['Hub of 11 booking apps', 'Single landing'], emoji: '🏢' },
-    { name: 'sj88-stayhub', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 89, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stayhub/', desc: 'StayHub · ระบบจองหอพัก & ห้องพัก', desc_full: 'Dormitory/room booking — ใหญ่ที่สุดในกลุ่ม booking (89 KB)', highlights: ['Largest booking app (89KB)', 'Dorm/room search + booking'], emoji: '🏨' },
-    { name: 'sj88-eventtix', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 55, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/eventtix/', desc: 'EventTix - จองตั๋ว & เลือกที่นั่ง 168 ที่นั่ง', desc_full: 'Event ticket + seating chart — 3 zones (VIP/Regular/Premium), 168 seats', highlights: ['Interactive seat map', '3 tier zones: VIP/Premium/Regular', '168 seats'], emoji: '🎟️' },
-    { name: 'sj88-dinebook', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 53, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/dinebook/', desc: 'DineBook - จองโต๊ะร้านอาหาร · 3 โซน · 24 โต๊ะ', desc_full: 'Restaurant table booking — 3 zones, 24 tables, menu integration', highlights: ['3 zones · 24 tables', 'Menu integration'], emoji: '🍽️' },
-    { name: 'sj88-tourlane', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 47, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/tourlane/', desc: 'TourLane · จองแพ็กเกจทัวร์', desc_full: 'Tour package booking', highlights: ['Tour packages'], emoji: '✈️' },
-    { name: 'sj88-studiobook', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 44, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/studiobook/', desc: 'StudioBook · จองสตูดิโอ & ห้องซ้อม', desc_full: 'Studio/rehearsal room booking', highlights: ['Studio rehearsal rooms'], emoji: '🎙️' },
-    { name: 'sj88-medbook', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 38, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/medbook/', desc: 'MedBook - นัดหมอ & คลินิก · 12 สาขา · ฉุกเฉิน 1669', desc_full: 'Doctor/clinic appointment — 12 branches, 10 doctors, emergency 1669 hotline', highlights: ['12 สาขา · 10 แพทย์', 'Emergency 1669 hotline'], emoji: '⚕️' },
-    { name: 'sj88-cospace', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 39, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/cospace/', desc: 'CoSpace - จอง Co-working & ห้องประชุม', desc_full: 'Co-working space + meeting room — 32 desks, 6 meeting rooms', highlights: ['32 desks + 6 meeting rooms'], emoji: '🏢' },
-    { name: 'sj88-driverent', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 38, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/driverent/', desc: 'DriveRent - เช่ารถ & อุปกรณ์ · 10 คัน · 5 add-on', desc_full: 'Car/motorcycle/equipment rental — 10 vehicles, 5 add-ons', highlights: ['10 vehicles · 5 add-ons'], emoji: '🚗' },
-    { name: 'sj88-glowbook', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 35, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/glowbook/', desc: 'GlowBook - จองสปา & ร้านเสริมสวย', desc_full: 'Spa/salon booking with stylists', highlights: ['Spa + salon + stylists'], emoji: '💆' },
-    { name: 'sj88-fitbook', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 40, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fitbook/', desc: 'FitBook - จองฟิตเนส & คอร์ทกีฬา', desc_full: 'Fitness class + sports court booking', highlights: ['Fitness + court booking'], emoji: '🏋️' },
-    { name: 'sj88-venuehub', cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 37, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/venuehub/', desc: 'VenueHub · จองสถานที่จัดงาน', desc_full: 'Event venue booking', highlights: ['Event venues'], emoji: '🎪' },
+    { name: 'sj88-bookinghub',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 43, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/bookinghub/', desc: 'BookingHub - ทุกการจองในที่เดียว', desc_full: 'ศูนย์รวมการจอง 11 แอป · ครบทุกหมวด', highlights: ['Hub of 11 booking apps', 'Single landing'], emoji: '🏢' },
+    { name: 'sj88-stayhub',
+      tags: ['booking', 'html', 'live', 'reservation', 'small'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 89, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/stayhub/', desc: 'StayHub · ระบบจองหอพัก & ห้องพัก', desc_full: 'Dormitory/room booking — ใหญ่ที่สุดในกลุ่ม booking (89 KB)', highlights: ['Largest booking app (89KB)', 'Dorm/room search + booking'], emoji: '🏨' },
+    { name: 'sj88-eventtix',
+      tags: ['booking', 'html', 'live', 'reservation', 'small'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 55, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/eventtix/', desc: 'EventTix - จองตั๋ว & เลือกที่นั่ง 168 ที่นั่ง', desc_full: 'Event ticket + seating chart — 3 zones (VIP/Regular/Premium), 168 seats', highlights: ['Interactive seat map', '3 tier zones: VIP/Premium/Regular', '168 seats'], emoji: '🎟️' },
+    { name: 'sj88-dinebook',
+      tags: ['booking', 'html', 'live', 'reservation', 'small'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 53, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/dinebook/', desc: 'DineBook - จองโต๊ะร้านอาหาร · 3 โซน · 24 โต๊ะ', desc_full: 'Restaurant table booking — 3 zones, 24 tables, menu integration', highlights: ['3 zones · 24 tables', 'Menu integration'], emoji: '🍽️' },
+    { name: 'sj88-tourlane',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 47, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/tourlane/', desc: 'TourLane · จองแพ็กเกจทัวร์', desc_full: 'Tour package booking', highlights: ['Tour packages'], emoji: '✈️' },
+    { name: 'sj88-studiobook',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 44, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/studiobook/', desc: 'StudioBook · จองสตูดิโอ & ห้องซ้อม', desc_full: 'Studio/rehearsal room booking', highlights: ['Studio rehearsal rooms'], emoji: '🎙️' },
+    { name: 'sj88-medbook',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 38, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/medbook/', desc: 'MedBook - นัดหมอ & คลินิก · 12 สาขา · ฉุกเฉิน 1669', desc_full: 'Doctor/clinic appointment — 12 branches, 10 doctors, emergency 1669 hotline', highlights: ['12 สาขา · 10 แพทย์', 'Emergency 1669 hotline'], emoji: '⚕️' },
+    { name: 'sj88-cospace',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 39, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/cospace/', desc: 'CoSpace - จอง Co-working & ห้องประชุม', desc_full: 'Co-working space + meeting room — 32 desks, 6 meeting rooms', highlights: ['32 desks + 6 meeting rooms'], emoji: '🏢' },
+    { name: 'sj88-driverent',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 38, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/driverent/', desc: 'DriveRent - เช่ารถ & อุปกรณ์ · 10 คัน · 5 add-on', desc_full: 'Car/motorcycle/equipment rental — 10 vehicles, 5 add-ons', highlights: ['10 vehicles · 5 add-ons'], emoji: '🚗' },
+    { name: 'sj88-glowbook',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 35, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/glowbook/', desc: 'GlowBook - จองสปา & ร้านเสริมสวย', desc_full: 'Spa/salon booking with stylists', highlights: ['Spa + salon + stylists'], emoji: '💆' },
+    { name: 'sj88-fitbook',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 40, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/fitbook/', desc: 'FitBook - จองฟิตเนส & คอร์ทกีฬา', desc_full: 'Fitness class + sports court booking', highlights: ['Fitness + court booking'], emoji: '🏋️' },
+    { name: 'sj88-venuehub',
+      tags: ['booking', 'html', 'live', 'reservation', 'tiny'], cat: 'booking', stack: 'HTML', lang: 'HTML', size_kb: 37, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/venuehub/', desc: 'VenueHub · จองสถานที่จัดงาน', desc_full: 'Event venue booking', highlights: ['Event venues'], emoji: '🎪' },
 
     // === sj88cute (Creator Tools) (11) ===
-    { name: 'sj88cute-video-editor', cat: 'sj88cute', stack: 'FFmpeg.wasm, WebCodecs', lang: 'HTML', size_kb: 37, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/sj88-video-editor-pro/', desc: 'Landing page for SJ88Cute Video Editor', desc_full: 'Single-file landing for SJ88Cute Video Editor — CapCut-style web editor, 100% Thai UI, multi-track + AI-powered, FFmpeg.wasm + WebCodecs, 5 deployments (V1, V11, V22, V23, V42.5)', highlights: ['105 versions · 470+ features', '5 deployments: V1/V11/V22/V23/V42.5', '100% Thai UI', 'WebCodecs encoder ≈ 258 fps'], emoji: '🎬' },
-    { name: 'sj88cute-engagement-heatmap', cat: 'sj88cute', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 8, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Engagement heatmap for video creators', desc_full: 'Visualize engagement across video timeline', highlights: ['Heatmap visualization'], emoji: '🔥' },
-    { name: 'sj88cute-voice-isolator', cat: 'sj88cute', stack: 'Web Audio', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Voice isolation tool', desc_full: 'Isolate voice from background noise', highlights: ['Voice isolation'], emoji: '🎤' },
-    { name: 'sj88cute-thumbnail-maker', cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'YouTube thumbnail maker', desc_full: 'Create YouTube thumbnails', highlights: ['Thumbnail creator'], emoji: '🖼️' },
-    { name: 'sj88cute-subtitle-burner', cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Burn subtitles into video', desc_full: 'Hardcode subtitles into video', highlights: ['Subtitle burn-in'], emoji: '💬' },
-    { name: 'sj88cute-safe-zones', cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'YouTube/TikTok safe zones overlay', desc_full: 'Overlay safe zones for different platforms', highlights: ['Multi-platform safe zones'], emoji: '🎯' },
-    { name: 'sj88cute-lut-preview', cat: 'sj88cute', stack: 'WebGL', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'LUT (color grade) preview', desc_full: 'Preview LUTs on images/video', highlights: ['LUT preview'], emoji: '🎨' },
-    { name: 'sj88cute-frame-extractor', cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Extract frames from video', desc_full: 'Pull still frames from video at chosen timestamps', highlights: ['Frame extraction'], emoji: '🖼️' },
-    { name: 'sj88cute-cps-calculator', cat: 'sj88cute', stack: 'HTML', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'CPS calculator for YouTube', desc_full: 'CPS (Cost Per Score / Cents Per Second) calculator', highlights: ['YouTube metric calculator'], emoji: '🧮' },
-    { name: 'sj88cute-audio-waveform', cat: 'sj88cute', stack: 'Web Audio', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Audio waveform generator', desc_full: 'Visualize audio as waveform', highlights: ['Waveform visualization'], emoji: '🌊' },
-    { name: 'sj88cute-aspect-visualizer', cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Aspect ratio visualizer', desc_full: 'Visualize aspect ratios (16:9, 9:16, 1:1, etc.)', highlights: ['AR visualizer'], emoji: '📐' },
+    { name: 'sj88cute-video-editor',
+      tags: ['creator', 'ffmpeg', 'html', 'live', 'media', 'tiny', 'video', 'webcodecs'], cat: 'sj88cute', stack: 'FFmpeg.wasm, WebCodecs', lang: 'HTML', size_kb: 37, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/sj88-video-editor-pro/', desc: 'Landing page for SJ88Cute Video Editor', desc_full: 'Single-file landing for SJ88Cute Video Editor — CapCut-style web editor, 100% Thai UI, multi-track + AI-powered, FFmpeg.wasm + WebCodecs, 5 deployments (V1, V11, V22, V23, V42.5)', highlights: ['105 versions · 470+ features', '5 deployments: V1/V11/V22/V23/V42.5', '100% Thai UI', 'WebCodecs encoder ≈ 258 fps'], emoji: '🎬' },
+    { name: 'sj88cute-engagement-heatmap',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'HTML/Canvas', lang: 'HTML', size_kb: 8, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Engagement heatmap for video creators', desc_full: 'Visualize engagement across video timeline', highlights: ['Heatmap visualization'], emoji: '🔥' },
+    { name: 'sj88cute-voice-isolator',
+      tags: ['creator', 'html', 'live', 'media', 'tiny', 'video', 'web-audio'], cat: 'sj88cute', stack: 'Web Audio', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Voice isolation tool', desc_full: 'Isolate voice from background noise', highlights: ['Voice isolation'], emoji: '🎤' },
+    { name: 'sj88cute-thumbnail-maker',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'YouTube thumbnail maker', desc_full: 'Create YouTube thumbnails', highlights: ['Thumbnail creator'], emoji: '🖼️' },
+    { name: 'sj88cute-subtitle-burner',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Burn subtitles into video', desc_full: 'Hardcode subtitles into video', highlights: ['Subtitle burn-in'], emoji: '💬' },
+    { name: 'sj88cute-safe-zones',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'YouTube/TikTok safe zones overlay', desc_full: 'Overlay safe zones for different platforms', highlights: ['Multi-platform safe zones'], emoji: '🎯' },
+    { name: 'sj88cute-lut-preview',
+      tags: ['creator', 'html', 'live', 'media', 'tiny', 'video', 'webgl'], cat: 'sj88cute', stack: 'WebGL', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'LUT (color grade) preview', desc_full: 'Preview LUTs on images/video', highlights: ['LUT preview'], emoji: '🎨' },
+    { name: 'sj88cute-frame-extractor',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Extract frames from video', desc_full: 'Pull still frames from video at chosen timestamps', highlights: ['Frame extraction'], emoji: '🖼️' },
+    { name: 'sj88cute-cps-calculator',
+      tags: ['creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'HTML', lang: 'HTML', size_kb: 7, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'CPS calculator for YouTube', desc_full: 'CPS (Cost Per Score / Cents Per Second) calculator', highlights: ['YouTube metric calculator'], emoji: '🧮' },
+    { name: 'sj88cute-audio-waveform',
+      tags: ['creator', 'html', 'live', 'media', 'tiny', 'video', 'web-audio'], cat: 'sj88cute', stack: 'Web Audio', lang: 'HTML', size_kb: 6, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Audio waveform generator', desc_full: 'Visualize audio as waveform', highlights: ['Waveform visualization'], emoji: '🌊' },
+    { name: 'sj88cute-aspect-visualizer',
+      tags: ['canvas', 'creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'Canvas', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/', desc: 'Aspect ratio visualizer', desc_full: 'Visualize aspect ratios (16:9, 9:16, 1:1, etc.)', highlights: ['AR visualizer'], emoji: '📐' },
 
     // === Productivity (5) ===
-    { name: 'sj88-flowboard', cat: 'productivity', stack: 'HTML + Python sync server', lang: 'HTML', size_kb: 318, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/flowboard/', desc: 'Trello-style Kanban · 14 versions · AI + server sync', desc_full: 'Productivity app — boards/lists/cards, drag-drop, calendar, time tracking, archive, ICS export, board templates, time tracking stats, subtask templates, board transfer (base64), QR + share, **real server sync**, **board version history & restore**', highlights: ['14 versions v1.0 → v2.3', 'Real Python sync server (v2.2)', 'Version history & restore (v2.3)', 'ICS export (RFC 5545)', 'QR + share codes (v2.1)', 'Biggest non-3D app: 318KB'], emoji: '🌊' },
-    { name: 'sj88-quick-note', cat: 'productivity', stack: 'HTML', lang: 'HTML', size_kb: 102, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/quick-note/', desc: 'สมุดโน้ตส่วนตัว', desc_full: 'Personal notebook app', highlights: ['Personal notes', '202KB single file'], emoji: '📝' },
-    { name: 'sj88-mavis-assistant', cat: 'productivity', stack: 'HTML + AI', lang: 'HTML', size_kb: 18, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/mavis-assistant/', desc: 'Mavis Assistant — Cross-app AI brain · Cmd+K', desc_full: 'Cross-app AI brain — Cmd+K palette, daily briefing, hooks into other Mavis apps', highlights: ['Cmd+K command palette', 'Cross-app AI brain', 'Daily briefing'], emoji: '🧠' },
-    { name: 'sj88-palette', cat: 'productivity', stack: 'Canvas + K-means', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/palette/', desc: 'Palette — แยกสีจากรูป · K-means · ส่งออก CSS', desc_full: 'Color extractor — K-means clustering, export to CSS', highlights: ['K-means color extraction', 'CSS export'], emoji: '🎨' },
-    { name: 'sj88-squish', cat: 'productivity', stack: 'Canvas', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/squish/', desc: 'Image Compressor', desc_full: 'Compress images in browser', highlights: ['Image compression'], emoji: '📦' },
+    { name: 'sj88-flowboard',
+      tags: ['html', 'live', 'productivity', 'small', 'tools', 'utility'], cat: 'productivity', stack: 'HTML + Python sync server', lang: 'HTML', size_kb: 318, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/flowboard/', desc: 'Trello-style Kanban · 14 versions · AI + server sync', desc_full: 'Productivity app — boards/lists/cards, drag-drop, calendar, time tracking, archive, ICS export, board templates, time tracking stats, subtask templates, board transfer (base64), QR + share, **real server sync**, **board version history & restore**', highlights: ['14 versions v1.0 → v2.3', 'Real Python sync server (v2.2)', 'Version history & restore (v2.3)', 'ICS export (RFC 5545)', 'QR + share codes (v2.1)', 'Biggest non-3D app: 318KB'], emoji: '🌊' },
+    { name: 'sj88-quick-note',
+      tags: ['html', 'live', 'productivity', 'small', 'tools', 'utility'], cat: 'productivity', stack: 'HTML', lang: 'HTML', size_kb: 102, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/quick-note/', desc: 'สมุดโน้ตส่วนตัว', desc_full: 'Personal notebook app', highlights: ['Personal notes', '202KB single file'], emoji: '📝' },
+    { name: 'sj88-mavis-assistant',
+      tags: ['html', 'live', 'productivity', 'tiny', 'tools', 'utility'], cat: 'productivity', stack: 'HTML + AI', lang: 'HTML', size_kb: 18, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/mavis-assistant/', desc: 'Mavis Assistant — Cross-app AI brain · Cmd+K', desc_full: 'Cross-app AI brain — Cmd+K palette, daily briefing, hooks into other Mavis apps', highlights: ['Cmd+K command palette', 'Cross-app AI brain', 'Daily briefing'], emoji: '🧠' },
+    { name: 'sj88-palette',
+      tags: ['canvas', 'html', 'live', 'productivity', 'tiny', 'tools', 'utility'], cat: 'productivity', stack: 'Canvas + K-means', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/palette/', desc: 'Palette — แยกสีจากรูป · K-means · ส่งออก CSS', desc_full: 'Color extractor — K-means clustering, export to CSS', highlights: ['K-means color extraction', 'CSS export'], emoji: '🎨' },
+    { name: 'sj88-squish',
+      tags: ['canvas', 'html', 'live', 'productivity', 'tiny', 'tools', 'utility'], cat: 'productivity', stack: 'Canvas', lang: 'HTML', size_kb: 5, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/squish/', desc: 'Image Compressor', desc_full: 'Compress images in browser', highlights: ['Image compression'], emoji: '📦' },
 
     // === AI Apps (1) ===
-    { name: 'sj88-cutout-studio', cat: 'ai', stack: '@imgly/background-removal', lang: 'HTML', size_kb: 23, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/cutout-studio/', desc: 'CutOut Studio — AI ลบพื้นหลัง · 14 advanced controls', desc_full: 'Background remover with 14 advanced controls — edge refine, feather, alpha, enhance, export', highlights: ['14 advanced controls', '@imgly/background-removal', 'Edge refine + feather'], emoji: '🎭' },
+    { name: 'sj88-cutout-studio',
+      tags: ['ai', 'html', 'live', 'ml', 'tiny', 'tools'], cat: 'ai', stack: '@imgly/background-removal', lang: 'HTML', size_kb: 23, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/cutout-studio/', desc: 'CutOut Studio — AI ลบพื้นหลัง · 14 advanced controls', desc_full: 'Background remover with 14 advanced controls — edge refine, feather, alpha, enhance, export', highlights: ['14 advanced controls', '@imgly/background-removal', 'Edge refine + feather'], emoji: '🎭' },
 
     // === Python Desktop Tools (4) ===
-    { name: 'rename_by_template_gui', cat: 'python', stack: 'Python + Tkinter', lang: 'Python', size_kb: 6, created: '2025-09-05', stars: 0, is_fork: false, live: null, desc: 'Batch rename files by template folder (natural sort)', desc_full: 'GUI tool — rename จำนวนมาก ใช้ template folder, natural sort (file2 ก่อน file10)', highlights: ['Natural sort pairing', 'Template-driven rename'], emoji: '🏷️' },
-    { name: 'TikTok-Downloader-free', cat: 'python', stack: 'Python + Tkinter + yt-dlp', lang: 'Python', size_kb: 8, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'GUI for downloading TikTok videos (profile or links)', desc_full: 'ดาวน์โหลด TikTok — ทั้ง profile/channel หรือใส่ลิงก์หลายๆ ลิงก์', highlights: ['yt-dlp powered', 'Multi-link batch'], emoji: '📥' },
-    { name: 'remove-bg-free', cat: 'python', stack: 'Python + Tkinter + rembg', lang: 'Python', size_kb: 9, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'AI background remover (batch folder GUI)', desc_full: 'ลบพื้นหลังภาพคนเป็นชุด (whole folder) — ใช้ rembg', highlights: ['rembg AI model', 'Whole-folder batch'], emoji: '✂️' },
-    { name: 'png_to_jpg_gui', cat: 'python', stack: 'Python + Tkinter + Pillow', lang: 'Python', size_kb: 8, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'PNG → JPG batch converter', desc_full: 'Batch PNG→JPG — quality, BG color, progressive, optimize, sub-folders, ZIP after', highlights: ['Batch convert + ZIP', 'Quality/bg/progressive settings'], emoji: '🖼️' },
+    { name: 'rename_by_template_gui',
+      tags: ['cli', 'desktop', 'local', 'python', 'tiny', 'tkinter'], cat: 'python', stack: 'Python + Tkinter', lang: 'Python', size_kb: 6, created: '2025-09-05', stars: 0, is_fork: false, live: null, desc: 'Batch rename files by template folder (natural sort)', desc_full: 'GUI tool — rename จำนวนมาก ใช้ template folder, natural sort (file2 ก่อน file10)', highlights: ['Natural sort pairing', 'Template-driven rename'], emoji: '🏷️' },
+    { name: 'TikTok-Downloader-free',
+      tags: ['cli', 'desktop', 'local', 'python', 'tiny', 'tkinter'], cat: 'python', stack: 'Python + Tkinter + yt-dlp', lang: 'Python', size_kb: 8, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'GUI for downloading TikTok videos (profile or links)', desc_full: 'ดาวน์โหลด TikTok — ทั้ง profile/channel หรือใส่ลิงก์หลายๆ ลิงก์', highlights: ['yt-dlp powered', 'Multi-link batch'], emoji: '📥' },
+    { name: 'remove-bg-free',
+      tags: ['ai', 'cli', 'desktop', 'local', 'python', 'tiny', 'tkinter'], cat: 'python', stack: 'Python + Tkinter + rembg', lang: 'Python', size_kb: 9, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'AI background remover (batch folder GUI)', desc_full: 'ลบพื้นหลังภาพคนเป็นชุด (whole folder) — ใช้ rembg', highlights: ['rembg AI model', 'Whole-folder batch'], emoji: '✂️' },
+    { name: 'png_to_jpg_gui',
+      tags: ['cli', 'desktop', 'local', 'python', 'tiny', 'tkinter'], cat: 'python', stack: 'Python + Tkinter + Pillow', lang: 'Python', size_kb: 8, created: '2025-09-04', stars: 0, is_fork: false, live: null, desc: 'PNG → JPG batch converter', desc_full: 'Batch PNG→JPG — quality, BG color, progressive, optimize, sub-folders, ZIP after', highlights: ['Batch convert + ZIP', 'Quality/bg/progressive settings'], emoji: '🖼️' },
 
     // === Desktop Video Editor (1) ===
-    { name: 'lnwSJCut', cat: 'desktop-video', stack: 'Python + Flet + FFmpeg', lang: 'Python', size_kb: 454, created: '2026-02-09', stars: 0, is_fork: false, live: null, desc: 'โปรแกรมตัดต่อ VDO ขั้นเทพ · MiniCut MVP', desc_full: 'Full video editor — import media, 2 tracks (V1/A1), split/trim, reorder, duplicate, undo/redo, JSON project save, auto-save 60s, MP4 export (mix/a1_only/v1_only), Windows build script, runs as desktop AND web', highlights: ['2-track timeline (V1/A1)', 'FFmpeg MP4 export', 'Desktop + Web (Flet)', 'Auto-save + recent projects', 'System test mode'], emoji: '🎞️' },
+    { name: 'lnwSJCut',
+      tags: ['desktop', 'editor', 'ffmpeg', 'flet', 'local', 'python', 'small', 'video'], cat: 'desktop-video', stack: 'Python + Flet + FFmpeg', lang: 'Python', size_kb: 454, created: '2026-02-09', stars: 0, is_fork: false, live: null, desc: 'โปรแกรมตัดต่อ VDO ขั้นเทพ · MiniCut MVP', desc_full: 'Full video editor — import media, 2 tracks (V1/A1), split/trim, reorder, duplicate, undo/redo, JSON project save, auto-save 60s, MP4 export (mix/a1_only/v1_only), Windows build script, runs as desktop AND web', highlights: ['2-track timeline (V1/A1)', 'FFmpeg MP4 export', 'Desktop + Web (Flet)', 'Auto-save + recent projects', 'System test mode'], emoji: '🎞️' },
 
     // === Infrastructure (1) ===
-    { name: 'SJ-hosting-control-panel', cat: 'infra', stack: 'Flask + Docker + MariaDB + Nginx + Certbot', lang: 'HTML', size_kb: 1392, created: '2025-12-26', stars: 0, is_fork: false, live: null, desc: 'DirectAdmin-style self-hosting control panel', desc_full: 'Custom hosting panel — domain mgmt (auto Nginx), MySQL DB mgmt, file manager, Let\'s Encrypt one-click SSL, server dashboard (CPU/RAM/Disk), email (Mailserver + Roundcube), backup (tar.gz + mysqldump), DNS (Cloudflare API)', highlights: ['9 phases done', 'Roadmap to phase 19', 'Domain + DB + Files + SSL + Email', 'Cloudflare DNS API'], emoji: '🏗️' },
+    { name: 'SJ-hosting-control-panel',
+      tags: ['devops', 'docker', 'flask', 'html', 'infra', 'local', 'medium', 'nginx', 'self-host', 'sql', 'ssl'], cat: 'infra', stack: 'Flask + Docker + MariaDB + Nginx + Certbot', lang: 'HTML', size_kb: 1392, created: '2025-12-26', stars: 0, is_fork: false, live: null, desc: 'DirectAdmin-style self-hosting control panel', desc_full: 'Custom hosting panel — domain mgmt (auto Nginx), MySQL DB mgmt, file manager, Let\'s Encrypt one-click SSL, server dashboard (CPU/RAM/Disk), email (Mailserver + Roundcube), backup (tar.gz + mysqldump), DNS (Cloudflare API)', highlights: ['9 phases done', 'Roadmap to phase 19', 'Domain + DB + Files + SSL + Email', 'Cloudflare DNS API'], emoji: '🏗️' },
 
     // === Forks (3) ===
-    { name: 'CorsixTH', cat: 'fork', stack: 'C++', lang: 'C++', size_kb: 41122, created: '2026-07-11', stars: 0, is_fork: true, live: null, desc: 'Open source clone of Theme Hospital', desc_full: '41 MB — Theme Hospital open source clone (forked)', highlights: ['41 MB', 'Theme Hospital clone'], emoji: '🏥' },
-    { name: 'clawdbot', cat: 'fork', stack: '?', lang: '?', size_kb: 136915, created: '2026-01-26', stars: 0, is_fork: true, live: null, desc: 'Your own personal AI assistant · lobster way 🦞', desc_full: '137 MB — AI assistant fork for study', highlights: ['137 MB (largest)', 'AI assistant platform'], emoji: '🦞' },
-    { name: 'agent-skills', cat: 'fork', stack: 'Markdown', lang: 'Markdown', size_kb: 349, created: '2026-05-06', stars: 0, is_fork: true, live: null, desc: 'Production-grade engineering skills for AI coding agents', desc_full: '349 KB — production skills reference for AI agents', highlights: ['Production skills reference'], emoji: '🧠' },
+    { name: 'CorsixTH',
+      tags: ['c++', 'fork', 'large', 'local', 'study'], cat: 'fork', stack: 'C++', lang: 'C++', size_kb: 41122, created: '2026-07-11', stars: 0, is_fork: true, live: null, desc: 'Open source clone of Theme Hospital', desc_full: '41 MB — Theme Hospital open source clone (forked)', highlights: ['41 MB', 'Theme Hospital clone'], emoji: '🏥' },
+    { name: 'clawdbot',
+      tags: ['fork', 'large', 'local', 'study'], cat: 'fork', stack: '?', lang: '?', size_kb: 136915, created: '2026-01-26', stars: 0, is_fork: true, live: null, desc: 'Your own personal AI assistant · lobster way 🦞', desc_full: '137 MB — AI assistant fork for study', highlights: ['137 MB (largest)', 'AI assistant platform'], emoji: '🦞' },
+    { name: 'agent-skills',
+      tags: ['fork', 'local', 'markdown', 'small', 'study'], cat: 'fork', stack: 'Markdown', lang: 'Markdown', size_kb: 349, created: '2026-05-06', stars: 0, is_fork: true, live: null, desc: 'Production-grade engineering skills for AI coding agents', desc_full: '349 KB — production skills reference for AI agents', highlights: ['Production skills reference'], emoji: '🧠' },
 
     // === Empty / Test (1) ===
-    { name: 'Sj', cat: 'portfolio', stack: '?', lang: '?', size_kb: 0, created: '2026-03-02', stars: 0, is_fork: false, live: null, desc: 'Empty test repo', desc_full: 'Empty repository — likely a quick test/placeholder', highlights: ['0 KB', 'Test'], emoji: '📄' },
+    { name: 'Sj',
+      tags: ['local', 'portfolio', 'showcase', 'tiny'], cat: 'portfolio', stack: '?', lang: '?', size_kb: 0, created: '2026-03-02', stars: 0, is_fork: false, live: null, desc: 'Empty test repo', desc_full: 'Empty repository — likely a quick test/placeholder', highlights: ['0 KB', 'Test'], emoji: '📄' },
 
     // === Portfolio (2) ===
-    { name: 'lnwsj', cat: 'portfolio', stack: 'Markdown', lang: 'Markdown', size_kb: 2, created: '2026-07-11', stars: 0, is_fork: false, live: null, desc: '🌊 Mavis — AI agent shipping 100+ single-file apps', desc_full: 'Profile README — "I\'m Mavis, a single AI agent for solo projects. I build, ship, and host 100+ production web apps in days, not months."', highlights: ['Mavis brand identity', 'Solo AI agent manifesto', '103 repos claim'], emoji: '🌊' },
-    { name: 'demo-sj88ai', cat: 'portfolio', stack: 'HTML + CDN libs', lang: 'HTML', size_kb: 469, created: '2026-07-11', stars: 0, is_fork: false, live: 'https://lnwsj.github.io/demo-sj88ai/', desc: '🎨 Showcase of lnwsj apps — live demos + interactive tools', desc_full: 'Live showcase — 6 apps (2 web + 4 desktop) with "Launch Live Demo" and "Run on desktop" buttons', highlights: ['2 web apps + 4 desktop tools', 'Live demo buttons', '469KB showcase'], emoji: '🎨' },
-    { name: 'sj88-portfolio', cat: 'portfolio', stack: 'HTML', lang: 'HTML', size_kb: 3, created: '2026-07-11', stars: 0, is_fork: false, live: 'https://lnwsj.github.io/sj88-portfolio/', desc: '🌊 Live showcase of all 100+ SJ88 apps', desc_full: 'GitHub Pages portfolio — links to all 100+ apps', highlights: ['GitHub Pages', '100+ app links'], emoji: '🌊' },
+    { name: 'lnwsj',
+      tags: ['local', 'markdown', 'portfolio', 'showcase', 'tiny'], cat: 'portfolio', stack: 'Markdown', lang: 'Markdown', size_kb: 2, created: '2026-07-11', stars: 0, is_fork: false, live: null, desc: '🌊 Mavis — AI agent shipping 100+ single-file apps', desc_full: 'Profile README — "I\'m Mavis, a single AI agent for solo projects. I build, ship, and host 100+ production web apps in days, not months."', highlights: ['Mavis brand identity', 'Solo AI agent manifesto', '103 repos claim'], emoji: '🌊' },
+    { name: 'demo-sj88ai',
+      tags: ['html', 'live', 'portfolio', 'showcase', 'small'], cat: 'portfolio', stack: 'HTML + CDN libs', lang: 'HTML', size_kb: 469, created: '2026-07-11', stars: 0, is_fork: false, live: 'https://lnwsj.github.io/demo-sj88ai/', desc: '🎨 Showcase of lnwsj apps — live demos + interactive tools', desc_full: 'Live showcase — 6 apps (2 web + 4 desktop) with "Launch Live Demo" and "Run on desktop" buttons', highlights: ['2 web apps + 4 desktop tools', 'Live demo buttons', '469KB showcase'], emoji: '🎨' },
+    { name: 'sj88-portfolio',
+      tags: ['html', 'live', 'portfolio', 'showcase', 'tiny'], cat: 'portfolio', stack: 'HTML', lang: 'HTML', size_kb: 3, created: '2026-07-11', stars: 0, is_fork: false, live: 'https://lnwsj.github.io/sj88-portfolio/', desc: '🌊 Live showcase of all 100+ SJ88 apps', desc_full: 'GitHub Pages portfolio — links to all 100+ apps', highlights: ['GitHub Pages', '100+ app links'], emoji: '🌊' },
 
     // === Karaoke (extra) ===
-    { name: 'karaoke-studio', cat: 'sj88cute', stack: 'Web Audio + MediaRecorder + FFmpeg.wasm', lang: 'HTML', size_kb: 17, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/karaoke-studio/', desc: '🎤 Karaoke Subtitle Studio — 11 themes, beat detection, MP4 export', desc_full: 'Web-based karaoke lyric video maker — 11 preset themes (Suno/YouTube/TikTok/Neon/Pastel/Cyberpunk/Ocean/Sunset/Lo-Fi/Anime/Classic), 7 animation styles, beat detection (Web Audio API), WebM + MP4 export', highlights: ['11 themes · 7 animations', 'Beat detection', 'WebM + MP4 export', 'Privacy: audio never leaves device'], emoji: '🎤' },
-    { name: 'sj88-karaoke-studio', cat: 'sj88cute', stack: 'HTML', lang: 'HTML', size_kb: 13, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/karaoke-studio/', desc: 'Karaoke Studio (variant)', desc_full: 'Karaoke Studio — variant/duplicate of karaoke-studio', highlights: ['Variant of karaoke-studio'], emoji: '🎤' }
+    { name: 'karaoke-studio',
+      tags: ['creator', 'ffmpeg', 'html', 'live', 'media', 'tiny', 'video', 'web-audio'], cat: 'sj88cute', stack: 'Web Audio + MediaRecorder + FFmpeg.wasm', lang: 'HTML', size_kb: 17, created: '2026-07-08', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/karaoke-studio/', desc: '🎤 Karaoke Subtitle Studio — 11 themes, beat detection, MP4 export', desc_full: 'Web-based karaoke lyric video maker — 11 preset themes (Suno/YouTube/TikTok/Neon/Pastel/Cyberpunk/Ocean/Sunset/Lo-Fi/Anime/Classic), 7 animation styles, beat detection (Web Audio API), WebM + MP4 export', highlights: ['11 themes · 7 animations', 'Beat detection', 'WebM + MP4 export', 'Privacy: audio never leaves device'], emoji: '🎤' },
+    { name: 'sj88-karaoke-studio',
+      tags: ['creator', 'html', 'live', 'media', 'tiny', 'video'], cat: 'sj88cute', stack: 'HTML', lang: 'HTML', size_kb: 13, created: '2026-07-09', stars: 0, is_fork: false, live: 'https://codehub.sj88ai.com/karaoke-studio/', desc: 'Karaoke Studio (variant)', desc_full: 'Karaoke Studio — variant/duplicate of karaoke-studio', highlights: ['Variant of karaoke-studio'], emoji: '🎤' }
   ];
 
   /* =========================================================
@@ -2687,7 +2798,9 @@
     sizeFilter: null,  // 'small' (<500KB), 'medium' (<5MB), 'large' (>=5MB)
     liveOnly: false,
     forkOnly: false,
-    showFilters: true
+    showFilters: true,
+    tagFilter: null,
+    customAccent: ''
   };
 
   /* =========================================================
@@ -2699,10 +2812,205 @@
     return kb + ' KB';
   }
   function sizeBucket(kb) {
-    if (kb > 5000) return 'huge';
-    if (kb > 500) return 'big';
-    return 'normal';
+    if (kb < 50) return 'tiny';
+    if (kb < 500) return 'small';
+    if (kb < 5000) return 'medium';
+    return 'large';
   }
+
+  /* === v16: Tag Explorer === */
+  function deriveTags(r) {
+    const tags = new Set();
+    const catMap = { '3d-game': ['3d','game'], '2d-game': ['2d','sim'], 'booking': ['booking'], 'sj88cute': ['creator','video'], 'productivity': ['productivity'], 'ai': ['ai'], 'python': ['python','desktop'], 'desktop-video': ['video','editor'], 'infra': ['infra'], 'fork': ['fork'], 'portfolio': ['portfolio'] };
+    (catMap[r.cat] || []).forEach(t => tags.add(t));
+    const s = (r.stack || '').toLowerCase();
+    if (s.includes('babylon')) tags.add('babylon');
+    if (s.includes('three.js')) tags.add('three.js');
+    if (s.includes('webgl')) tags.add('webgl');
+    if (s.includes('canvas')) tags.add('canvas');
+    if (s.includes('ffmpeg')) tags.add('ffmpeg');
+    if (s.includes('webcodecs')) tags.add('webcodecs');
+    if (s.includes('web audio')) tags.add('web-audio');
+    if (s.includes('flask')) tags.add('flask');
+    if (s.includes('react')) tags.add('react');
+    if (s.includes('sqlite')) tags.add('sqlite');
+    if (s.includes('flet')) tags.add('flet');
+    if (s.includes('tkinter')) tags.add('tkinter');
+    if (s.includes('docker')) tags.add('docker');
+    if (s.includes('nginx')) tags.add('nginx');
+    if (s.includes('cloudflare')) tags.add('cloudflare');
+    if (s.includes('next.js')) tags.add('next.js');
+    if (s.includes('prisma')) tags.add('prisma');
+    if (s.includes('tailwind')) tags.add('tailwind');
+    if (s.includes('rembg')) tags.add('ai');
+    if (s.includes('yt-dlp')) tags.add('cli');
+    if (s.includes('certbot')) tags.add('ssl');
+    if (s.includes('mariadb') || s.includes('mysql')) tags.add('sql');
+    if (s.includes('3d') || s.includes('babylon') || s.includes('three.js')) tags.add('3d-engine');
+    const l = (r.lang || '').toLowerCase();
+    if (l) tags.add(l);
+    const s2 = r.size_kb || 0;
+    if (s2 < 50) tags.add('tiny');
+    else if (s2 < 500) tags.add('small');
+    else if (s2 < 5000) tags.add('medium');
+    else tags.add('large');
+    tags.add(r.live ? 'live' : 'local');
+    if (r.is_fork) tags.add('fork');
+    return [...tags].sort();
+  }
+
+  function allTags() {
+    const map = new Map();
+    REPOS.forEach(r => {
+      const tags = r.tags || deriveTags(r);
+      tags.forEach(t => map.set(t, (map.get(t) || 0) + 1));
+    });
+    return [...map.entries()].sort((a, b) => b[1] - a[1]);
+  }
+
+  /* === v16: Custom accent color picker === */
+  function setCustomAccent(hex) {
+    if (!hex) {
+      document.documentElement.style.removeProperty('--accent');
+      document.documentElement.style.removeProperty('--pink-deep');
+      document.documentElement.style.removeProperty('--pink-glow');
+    } else {
+      document.documentElement.style.setProperty('--accent', hex);
+      document.documentElement.style.setProperty('--pink-deep', hex);
+      document.documentElement.style.setProperty('--pink-glow', hex + '40');
+    }
+    state.customAccent = hex || '';
+    localStorage.setItem('sj88-accent', hex || '');
+  }
+
+  function showCustomAccent() {
+    const presets = [
+      { c: '#ec4899', n: 'Pink' }, { c: '#a855f7', n: 'Purple' },
+      { c: '#6366f1', n: 'Indigo' }, { c: '#3b82f6', n: 'Blue' },
+      { c: '#0ea5e9', n: 'Sky' }, { c: '#06b6d4', n: 'Cyan' },
+      { c: '#10b981', n: 'Emerald' }, { c: '#22c55e', n: 'Green' },
+      { c: '#eab308', n: 'Yellow' }, { c: '#f59e0b', n: 'Amber' },
+      { c: '#f97316', n: 'Orange' }, { c: '#ef4444', n: 'Red' },
+      { c: '#f43f5e', n: 'Rose' }, { c: '#000000', n: 'Black' }
+    ];
+    const current = state.customAccent || '';
+    const modal = `<div class="modal-bg" id="accentModalBg" style="z-index: 9500;">
+        <div class="modal" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+          <div class="modal-head">
+            <h3>🌈 Custom Accent Color</h3>
+            <button class="modal-close" data-close-accent>✕</button>
+          </div>
+          <div style="padding: 20px;">
+            <p style="color: var(--slate-2); margin-bottom: 16px;">เลือกสีของคุณเอง — applies ทันทีกับทุก buttons, chips, active states</p>
+            <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px;">
+              ${presets.map(p => `<button data-accent-set="${p.c}" title="${p.n}" style="width: 100%; aspect-ratio: 1; border-radius: 12px; background: ${p.c}; border: ${current === p.c ? '3px solid var(--text)' : '2px solid var(--border)'}; cursor: pointer; transition: transform .15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"></button>`).join('')}
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-2); border-radius: 10px; margin-bottom: 12px;">
+              <input type="color" id="customAccentPicker" value="${current || '#ec4899'}" style="width: 50px; height: 50px; border: none; border-radius: 8px; cursor: pointer;" />
+              <div style="flex: 1;">
+                <div style="font-size: 12px; color: var(--slate-3);">Custom hex (พิมพ์เอง):</div>
+                <input type="text" id="customAccentHex" value="${current || ''}" placeholder="#ec4899" style="width: 100%; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-family: monospace; margin-top: 4px;" />
+              </div>
+            </div>
+            <button class="chip" data-accent-reset style="width: 100%; background: var(--bg-2);">↺ Reset to default pink</button>
+            <div style="margin-top: 16px; padding: 10px; background: var(--bg-2); border-radius: 8px; font-size: 12px; color: var(--slate-2);">
+              💡 Tip: สีจะถูก save ใน localStorage (<code>sj88-accent</code>) และ apply กับทุก theme
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', modal);
+    const bg = document.getElementById('accentModalBg');
+    bg.addEventListener('click', e => { if (e.target === bg || e.target.hasAttribute('data-close-accent')) bg.remove(); });
+    bg.querySelectorAll('[data-accent-set]').forEach(btn => {
+      btn.addEventListener('click', () => { setCustomAccent(btn.dataset.accentSet); bg.remove(); showCustomAccent(); });
+    });
+    const hexInput = document.getElementById('customAccentHex');
+    const colorInput = document.getElementById('customAccentPicker');
+    colorInput.addEventListener('input', e => { hexInput.value = e.target.value; setCustomAccent(e.target.value); });
+    hexInput.addEventListener('input', e => { const v = e.target.value.trim(); if (/^#[0-9a-fA-F]{6}$/.test(v)) { colorInput.value = v; setCustomAccent(v); } });
+    bg.querySelector('[data-accent-reset]').addEventListener('click', () => { setCustomAccent(''); bg.remove(); showToast('🎨 Accent reset to pink', 'success'); });
+  }
+
+  /* === v16: Star history modal (GitHub API) === */
+  async function showStarHistory(name) {
+    const r = REPOS.find(x => x.name === name);
+    if (!r) return;
+    const modal = `<div class="modal-bg" id="starModalBg" style="z-index: 9400;">
+        <div class="modal" style="max-width: 560px;">
+          <div class="modal-head">
+            <h3>⭐ Star History — ${escapeHtml(name)}</h3>
+            <button class="modal-close" data-close-star>✕</button>
+          </div>
+          <div style="padding: 20px;">
+            <div id="starContent">
+              <div style="text-align: center; padding: 30px;">
+                <div style="font-size: 32px;">⭐</div>
+                <div style="color: var(--slate-2); margin-top: 8px;">Fetching live data from GitHub API...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', modal);
+    const bg = document.getElementById('starModalBg');
+    bg.addEventListener('click', e => { if (e.target === bg || e.target.hasAttribute('data-close-star')) bg.remove(); });
+    // Fetch from GitHub
+    try {
+      const resp = await fetch(`https://api.github.com/repos/lnwsj/${name}`);
+      const data = await resp.json();
+      if (data.stargazers_count === undefined) { renderStarMock(name); return; }
+      const stars = data.stargazers_count || 0;
+      const forks = data.forks_count || 0;
+      const html2 = `<div style="text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 48px; font-weight: 800; color: var(--accent);">⭐ ${stars}</div>
+          <div style="color: var(--slate-3); font-size: 12px; margin-top: 4px;">${forks} forks · ${data.language || 'N/A'} · ${data.size ? (data.size / 1024).toFixed(1) + ' MB' : ''}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;">
+          <div class="stat-mini"><div style="font-size: 18px; font-weight: 700;">${data.open_issues_count || 0}</div><div style="font-size: 10px; color: var(--slate-3);">issues</div></div>
+          <div class="stat-mini"><div style="font-size: 18px; font-weight: 700;">${data.subscribers_count || 0}</div><div style="font-size: 10px; color: var(--slate-3);">watchers</div></div>
+          <div class="stat-mini"><div style="font-size: 18px; font-weight: 700;">${data.stargazers_count + data.forks_count}</div><div style="font-size: 10px; color: var(--slate-3);">engagement</div></div>
+        </div>
+        <a href="https://github.com/lnwsj/${name}" target="_blank" rel="noopener" class="chip" style="width: 100%; text-decoration: none; background: var(--bg-2); padding: 10px;">🔗 Open on GitHub →</a>
+        <div style="margin-top: 16px; padding: 10px; background: var(--bg-2); border-radius: 8px; font-size: 12px; color: var(--slate-2);">
+          💡 Live data via <a href="https://api.github.com/repos/lnwsj/${name}" target="_blank" rel="noopener" style="color: var(--accent);">GitHub REST API</a>
+        </div>`;
+      document.getElementById('starContent').innerHTML = html2;
+    } catch (e) {
+      renderStarMock(name);
+    }
+  }
+
+  function renderStarMock(name) {
+    const r = REPOS.find(x => x.name === name);
+    if (!r) return;
+    document.getElementById('starContent').innerHTML = `<div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 48px; font-weight: 800; color: var(--accent);">⭐ ${r.stars || 0}</div>
+        <div style="color: var(--slate-3); font-size: 12px; margin-top: 4px;">API rate-limited (60 req/hr for unauthenticated)</div>
+      </div>
+      <div style="padding: 10px; background: var(--bg-2); border-radius: 8px; font-size: 12px; color: var(--slate-2);">
+        💡 Try again in 1 hour, or <a href="https://github.com/lnwsj/${name}" target="_blank" rel="noopener" style="color: var(--accent);">open on GitHub</a>
+      </div>`;
+  }
+
+  /* === v16: Activity Feed === */
+  function renderActivityFeed() {
+    if (!commitsData || !commitsData.messages || !commitsData.messages.length) {
+      return '<div style="color: var(--slate-3); text-align: center; padding: 20px;">No commits yet</div>';
+    }
+    const recent = commitsData.messages.slice(0, 8);
+    return recent.map(m => {
+      const emoji = m.author === 'lnwsj' ? '🌊' : m.author === 'Mavis' ? '🤖' : m.author === 'SJ88' ? '🌸' : '👤';
+      return `<div style="display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-2);">
+          <div style="font-size: 18px;">${emoji}</div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 12px; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(m.message || '').slice(0, 60)}</div>
+            <div style="font-size: 10px; color: var(--slate-3); margin-top: 2px;"><strong>${escapeHtml(m.author || 'unknown')}</strong> · ${escapeHtml(m.repo || '')} · ${m.date || ''}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
   function fmtDate(iso) {
     const d = new Date(iso);
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -3159,6 +3467,12 @@
       <button class="chip size-chip ${state.sizeFilter === 'large' ? 'active' : ''}" data-size="large" title=">= 5 MB">💾 Large <span class="chip-count">${REPOS.filter(r => r.size_kb >= 5000).length}</span></button>
     `;
 
+    // Tag filter row (top 14 tags)
+    const topTags = allTags().slice(0, 14);
+    const tagChips = topTags.map(([t, c]) => `
+      <button class="chip tag-chip ${state.tagFilter === t ? 'active' : ''}" data-tag="${t}" title="Filter by #${t}">#${t} <span class="chip-count">${c}</span></button>
+    `).join('');
+
     // Status toggles (live, fork)
     const statusChips = `
       <button class="chip toggle-chip ${state.liveOnly ? 'active' : ''}" data-toggle="live" title="Show only live repos">✓ Live only</button>
@@ -3175,7 +3489,7 @@
     const savePreset = `<button class="chip preset-save" data-save-preset title="Save current filters as preset">💾 Save preset</button>`;
 
     document.getElementById('filterChips').innerHTML =
-      chipsHtml + authorChip + langChips + sizeChips + statusChips + savePreset + clearAll;
+      chipsHtml + authorChip + langChips + tagChips + sizeChips + statusChips + savePreset + clearAll;
 
     // Wire up all chips
     document.querySelectorAll('.chip[data-cat]').forEach(c => {
@@ -3202,6 +3516,14 @@
         saveFilterPreset();
       });
     });
+    document.querySelectorAll('.tag-chip').forEach(c => {
+      c.addEventListener('click', () => {
+        state.tagFilter = state.tagFilter === c.dataset.tag ? null : c.dataset.tag;
+        renderChips();
+        render();
+        saveFilterPreset();
+      });
+    });
     document.querySelectorAll('.toggle-chip').forEach(c => {
       c.addEventListener('click', () => {
         if (c.dataset.toggle === 'live') state.liveOnly = !state.liveOnly;
@@ -3213,6 +3535,17 @@
     });
     // Author clear
     const authorClear = document.querySelector('[data-author-clear]');
+    // Wire up in-card tag clicks (v16)
+    document.querySelectorAll('.tag-mini').forEach(t => {
+      t.addEventListener('click', (e) => {
+        e.stopPropagation();
+        state.tagFilter = state.tagFilter === t.dataset.tag ? null : t.dataset.tag;
+        renderChips();
+        render();
+        saveFilterPreset();
+        showToast('🏷️ Filter: #' + t.dataset.tag, 'info');
+      });
+    });
     if (authorClear) {
       authorClear.addEventListener('click', () => {
         state.authorFilter = null;
@@ -3340,6 +3673,11 @@
       if (state.liveOnly && !r.live) return false;
       // Fork only
       if (state.forkOnly && !r.is_fork) return false;
+      // Tag filter (v16)
+      if (state.tagFilter) {
+        const tags = r.tags || deriveTags(r);
+        if (!tags.includes(state.tagFilter)) return false;
+      }
       return true;
     });
   }
@@ -3353,6 +3691,7 @@
     if (state.liveOnly) n++;
     if (state.forkOnly) n++;
     if (state.search) n++;
+    if (state.tagFilter) n++;
     return n;
   }
 
@@ -3381,6 +3720,9 @@
           <span class="tag lang">${r.stack || r.lang}</span>
           ${r.is_fork ? '<span class="tag fork">🍴 Fork</span>' : ''}
           ${r.live ? '<span class="tag live">Live</span>' : ''}
+        </div>
+        <div class="repo-tags" style="padding: 0 20px 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+          ${(r.tags || deriveTags(r)).slice(0, 5).map(t => `<span class="tag-mini" data-tag="${t}" title="Click to filter by #${t}">#${t}</span>`).join('')}
         </div>
         <div class="size-bar">
           <div class="size-bar-fill" style="width: ${Math.min(100, r.size_kb / maxSize * 100)}%"></div>
@@ -3416,7 +3758,7 @@
         <div class="repo-foot">
           <div class="repo-stats">
             <span class="repo-stat">💾 ${fmtSize(r.size_kb)}</span>
-            <span class="repo-stat">⭐ ${r.stars}</span>
+            <span class="repo-stat" data-star-history="${r.name}" style="cursor: pointer;" title="Click for star history">⭐ ${r.stars}</span>
             <span class="repo-stat">💻 ${r.lang}</span>
           </div>
           ${r.live ? `<a href="${r.live}" target="_blank" rel="noopener" class="repo-stat" style="color: var(--mint); text-decoration: none;" onclick="event.stopPropagation()">↗ Live</a>` : ''}
@@ -4266,6 +4608,13 @@
         if (action === 'refresh') cockpitRefresh(name);
         else if (action === 'deploy') cockpitDeploy(name);
         else if (action === 'scan') cockpitScan(name);
+      });
+    });
+    // v16: star history
+    document.querySelectorAll('[data-star-history]').forEach(s => {
+      s.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showStarHistory(s.dataset.starHistory);
       });
     });
   }
