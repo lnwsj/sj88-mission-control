@@ -3,8 +3,9 @@
 > **Live interactive dashboard of all 59 GitHub repositories shipped by Mavis (lnwsj)**
 > Built as a single-file vanilla HTML+CSS+JS app. No build step. No dependencies. Just open and explore.
 
-🌐 **Live demo**: [https://lnwsj.github.io/sj88-mission-control/](https://lnwsj.github.io/sj88-mission-control/)
-📦 **Project hub**: [https://codehub.sj88ai.com/sj88-mission-control/](https://codehub.sj88ai.com/sj88-mission-control/)
+🌐 **Live demo (production)**: [https://git88.sj88ai.com/](https://git88.sj88ai.com/) (🔒 Let's Encrypt SSL)
+🪞 **GitHub Pages mirror**: [https://lnwsj.github.io/sj88-mission-control/](https://lnwsj.github.io/sj88-mission-control/)
+📦 **Source**: [https://github.com/lnwsj/sj88-mission-control](https://github.com/lnwsj/sj88-mission-control)
 
 ---
 
