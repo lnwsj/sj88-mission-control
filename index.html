@@ -377,6 +377,46 @@
     box-shadow: var(--shadow-xl); z-index: 200;
     animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  /* === Chat Agent === */
+  .chat-msg {
+    display: flex; gap: 8px; margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bg-2); display: grid; place-items: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .chat-bubble {
+    max-width: 80%; padding: 10px 14px;
+    background: white; border-radius: 12px;
+    font-size: 13px; line-height: 1.5;
+    box-shadow: var(--shadow-sm);
+  }
+  .chat-msg.user .chat-bubble {
+    background: var(--pink); color: white;
+  }
+  html[data-theme="dark"] .chat-bubble { background: rgba(15, 23, 42, 0.8); }
+  html[data-theme="dark"] .chat-msg.user .chat-bubble { background: var(--pink); }
+  .chat-suggestions {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px;
+  }
+  .chat-sug {
+    padding: 4px 10px; background: var(--pink-soft);
+    color: var(--pink-deep); border: none;
+    border-radius: 999px; cursor: pointer;
+    font: inherit; font-size: 11px; font-weight: 500;
+    transition: all 0.2s;
+  }
+  .chat-sug:hover { background: var(--pink); color: white; }
+  .chat-msg.typing .chat-bubble {
+    background: var(--bg-2); color: var(--slate-3);
+    font-style: italic;
+  }
+  .mini-spark { flex: 1; height: 24px; display: flex; align-items: center; gap: 4px; }
+  .mini-spark svg { display: block; }
   @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
   .toast.success { background: var(--mint-deep); }
   .toast.error { background: var(--coral); }
@@ -1234,6 +1274,7 @@
       <button id="darkModeBtn" class="hero-tool-btn" title="Toggle dark mode (press D)">🌙</button>
       <button id="shortcutsBtn" class="hero-tool-btn" title="Keyboard shortcuts (press ?)">⌨️</button>
       <button id="achievementsBtn" class="hero-tool-btn" title="Achievements (press A)">🏆</button>
+      <button id="chatBtn" class="hero-tool-btn" title="Chat with Mavis (press C)">💬</button>
       <button id="shareBtn" class="hero-tool-btn" title="Copy link to this view">🔗</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
@@ -1247,6 +1288,11 @@
 <!-- Stats -->
 <div class="container">
   <div class="stats" id="stats"></div>
+</div>
+
+<!-- Live Indicator -->
+<div style="text-align: center; margin-top: -16px; margin-bottom: 16px; font-size: 12px;">
+  <span id="liveIndicator" style="padding: 4px 12px; background: var(--bg-2); border-radius: 999px; color: var(--slate-3);"><span style="color: var(--slate-3);">●</span> Initializing...</span>
 </div>
 
 <!-- Filter bar -->
@@ -1354,10 +1400,11 @@
         <div class="shortcuts-grid">
           <div class="shortcut-row"><div class="shortcut-key">D</div><div class="shortcut-desc">Toggle dark mode</div></div>
           <div class="shortcut-row"><div class="shortcut-key">A</div><div class="shortcut-desc">Achievements</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">C</div><div class="shortcut-desc">Chat with Mavis (Shift for Category)</div></div>
           <div class="shortcut-row"><div class="shortcut-key">/</div><div class="shortcut-desc">Focus search</div></div>
           <div class="shortcut-row"><div class="shortcut-key">G</div><div class="shortcut-desc">Grid view</div></div>
           <div class="shortcut-row"><div class="shortcut-key">T</div><div class="shortcut-desc">Timeline view</div></div>
-          <div class="shortcut-row"><div class="shortcut-key">C</div><div class="shortcut-desc">Category view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">V</div><div class="shortcut-desc">Category view</div></div>
           <div class="shortcut-row"><div class="shortcut-key">M</div><div class="shortcut-desc">Commits view</div></div>
           <div class="shortcut-row"><div class="shortcut-key">F</div><div class="shortcut-desc">Favorites only</div></div>
           <div class="shortcut-row"><div class="shortcut-key">S</div><div class="shortcut-desc">Share link</div></div>
@@ -1422,11 +1469,12 @@
     const key = e.key.toLowerCase();
     if (key === 'd') toggleDarkMode();
     else if (key === 'a') showAchievements();
+    else if (key === 'c' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); showChat(); return; }
     else if (key === 's') shareCurrentView();
     else if (key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
     else if (key === 'g') document.querySelector('[data-view="grid"]')?.click();
     else if (key === 't') document.querySelector('[data-view="timeline"]')?.click();
-    else if (key === 'c') document.querySelector('[data-view="category"]')?.click();
+    else if (key === 'v') document.querySelector('[data-view="category"]')?.click();
     else if (key === 'm') document.querySelector('[data-view="commits"]')?.click();
     else if (key === 'f') {
       state.filter = 'favorites';
@@ -1436,6 +1484,94 @@
     else if (key === 'r') location.reload();
     else if (key === 'escape') closeModal();
   });
+
+  /* === Mavis Chat Agent === */
+  function showChat() {
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">💬</div>
+        <div class="modal-title">Chat with Mavis</div>
+        <div class="modal-cat" style="color: #a855f7;">AI agent for your 59 repos</div>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; height: 500px;">
+        <div id="chatMessages" style="flex: 1; overflow-y: auto; padding: 12px; background: var(--bg-1); border-radius: 12px; margin-bottom: 12px;">
+          <div class="chat-msg bot">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-bubble">
+              👋 Hi! I'm Mavis, the AI agent behind these 59 repos. Ask me anything:
+              <div class="chat-suggestions">
+                <button class="chat-sug" data-q="Which repo should I work on next?">🎯 Which repo next?</button>
+                <button class="chat-sug" data-q="What's the best repo to star?">⭐ Best to star?</button>
+                <button class="chat-sug" data-q="Show me the most buggy repos">🐛 Buggiest repos?</button>
+                <button class="chat-sug" data-q="What's the deployment status?">🚀 Deploy status?</button>
+                <button class="chat-sug" data-q="Which 3D game is most complete?">🎮 Best 3D game?</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form id="chatForm" style="display: flex; gap: 8px;">
+          <input type="text" id="chatInput" placeholder="Ask Mavis anything about your repos..." style="flex: 1; padding: 10px 14px; border: 1px solid var(--card-border); border-radius: 12px; font: inherit; font-size: 14px; background: white; color: var(--slate);" autocomplete="off" />
+          <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">Send</button>
+        </form>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    // Wire up form
+    document.getElementById('chatForm').addEventListener('submit', handleChatSubmit);
+    // Wire up suggestion chips
+    document.querySelectorAll('.chat-sug').forEach(b => {
+      b.addEventListener('click', () => {
+        document.getElementById('chatInput').value = b.dataset.q;
+        handleChatSubmit(new Event('submit'));
+      });
+    });
+    document.getElementById('chatInput').focus();
+  }
+
+  let chatHistory = [];
+  async function handleChatSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const q = input.value.trim();
+    if (!q) return;
+    input.value = '';
+    addChatMessage('user', q);
+    // Show typing
+    const typingId = addChatMessage('bot', '...', true);
+    try {
+      const res = await fetch(`${API_BASE}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q, history: chatHistory })
+      });
+      const data = await res.json();
+      document.getElementById(typingId)?.remove();
+      addChatMessage('bot', data.answer || 'Sorry, I couldn\'t process that.');
+      chatHistory.push({ q, a: data.answer });
+      if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+    } catch (e) {
+      document.getElementById(typingId)?.remove();
+      addChatMessage('bot', `❌ Error: ${e.message}`);
+    }
+  }
+
+  function addChatMessage(role, text, isTyping = false) {
+    const div = document.createElement('div');
+    const id = 'msg-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+    div.id = id;
+    div.className = `chat-msg ${role} ${isTyping ? 'typing' : ''}`;
+    div.innerHTML = `
+      <div class="chat-avatar">${role === 'user' ? '👤' : '🤖'}</div>
+      <div class="chat-bubble">${escapeHtml(text).replace(/\n/g, '<br>')}</div>
+    `;
+    const container = document.getElementById('chatMessages');
+    if (container) {
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+    return id;
+  }
 
   // === Init hero tool buttons ===
   function initHeroButtons() {
@@ -1450,6 +1586,8 @@
     if (achBtn) achBtn.addEventListener('click', showAchievements);
     const shBtn = document.getElementById('shareBtn');
     if (shBtn) shBtn.addEventListener('click', shareCurrentView);
+    const chatBtn = document.getElementById('chatBtn');
+    if (chatBtn) chatBtn.addEventListener('click', showChat);
   }
   initHeroButtons();
 
@@ -1696,6 +1834,8 @@
     const bucket = sizeBucket(r.size_kb);
     const maxSize = 11215; // Tokyo Student Life
     const isFav = isFavorite(r.name);
+    const heatmap = renderMiniHeatmap(r.name);
+    const sparkline = renderSparkline(r.name);
     return `
       <div class="repo-card" data-cat="${r.cat}" data-name="${r.name}" style="--cat-color: ${cat.accent}; --cat-bg: ${cat.accent}1f; animation-delay: ${Math.random() * 200}ms;">
         <button class="fav-btn ${isFav ? 'active' : ''}" data-fav="${r.name}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '⭐' : '☆'}</button>
@@ -1718,6 +1858,14 @@
         <div class="size-bar">
           <div class="size-bar-fill" style="width: ${Math.min(100, r.size_kb / maxSize * 100)}%"></div>
         </div>
+        <div style="display: flex; align-items: center; gap: 8px; padding: 0 20px 6px;">
+          <div style="font-size: 9px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; min-width: 50px;">Activity</div>
+          <div class="mini-heatmap" style="padding: 0; flex: 1;">${heatmap}</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; padding: 0 20px 8px;">
+          <div style="font-size: 9px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; min-width: 50px;">Growth</div>
+          <div class="mini-spark">${sparkline}</div>
+        </div>
         <div class="issue-badges" id="meta-${r.name}">${renderIssueBadges(r.name)}</div>
         <div class="cockpit-actions">
           <button class="cockpit-btn refresh" data-cockpit="refresh" data-name="${r.name}" title="Re-fetch from GitHub">🔄 Refresh</button>
@@ -1731,6 +1879,12 @@
           <button class="action-btn recommend" data-action="recommend" data-name="${r.name}" title="Recommend features">
             💡 Recommend
           </button>
+          <button class="action-btn review" data-action="review" data-name="${r.name}" title="AI Code Review">
+            🤖 AI Review
+          </button>
+          <button class="action-btn autopr" data-action="autopr" data-name="${r.name}" title="Auto-fix & generate PR">
+            🔧 Auto-PR
+          </button>
         </div>
         <div class="repo-foot">
           <div class="repo-stats">
@@ -1741,6 +1895,107 @@
           ${r.live ? `<a href="${r.live}" target="_blank" rel="noopener" class="repo-stat" style="color: var(--mint); text-decoration: none;" onclick="event.stopPropagation()">↗ Live</a>` : ''}
         </div>
       </div>
+    `;
+  }
+
+  /* === Mini heatmap on card (13 weeks × 7 days) === */
+  function renderMiniHeatmap(name) {
+    if (!commitsData || !commitsData.messages) {
+      return '<div class="m-cell" style="background: var(--bg-2); width: 100%; height: 14px; border-radius: 3px;"></div>';
+    }
+    // Get commits for this repo
+    const repoCommits = commitsData.messages.filter(m => m.repo === name);
+    if (!repoCommits.length) {
+      return '<div class="m-cell" style="background: var(--bg-2); width: 100%; height: 14px; border-radius: 3px; opacity: 0.5;"></div>';
+    }
+    // Build 13 weeks × 7 days grid
+    const today = new Date();
+    const startMonday = new Date(today);
+    startMonday.setDate(today.getDate() - 12 * 7 - today.getDay() + 1); // 13 weeks ago, Monday
+    const cells = [];
+    let maxC = 0;
+    // Count commits per day
+    const byDay = {};
+    repoCommits.forEach(c => {
+      byDay[c.date] = (byDay[c.date] || 0) + 1;
+    });
+    for (let week = 0; week < 13; week++) {
+      for (let dow = 0; dow < 7; dow++) {
+        const d = new Date(startMonday);
+        d.setDate(startMonday.getDate() + week * 7 + dow);
+        if (d > today) {
+          cells.push('<div class="m-cell" style="opacity: 0.2;"></div>');
+          continue;
+        }
+        const dateStr = d.toISOString().substring(0, 10);
+        const c = byDay[dateStr] || 0;
+        maxC = Math.max(maxC, c);
+      }
+    }
+    // Second pass to assign levels
+    let idx = 0;
+    const out = [];
+    for (let week = 0; week < 13; week++) {
+      for (let dow = 0; dow < 7; dow++) {
+        const d = new Date(startMonday);
+        d.setDate(startMonday.getDate() + week * 7 + dow);
+        if (d > today) {
+          out.push('<div class="m-cell" style="opacity: 0.2;"></div>');
+          idx++;
+          continue;
+        }
+        const dateStr = d.toISOString().substring(0, 10);
+        const c = byDay[dateStr] || 0;
+        let lvl = '';
+        if (c > 0 && maxC > 0) {
+          if (maxC <= 3) lvl = c === maxC ? 'l4' : c >= maxC * 0.6 ? 'l3' : 'l2';
+          else if (c === maxC) lvl = 'l4';
+          else if (c >= maxC * 0.6) lvl = 'l3';
+          else if (c >= maxC * 0.3) lvl = 'l2';
+          else lvl = 'l1';
+        }
+        out.push(`<div class="m-cell ${lvl}" title="${dateStr}: ${c} commit${c !== 1 ? 's' : ''}"></div>`);
+        idx++;
+      }
+    }
+    return out.join('');
+  }
+
+  /* === Sparkline for growth proxy === */
+  function renderSparkline(name) {
+    if (!commitsData || !commitsData.messages) return '';
+    const repoCommits = commitsData.messages.filter(m => m.repo === name);
+    if (repoCommits.length < 2) {
+      return '<div style="font-size: 11px; color: var(--slate-3); flex: 1;">📊 New repo</div>';
+    }
+    // 8 data points across history
+    const sorted = [...repoCommits].sort((a, b) => a.date.localeCompare(b.date));
+    const buckets = [0, 0, 0, 0, 0, 0, 0, 0];
+    const minDate = new Date(sorted[0].date);
+    const maxDate = new Date(sorted[sorted.length - 1].date);
+    const range = maxDate - minDate;
+    sorted.forEach(c => {
+      const pos = (new Date(c.date) - minDate) / range;
+      const idx = Math.min(7, Math.floor(pos * 8));
+      buckets[idx]++;
+    });
+    const max = Math.max(...buckets, 1);
+    const points = buckets.map((v, i) => {
+      const x = (i / 7) * 100;
+      const y = 100 - (v / max) * 100;
+      return `${x},${y}`;
+    }).join(' ');
+    // Determine trend
+    const firstHalf = buckets.slice(0, 4).reduce((a, b) => a + b, 0);
+    const secondHalf = buckets.slice(4).reduce((a, b) => a + b, 0);
+    const trend = secondHalf > firstHalf ? '📈' : secondHalf < firstHalf ? '📉' : '➡️';
+    const color = secondHalf > firstHalf ? 'var(--mint)' : secondHalf < firstHalf ? 'var(--coral)' : 'var(--slate-3)';
+    return `
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width: 100%; height: 24px; flex: 1;">
+        <polyline points="${points}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="0,100 ${points} 100,100" fill="${color}" opacity="0.15" stroke="none"/>
+      </svg>
+      <span style="font-size: 11px; min-width: 16px; text-align: center;">${trend}</span>
     `;
   }
 
@@ -2358,6 +2613,8 @@
         btn.disabled = true;
         if (action === 'bugs') runBugHunter(name, btn);
         else if (action === 'recommend') runRecommend(name, btn);
+        else if (action === 'review') showAIReview(name, btn);
+        else if (action === 'autopr') showAutoPR(name, btn);
       });
     });
     document.querySelectorAll('.fav-btn').forEach(btn => {
@@ -2574,6 +2831,146 @@
   function escapeHtml(s) {
     if (typeof s !== 'string') return s;
     return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* === AI Code Review (Phase 16) === */
+  async function showAIReview(name, btn) {
+    if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    showToast(`🤖 Reviewing ${name}...`);
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/review`);
+      const data = await res.json();
+      renderReviewModal(name, data);
+    } catch (e) {
+      showToast(`❌ Review failed: ${e.message}`, 'error');
+      if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    }
+  }
+
+  function renderReviewModal(name, data) {
+    const issuesHtml = (data.issues || []).map((i, idx) => `
+      <div class="review-item" style="border-left: 3px solid ${i.severity === 'high' ? 'var(--coral)' : i.severity === 'medium' ? '#f59e0b' : 'var(--mint)'};">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div style="font-weight: 600; font-size: 13px;">${i.title}</div>
+          <span class="tag" style="background: ${i.severity === 'high' ? '#fee2e2' : i.severity === 'medium' ? '#fef3c7' : '#d1fae5'}; color: ${i.severity === 'high' ? '#991b1b' : i.severity === 'medium' ? '#92400e' : '#065f46'};">${i.severity}</span>
+        </div>
+        <div style="font-size: 12px; color: var(--slate-2); margin-top: 4px;">${i.detail}</div>
+        ${i.fix ? `<div style="margin-top: 6px; font-size: 11px; color: var(--mint);"><b>Fix:</b> ${i.fix}</div>` : ''}
+      </div>
+    `).join('');
+    const llmBadge = data.llm_used
+      ? '<span class="tag" style="background: var(--pink-soft); color: var(--pink-deep);">🧠 LLM-powered</span>'
+      : '<span class="tag" style="background: var(--bg-2); color: var(--slate-3);">📊 Static analysis</span>';
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🤖</div>
+        <div class="modal-title">AI Code Review</div>
+        <div class="modal-cat">${name} ${llmBadge}</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-title">📊 Quality Score</div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+            <div style="font-size: 32px; font-weight: 700; color: ${data.score >= 80 ? 'var(--mint)' : data.score >= 60 ? '#f59e0b' : 'var(--coral)'};">${data.score}</div>
+            <div style="flex: 1;">
+              <div class="size-bar" style="height: 8px;"><div class="size-bar-fill" style="width: ${data.score}%;"></div></div>
+              <div style="font-size: 11px; color: var(--slate-3); margin-top: 4px;">${data.score >= 80 ? 'Excellent' : data.score >= 60 ? 'Good' : 'Needs work'}</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">⚠️ Issues Found (${(data.issues || []).length})</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">${issuesHtml || '<div style="color: var(--slate-3); font-size: 13px;">No major issues found! 🎉</div>'}</div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">💡 Suggestions</div>
+          <ul style="font-size: 13px; line-height: 1.7; padding-left: 20px; margin-top: 8px;">
+            ${(data.suggestions || []).map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">📈 Health Check</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px;">
+            ${(data.health || []).map(h => `
+              <div style="padding: 8px; background: var(--bg-1); border-radius: 8px;">
+                <div style="font-size: 10px; color: var(--slate-3); text-transform: uppercase;">${h.label}</div>
+                <div style="font-size: 13px; font-weight: 600; color: ${h.ok ? 'var(--mint)' : 'var(--coral)'};">${h.ok ? '✅' : '⚠️'} ${h.value}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  /* === Auto-PR Generator (Phase 17) === */
+  async function showAutoPR(name, btn) {
+    if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    showToast(`🔧 Generating fix PR for ${name}...`);
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/autopr`);
+      const data = await res.json();
+      renderAutoPRModal(name, data);
+    } catch (e) {
+      showToast(`❌ Auto-PR failed: ${e.message}`, 'error');
+      if (btn) { btn.classList.remove('loading'); btn.disabled = false; }
+    }
+  }
+
+  function renderAutoPRModal(name, data) {
+    const diff = data.diff || 'No changes proposed.';
+    const instructions = data.instructions || [];
+    const llmBadge = data.llm_used
+      ? '<span class="tag" style="background: var(--pink-soft); color: var(--pink-deep);">🧠 LLM-powered</span>'
+      : '<span class="tag" style="background: var(--bg-2); color: var(--slate-3);">📊 Pattern-based</span>';
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🔧</div>
+        <div class="modal-title">Auto-Fix PR</div>
+        <div class="modal-cat">${name} ${llmBadge}</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <div class="modal-section-title">📋 Issue ${data.issue_id || 'N/A'}</div>
+          <div style="margin-top: 8px; padding: 10px; background: var(--bg-1); border-radius: 8px; font-size: 13px;">
+            <div style="font-weight: 600;">${data.issue_title || 'Auto-detected issue'}</div>
+            <div style="color: var(--slate-2); margin-top: 4px;">${data.issue_desc || 'Detected by static analysis.'}</div>
+          </div>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">📝 Proposed Diff</div>
+          <pre style="background: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 11px; line-height: 1.5; margin: 8px 0 0;">${escapeHtml(diff)}</pre>
+        </div>
+        <div class="modal-section">
+          <div class="modal-section-title">📥 How to apply this PR</div>
+          <ol style="font-size: 13px; line-height: 1.7; padding-left: 20px; margin-top: 8px;">
+            ${instructions.map(i => `<li>${i}</li>`).join('')}
+          </ol>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 16px;">
+          <button class="btn btn-primary" onclick="copyPRDiff('${name}')">📋 Copy Diff</button>
+          <button class="btn btn-secondary" onclick="copyPRInstructions('${name}')">📋 Copy Instructions</button>
+          <a href="https://github.com/lnwsj/${name}/compare/main...fix/${name}-autopr" target="_blank" class="btn btn-secondary" style="text-decoration: none;">↗ Open PR Page</a>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    // Store diff globally
+    window._lastPRDiff = diff;
+    window._lastPRInstructions = instructions.join('\n');
+  }
+
+  function copyPRDiff(name) {
+    navigator.clipboard.writeText(window._lastPRDiff || '');
+    showToast(`📋 Diff copied! Paste to fix ${name}.`, 'success');
+  }
+
+  function copyPRInstructions(name) {
+    navigator.clipboard.writeText(window._lastPRInstructions || '');
+    showToast(`📋 Instructions copied!`, 'success');
   }
 
   async function showCompareModal(name1) {
@@ -2828,6 +3225,10 @@
     // Ping API in background
     pingAPI();
     loadRepoMeta();
+    // Preload commits for mini heatmaps & sparklines on cards
+    preloadCommitsForCards();
+    // Start live commit ticker
+    startLiveTicker();
     // Apply URL state if any
     const params = new URLSearchParams(location.search);
     if (params.get('view') && ['grid','timeline','category','commits'].includes(params.get('view'))) {
@@ -2844,6 +3245,43 @@
       document.getElementById('searchInput').value = state.search;
       render();
     }
+  }
+
+  /* === Preload commits for per-card mini-heatmap === */
+  async function preloadCommitsForCards() {
+    try {
+      const res = await fetch(`${API_BASE}/commits`);
+      if (res.ok) {
+        const oldCount = commitsData?.messages?.length || 0;
+        commitsData = await res.json();
+        const newCount = commitsData.messages?.length || 0;
+        if (oldCount > 0 && newCount > oldCount) {
+          const diff = newCount - oldCount;
+          showToast(`🟢 ${diff} new commits detected!`, 'success');
+        }
+        // Re-render cards to show heatmaps + sparklines
+        render();
+      }
+    } catch (e) { console.warn('Preload commits failed:', e); }
+  }
+
+  /* === Live commit ticker (auto-refresh every 60s) === */
+  let liveTickerInterval = null;
+  function startLiveTicker() {
+    // Update live indicator
+    updateLiveIndicator();
+    if (liveTickerInterval) clearInterval(liveTickerInterval);
+    liveTickerInterval = setInterval(async () => {
+      await preloadCommitsForCards();
+      updateLiveIndicator();
+    }, 60000); // every 60s
+  }
+
+  function updateLiveIndicator() {
+    const el = document.getElementById('liveIndicator');
+    if (!el) return;
+    const last = commitsData?.summary?.date_range_end || '—';
+    el.innerHTML = `<span style="color: var(--mint);">●</span> Live · last: ${last}`;
   }
 
   async function pingAPI() {
