@@ -378,6 +378,110 @@
     animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* === This Month Highlight === */
+  .month-highlight {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(168, 85, 247, 0.06) 50%, rgba(99, 102, 241, 0.08) 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+  }
+  .mh-head {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .mh-badge {
+    padding: 4px 10px; background: var(--pink); color: white;
+    border-radius: 999px; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .mh-title { font-size: 24px; font-weight: 700; color: var(--slate); }
+  .mh-sub { font-size: 13px; color: var(--slate-3); margin-left: auto; }
+  .mh-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 900px) { .mh-grid { grid-template-columns: repeat(3, 1fr); } }
+  .mh-num {
+    background: white;
+    border-radius: 14px;
+    padding: 14px 12px;
+    text-align: center;
+    border-left: 4px solid var(--accent);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s;
+  }
+  .mh-num:hover { transform: translateY(-2px); }
+  .mh-value {
+    font-size: 30px; font-weight: 800; line-height: 1.1;
+    color: var(--accent);
+    letter-spacing: -1px;
+  }
+  .mh-value .suffix { font-size: 18px; opacity: 0.7; }
+  .mh-label { font-size: 11px; color: var(--slate-2); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+  .mh-sub { font-size: 10px; color: var(--slate-3); margin-top: 2px; }
+  html[data-theme="dark"] .mh-num { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .mh-title { color: white; }
+  .mh-chart-row {
+    display: grid;
+    grid-template-columns: 2fr 1.3fr 1.5fr;
+    gap: 16px;
+  }
+  @media (max-width: 1100px) { .mh-chart-row { grid-template-columns: 1fr; } }
+  .mh-chart-block {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  html[data-theme="dark"] .mh-chart-block { background: rgba(15, 23, 42, 0.6); }
+  .mh-chart-title {
+    font-size: 11px; color: var(--slate-3);
+    text-transform: uppercase; font-weight: 700;
+    margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .mh-day-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+  .mh-day-bar { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .mh-day-bar .bar {
+    width: 100%; background: linear-gradient(180deg, var(--pink) 0%, var(--indigo) 100%);
+    border-radius: 4px 4px 0 0;
+    min-height: 2px;
+    transition: all 0.3s;
+  }
+  .mh-day-bar.peak .bar { background: linear-gradient(180deg, var(--gold) 0%, var(--coral) 100%); }
+  .mh-day-bar:hover .bar { transform: scaleY(1.05); transform-origin: bottom; }
+  .mh-day-bar .lbl { font-size: 9px; color: var(--slate-3); font-weight: 600; }
+  .mh-day-bar .cnt { font-size: 10px; color: var(--slate); font-weight: 700; }
+  .mh-author-list, .mh-repo-list { display: flex; flex-direction: column; gap: 6px; }
+  .mh-author-row, .mh-repo-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 8px;
+    align-items: center; font-size: 12px;
+  }
+  .mh-author-row .name, .mh-repo-row .name {
+    color: var(--slate-2); font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .mh-author-row .name { font-size: 12px; }
+  .mh-repo-row .name { font-size: 11px; font-family: monospace; }
+  .mh-author-row .bar-wrap, .mh-repo-row .bar-wrap {
+    grid-column: 1 / -1;
+    height: 5px; background: var(--bg-2); border-radius: 3px; overflow: hidden;
+  }
+  .mh-author-row .bar-fill, .mh-repo-row .bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--pink), var(--indigo));
+    border-radius: 3px;
+  }
+  .mh-author-row .val, .mh-repo-row .val {
+    font-size: 11px; color: var(--slate); font-weight: 700;
+    min-width: 28px; text-align: right;
+  }
+  html[data-theme="dark"] .mh-author-row .name,
+  html[data-theme="dark"] .mh-repo-row .name,
+  html[data-theme="dark"] .mh-author-row .val,
+  html[data-theme="dark"] .mh-repo-row .val { color: white; }
+
   /* === Chat Agent === */
   .chat-msg {
     display: flex; gap: 8px; margin-bottom: 10px;
@@ -1295,6 +1399,63 @@
   <span id="liveIndicator" style="padding: 4px 12px; background: var(--bg-2); border-radius: 999px; color: var(--slate-3);"><span style="color: var(--slate-3);">●</span> Initializing...</span>
 </div>
 
+<!-- This Month Highlight -->
+<div class="container" id="thisMonthSection" style="margin-top: 24px; margin-bottom: 8px;">
+  <div class="month-highlight">
+    <div class="mh-head">
+      <span class="mh-badge">📅 THIS MONTH</span>
+      <span class="mh-title">July 2026</span>
+      <span class="mh-sub" id="mhDateRange">Jul 8 — Jul 13 · 6 days</span>
+    </div>
+    <div class="mh-grid">
+      <div class="mh-num" style="--accent: var(--pink);">
+        <div class="mh-value" id="mhCommits">134</div>
+        <div class="mh-label">commits</div>
+        <div class="mh-sub">all authors</div>
+      </div>
+      <div class="mh-num" style="--accent: var(--indigo);">
+        <div class="mh-value" id="mhRepos">50</div>
+        <div class="mh-label">repos touched</div>
+        <div class="mh-sub">83% of all 60</div>
+      </div>
+      <div class="mh-num" style="--accent: var(--mint);">
+        <div class="mh-value" id="mhAuthors">6</div>
+        <div class="mh-label">authors</div>
+        <div class="mh-sub">Mavis · lnwsj · SJ88…</div>
+      </div>
+      <div class="mh-num" style="--accent: var(--gold);">
+        <div class="mh-value" id="mhPeak">48</div>
+        <div class="mh-label">peak day</div>
+        <div class="mh-sub">🚀 Jul 9 = THE SHIP</div>
+      </div>
+      <div class="mh-num" style="--accent: var(--coral);">
+        <div class="mh-value" id="mhShare">78<span class="suffix">%</span></div>
+        <div class="mh-label">lnwsj share</div>
+        <div class="mh-sub">105 of 134</div>
+      </div>
+      <div class="mh-num" style="--accent: var(--pink);">
+        <div class="mh-value" id="mhAvg">22.3</div>
+        <div class="mh-label">commits/day</div>
+        <div class="mh-sub">avg over 6 days</div>
+      </div>
+    </div>
+    <div class="mh-chart-row">
+      <div class="mh-chart-block">
+        <div class="mh-chart-title">📈 Daily breakdown</div>
+        <div id="mhDayChart" class="mh-day-chart"></div>
+      </div>
+      <div class="mh-chart-block">
+        <div class="mh-chart-title">👥 Per author</div>
+        <div id="mhAuthorChart" class="mh-author-list"></div>
+      </div>
+      <div class="mh-chart-block">
+        <div class="mh-chart-title">🏆 Top 5 repos</div>
+        <div id="mhRepoChart" class="mh-repo-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Filter bar -->
 <div class="container">
   <div class="filter-bar">
@@ -1730,6 +1891,84 @@
   /* =========================================================
    * STATS
    * ========================================================= */
+  /* === This Month Highlight (Phase 19) === */
+  function renderMonthHighlight() {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages;
+    // Get this month (YYYY-MM from latest message)
+    const latest = msgs.reduce((a, b) => a.date > b.date ? a : b);
+    const month = latest.date.substring(0, 7); // "2026-07"
+    const monthMsgs = msgs.filter(m => m.date.startsWith(month));
+    if (!monthMsgs.length) return;
+    const totalCommits = monthMsgs.length;
+    const repos = new Set(monthMsgs.map(m => m.repo)).size;
+    const authors = new Set();
+    const authorCounts = {};
+    monthMsgs.forEach(m => {
+      const a = m.author || 'unknown';
+      authors.add(a);
+      authorCounts[a] = (authorCounts[a] || 0) + 1;
+    });
+    // Per day
+    const byDay = {};
+    monthMsgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
+    const days = Object.keys(byDay).sort();
+    const maxDay = Math.max(...Object.values(byDay));
+    const peakDay = days.reduce((a, b) => byDay[a] >= byDay[b] ? a : b);
+    const avg = (totalCommits / days.length).toFixed(1);
+    // lnwsj share
+    const lnwsjShare = monthMsgs.filter(m => m.is_lnwsj).length;
+    const lnwsjPct = Math.round(lnwsjShare / totalCommits * 100);
+    // Update top numbers
+    document.getElementById('mhCommits').textContent = totalCommits;
+    document.getElementById('mhRepos').textContent = repos;
+    document.getElementById('mhAuthors').textContent = authors.size;
+    document.getElementById('mhPeak').textContent = maxDay;
+    document.getElementById('mhShare').innerHTML = `${lnwsjPct}<span class="suffix">%</span>`;
+    document.getElementById('mhAvg').textContent = avg;
+    document.getElementById('mhDateRange').textContent =
+      `${days[0].substring(5)} — ${days[days.length-1].substring(5)} · ${days.length} days`;
+    // Day chart
+    const dayChart = document.getElementById('mhDayChart');
+    dayChart.innerHTML = days.map(d => {
+      const c = byDay[d];
+      const h = Math.max(8, (c / maxDay) * 100);
+      const isPeak = d === peakDay;
+      const dayShort = d.substring(8); // day number
+      return `<div class="mh-day-bar ${isPeak ? 'peak' : ''}" title="${d}: ${c} commits${isPeak ? ' (PEAK 🚀)' : ''}">
+        <div class="cnt">${c}</div>
+        <div class="bar" style="height: ${h}%;"></div>
+        <div class="lbl">${dayShort}</div>
+      </div>`;
+    }).join('');
+    // Author chart (sorted desc)
+    const authorSorted = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const maxAuth = authorSorted[0][1];
+    const authorList = document.getElementById('mhAuthorChart');
+    authorList.innerHTML = authorSorted.map(([name, count]) => {
+      const pct = count / maxAuth * 100;
+      return `<div class="mh-author-row">
+        <div class="name">${name === 'lnwsj' ? '👤 ' : '🤖 '}${name}</div>
+        <div class="val">${count}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+      </div>`;
+    }).join('');
+    // Repo chart (top 5 by commits)
+    const repoCounts = {};
+    monthMsgs.forEach(m => { repoCounts[m.repo] = (repoCounts[m.repo] || 0) + 1; });
+    const repoSorted = Object.entries(repoCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const maxRepo = repoSorted[0][1];
+    const repoList = document.getElementById('mhRepoChart');
+    repoList.innerHTML = repoSorted.map(([name, count]) => {
+      const pct = count / maxRepo * 100;
+      return `<div class="mh-repo-row">
+        <div class="name">${name}</div>
+        <div class="val">${count}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width: ${pct}%;"></div></div>
+      </div>`;
+    }).join('');
+  }
+
   function renderStats() {
     const nonFork = REPOS.filter(r => !r.is_fork);
     const totalSize = nonFork.reduce((a, r) => a + r.size_kb, 0);
@@ -3227,6 +3466,8 @@
     loadRepoMeta();
     // Preload commits for mini heatmaps & sparklines on cards
     preloadCommitsForCards();
+    // Render month highlight from any available data
+    renderMonthHighlight();
     // Start live commit ticker
     startLiveTicker();
     // Apply URL state if any
@@ -3261,6 +3502,8 @@
         }
         // Re-render cards to show heatmaps + sparklines
         render();
+        // Re-render month highlight with fresh data
+        renderMonthHighlight();
       }
     } catch (e) { console.warn('Preload commits failed:', e); }
   }
