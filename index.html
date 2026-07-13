@@ -690,6 +690,165 @@
   }
   .commits-loading { text-align: center; padding: 60px; color: var(--slate-3); }
   .commits-loading .emoji { font-size: 48px; margin-bottom: 12px; }
+
+  /* === Streak badge === */
+  .streak-card {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .streak-stat {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(244, 63, 94, 0.08) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 16px; padding: 16px;
+    text-align: center;
+  }
+  .streak-stat.current { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(99, 102, 241, 0.08) 100%); border-color: rgba(16, 185, 129, 0.3); }
+  .streak-stat.longest { background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.08) 100%); border-color: rgba(99, 102, 241, 0.3); }
+  .streak-stat-emoji { font-size: 32px; margin-bottom: 4px; }
+  .streak-stat-value { font-size: 32px; font-weight: 800; color: var(--slate); line-height: 1; }
+  .streak-stat-label { font-size: 11px; color: var(--slate-2); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+
+  /* === Heatmap === */
+  .heatmap-container {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 20px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+  .heatmap-grid {
+    display: grid; grid-template-columns: 18px repeat(52, 14px);
+    gap: 2px; padding: 4px 0;
+    min-width: 800px;
+  }
+  .heatmap-dow-label {
+    font-size: 10px; color: var(--slate-3);
+    text-align: right; padding-right: 4px;
+    line-height: 14px;
+  }
+  .heatmap-week-label {
+    font-size: 9px; color: var(--slate-3);
+    grid-row: 1; text-align: left;
+  }
+  .heatmap-cell {
+    width: 14px; height: 14px; border-radius: 2px;
+    background: var(--bg-2);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .heatmap-cell:hover { stroke: var(--slate); stroke-width: 1.5; }
+  .heatmap-cell.l1 { background: rgba(236, 72, 153, 0.2); }
+  .heatmap-cell.l2 { background: rgba(236, 72, 153, 0.4); }
+  .heatmap-cell.l3 { background: rgba(236, 72, 153, 0.65); }
+  .heatmap-cell.l4 { background: rgba(236, 72, 153, 0.85); }
+  .heatmap-cell.l5 { background: var(--pink); }
+  .heatmap-legend {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--slate-3); margin-top: 10px;
+    justify-content: flex-end;
+  }
+  .heatmap-legend-cell {
+    width: 12px; height: 12px; border-radius: 2px;
+  }
+
+  /* === Chart toggle === */
+  .chart-toggle {
+    display: inline-flex; gap: 4px;
+    background: var(--bg-1);
+    border-radius: 10px; padding: 3px;
+    margin-bottom: 12px;
+  }
+  .chart-toggle button {
+    padding: 5px 10px; border: none; background: transparent;
+    border-radius: 7px; cursor: pointer;
+    font: inherit; font-size: 11px; font-weight: 600;
+    color: var(--slate-2); transition: all 0.2s;
+  }
+  .chart-toggle button.active {
+    background: white; color: var(--pink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* === Search box === */
+  .search-messages {
+    display: flex; gap: 8px; margin-bottom: 12px;
+  }
+  .search-messages input {
+    flex: 1; padding: 8px 14px;
+    background: var(--bg-1);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    font: inherit; font-size: 13px;
+    color: var(--slate);
+  }
+  .search-messages input:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 3px var(--pink-glow);
+  }
+  .search-messages .count {
+    padding: 8px 12px; font-size: 12px; color: var(--slate-3);
+    background: var(--bg-1); border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  /* === Message list === */
+  .messages-list {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 8px;
+    max-height: 500px; overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .message-row {
+    display: grid; grid-template-columns: 100px 200px 1fr;
+    gap: 12px; padding: 10px 14px;
+    border-bottom: 1px solid var(--card-border);
+    font-size: 13px; align-items: center;
+  }
+  .message-row:last-child { border-bottom: none; }
+  .message-row:hover { background: rgba(236, 72, 153, 0.04); }
+  .message-date { color: var(--slate-3); font-size: 12px; font-family: monospace; }
+  .message-repo { color: var(--indigo); font-size: 12px; font-weight: 600; }
+  .message-text { color: var(--slate); font-family: monospace; font-size: 12px; word-break: break-word; }
+  .message-text mark { background: rgba(245, 158, 11, 0.3); color: var(--slate); padding: 0 2px; border-radius: 2px; }
+
+  /* === AI Summary === */
+  .ai-summary-card {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(236, 72, 153, 0.05) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 20px; padding: 20px;
+  }
+  .pattern-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 0; border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+  }
+  .pattern-row:last-child { border-bottom: none; }
+  .pattern-label { font-weight: 600; color: var(--slate); min-width: 160px; }
+  .pattern-count { font-weight: 800; color: var(--pink-deep); font-size: 18px; min-width: 50px; }
+  .pattern-bar-wrap { flex: 1; height: 6px; background: rgba(168, 85, 247, 0.1); border-radius: 3px; overflow: hidden; }
+  .pattern-bar { height: 100%; background: linear-gradient(90deg, var(--pink), #a855f7); border-radius: 3px; }
+  .word-cloud {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+  }
+  .word-tag {
+    padding: 4px 12px; background: rgba(99, 102, 241, 0.1);
+    border-radius: 999px; font-size: 13px; color: var(--indigo-deep);
+  }
+  .word-tag .cnt { font-weight: 700; margin-left: 4px; }
+
+  /* === Export button === */
+  .export-btn {
+    padding: 8px 14px; border: 1px solid var(--card-border);
+    background: white; border-radius: 10px;
+    font: inherit; font-size: 12px; font-weight: 600;
+    color: var(--slate-2); cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .export-btn:hover { border-color: var(--pink); color: var(--pink); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .export-btn-primary {
+    background: var(--pink); color: white; border-color: var(--pink);
+  }
+  .export-btn-primary:hover { background: var(--pink-deep); color: white; }
   .loader {
     position: fixed; inset: 0; z-index: 200;
     background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
@@ -775,7 +934,13 @@
     </div>
     <h1>SJ88 Mission Control</h1>
     <p>59 repositories shipped by a single AI agent — from a cozy Tokyo slice-of-life to a DirectAdmin clone, from Babylon.js tycoons to single-file Thai booking apps. Welcome to the bridge.</p>
-    <p class="hero-sub">🌊 <a href="https://github.com/lnwsj" style="color:var(--pink)">github.com/lnwsj</a> · 🚀 <a href="https://codehub.sj88ai.com" style="color:var(--indigo)">codehub.sj88ai.com</a> · 🏠 <a href="https://mavis.sj88ai.com" style="color:var(--mint)">mavis.sj88ai.com</a></p>
+    <p class="hero-sub" style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center;">
+      <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
+      <span style="color: var(--slate-3);">·</span>
+      <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
+      <span style="color: var(--slate-3);">·</span>
+      <a href="https://mavis.sj88ai.com" style="color:var(--mint); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.08)'" onmouseout="this.style.background='transparent'" title="https://mavis.sj88ai.com">🏠 <strong>Mavis Home</strong></a>
+    </p>
   </div>
 </header>
 
@@ -1214,6 +1379,9 @@
 
   let commitsData = null;
   let commitsLoading = false;
+  let patternsData = null;
+  let chartMode = 'day';
+  let messageSearch = '';
 
   async function loadCommitsView() {
     if (commitsData) {
@@ -1230,9 +1398,14 @@
       </div>
     `;
     try {
-      const res = await fetch(`${API_BASE}/commits`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      commitsData = await res.json();
+      const [commitsRes, patternsRes] = await Promise.all([
+        fetch(`${API_BASE}/commits`),
+        fetch(`${API_BASE}/commits/patterns`)
+      ]);
+      if (!commitsRes.ok) throw new Error(`HTTP ${commitsRes.status}`);
+      if (!patternsRes.ok) throw new Error(`HTTP ${patternsRes.status}`);
+      commitsData = await commitsRes.json();
+      patternsData = await patternsRes.json();
       renderCommitsView(commitsData);
     } catch (e) {
       document.getElementById('commitsView').innerHTML = `
@@ -1249,10 +1422,16 @@
   function renderCommitsView(data) {
     const s = data.summary;
     const byDay = data.by_day || [];
+    const byWeek = data.by_week || [];
     const byMonth = data.by_month || [];
+    const byQuarter = data.by_quarter || [];
     const byAuthor = data.by_author || [];
+    const heatmap = data.heatmap || [];
+    const heatmapWeeks = data.heatmap_weeks || [];
+    const heatmapMax = data.heatmap_max || 0;
+    const streak = data.streak || {current: 0, longest: 0, last_active: null};
+    const messages = data.messages || [];
 
-    // Hero stats
     const heroHtml = `
       <div class="commits-hero">
         <div class="commit-stat" style="--accent: var(--pink);">
@@ -1267,38 +1446,58 @@
         </div>
         <div class="commit-stat" style="--accent: var(--indigo);">
           <div class="commit-stat-emoji">📅</div>
-          <div class="commit-stat-value">${s.date_range_start ? (new Date(s.date_range_end) - new Date(s.date_range_start)) / 86400000 : 0}</div>
+          <div class="commit-stat-value">${s.date_range_start ? Math.round((new Date(s.date_range_end) - new Date(s.date_range_start)) / 86400000) : 0}</div>
           <div class="commit-stat-label">Days active</div>
           <div class="commit-stat-sub">${s.date_range_start} → ${s.date_range_end}</div>
         </div>
         <div class="commit-stat" style="--accent: var(--mint);">
           <div class="commit-stat-emoji">🔥</div>
-          <div class="commit-stat-value">${Math.max(...byDay.map(d => d.count), 0)}</div>
+          <div class="commit-stat-value">${byDay.length ? Math.max(...byDay.map(d => d.count)) : 0}</div>
           <div class="commit-stat-label">Peak commits in 1 day</div>
-          <div class="commit-stat-sub">${byDay.find(d => d.count === Math.max(...byDay.map(d => d.count)))?.date || '—'}</div>
+          <div class="commit-stat-sub">${byDay.length ? byDay.find(d => d.count === Math.max(...byDay.map(d => d.count)))?.date : '—'}</div>
         </div>
         <div class="commit-stat" style="--accent: var(--gold);">
           <div class="commit-stat-emoji">🌊</div>
-          <div class="commit-stat-value">${(s.lnwsj / s.total * 100).toFixed(0)}%</div>
+          <div class="commit-stat-value">${s.total ? (s.lnwsj / s.total * 100).toFixed(0) : 0}%</div>
           <div class="commit-stat-label">lnwsj ratio</div>
           <div class="commit-stat-sub">${s.lnwsj} of ${s.total} commits</div>
         </div>
       </div>
     `;
 
-    // By-day bar chart (last 30 days)
-    const last30 = byDay.slice(-30);
-    const maxDay = Math.max(...last30.map(d => d.count), 1);
-    const dayChartHtml = renderBarChart(last30, maxDay, 'date', 30);
+    const streakHtml = `
+      <div class="commits-section">
+        <h3>🏆 Streak <span class="count">commit activity</span></h3>
+        <div class="streak-card">
+          <div class="streak-stat current">
+            <div class="streak-stat-emoji">🔥</div>
+            <div class="streak-stat-value">${streak.current}</div>
+            <div class="streak-stat-label">Current Streak</div>
+          </div>
+          <div class="streak-stat longest">
+            <div class="streak-stat-emoji">⚡</div>
+            <div class="streak-stat-value">${streak.longest}</div>
+            <div class="streak-stat-label">Longest Streak</div>
+          </div>
+          <div class="streak-stat">
+            <div class="streak-stat-emoji">📍</div>
+            <div class="streak-stat-value" style="font-size: 18px;">${streak.last_active || '—'}</div>
+            <div class="streak-stat-label">Last Active</div>
+          </div>
+        </div>
+      </div>
+    `;
 
-    // By-month bar chart
-    const maxMonth = Math.max(...byMonth.map(m => m.count), 1);
-    const monthChartHtml = renderBarChart(byMonth, maxMonth, 'month', null);
+    const chartData = chartMode === 'day' ? byDay : chartMode === 'week' ? byWeek : chartMode === 'month' ? byMonth : byQuarter;
+    const chartKey = chartMode === 'day' ? 'date' : chartMode === 'week' ? 'week' : chartMode === 'month' ? 'month' : 'quarter';
+    const maxVal = chartData.length ? Math.max(...chartData.map(d => d.count), 1) : 1;
+    const chartHtml = renderBarChart(chartData, maxVal, chartKey);
+    const chartTitle = chartMode === 'day' ? 'Commits by Day' : chartMode === 'week' ? 'Commits by Week' : chartMode === 'month' ? 'Commits by Month' : 'Commits by Quarter';
 
-    // Donut (lnwsj vs other)
+    const heatmapHtml = renderHeatmap(heatmap, heatmapWeeks, heatmapMax);
     const donutHtml = renderDonut(s.lnwsj, s.other);
+    const searchHtml = renderSearchMessages(messages);
 
-    // Authors table
     const authorsHtml = byAuthor.length === 0 ? '' : `
       <div class="commits-section">
         <h3>👥 Top Contributors <span class="count">${byAuthor.length} unique authors</span></h3>
@@ -1332,14 +1531,24 @@
       </div>
     `;
 
-    document.getElementById('commitsView').innerHTML = heroHtml + `
+    const aiHtml = renderAiSummary(patternsData);
+
+    document.getElementById('commitsView').innerHTML = heroHtml + streakHtml + `
       <div class="commits-section">
-        <h3>📅 Commits by Day <span class="count">last ${last30.length} days</span></h3>
-        ${dayChartHtml}
+        <h3>📊 Activity Chart
+          <div class="chart-toggle" style="margin-left: auto;">
+            <button class="${chartMode === 'day' ? 'active' : ''}" data-chart="day">Day</button>
+            <button class="${chartMode === 'week' ? 'active' : ''}" data-chart="week">Week</button>
+            <button class="${chartMode === 'month' ? 'active' : ''}" data-chart="month">Month</button>
+            <button class="${chartMode === 'quarter' ? 'active' : ''}" data-chart="quarter">Quarter</button>
+          </div>
+        </h3>
+        <div style="font-size: 12px; color: var(--slate-3); margin-bottom: 8px;">${chartTitle} · ${chartData.length} data points</div>
+        ${chartHtml}
       </div>
       <div class="commits-section">
-        <h3>🗓️ Commits by Month <span class="count">${byMonth.length} months</span></h3>
-        ${monthChartHtml}
+        <h3>🔥 GitHub-style Heatmap <span class="count">${heatmap.length} active days</span></h3>
+        ${heatmapHtml}
       </div>
       <div class="donut-row">
         <div class="donut-card">
@@ -1351,8 +1560,174 @@
           ${renderTopRepos(data.by_repo || [])}
         </div>
       </div>
+      ${searchHtml}
       ${authorsHtml}
+      ${aiHtml}
     `;
+
+    document.querySelectorAll('[data-chart]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        chartMode = btn.dataset.chart;
+        renderCommitsView(data);
+      });
+    });
+    const searchInput = document.getElementById('messageSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        messageSearch = e.target.value;
+        const list = document.querySelector('.messages-list');
+        const countEl = document.querySelector('.commits-section h3 .count');
+        if (list) {
+          const filtered = messageSearch
+            ? commitsData.messages.filter(m => m.message.toLowerCase().includes(messageSearch.toLowerCase()) ||
+                                m.repo.toLowerCase().includes(messageSearch.toLowerCase()))
+            : commitsData.messages;
+          list.innerHTML = filtered.slice(0, 200).map(m => {
+            let msg = escapeHtml(m.message || '');
+            if (messageSearch) {
+              const regex = new RegExp(`(${escapeHtml(messageSearch)})`, 'gi');
+              msg = msg.replace(regex, '<mark>$1</mark>');
+            }
+            return `<div class="message-row"><div class="message-date">${m.date}</div><div class="message-repo">${escapeHtml(m.repo)}</div><div class="message-text">${msg} <span style="color: var(--slate-3); font-size: 11px;">· ${m.sha}</span></div></div>`;
+          }).join('') || '<div class="empty-result"><div class="emoji">🔍</div><div>No matches</div></div>';
+          const cnt = document.querySelector('.search-messages .count');
+          if (cnt) cnt.textContent = `${filtered.length} / ${commitsData.messages.length}`;
+        }
+      });
+    }
+    const exportBtn = document.getElementById('exportCsvBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => exportCsv(data));
+    }
+  }
+
+  function renderHeatmap(heatmap, weeks, max) {
+    if (!heatmap.length || !weeks.length) {
+      return '<div class="empty-result"><div class="emoji">📭</div><div>No heatmap data</div></div>';
+    }
+    const dows = ['Mon', '', 'Wed', '', 'Fri', '', 'Sun'];
+    const lookup = {};
+    heatmap.forEach(h => { lookup[h.week + '|' + h.dow] = h.count; });
+    function level(count) {
+      if (count === 0) return '';
+      if (max <= 5) return count >= max ? 'l5' : count >= max*0.75 ? 'l4' : count >= max*0.5 ? 'l3' : count >= max*0.25 ? 'l2' : 'l1';
+      if (count >= max * 0.8) return 'l5';
+      if (count >= max * 0.6) return 'l4';
+      if (count >= max * 0.4) return 'l3';
+      if (count >= max * 0.2) return 'l2';
+      return 'l1';
+    }
+    let html = '<div class="heatmap-grid">';
+    for (let i = 0; i < 7; i++) {
+      html += `<div class="heatmap-dow-label" style="grid-row: ${i+2}">${dows[i]}</div>`;
+    }
+    weeks.forEach((wk, col) => {
+      for (let dow = 0; dow < 7; dow++) {
+        const c = lookup[wk + '|' + dow] || 0;
+        const l = level(c);
+        const title = c ? `${wk} ${dows[dow]}: ${c} commits` : `${wk} ${dows[dow]}: 0`;
+        html += `<div class="heatmap-cell ${l}" style="grid-row: ${dow+2}; grid-column: ${col+2};" title="${title}"></div>`;
+      }
+    });
+    html += '</div>';
+    html += '<div class="heatmap-legend"><span>Less</span>';
+    html += '<div class="heatmap-legend-cell" style="background: var(--bg-2);"></div>';
+    html += '<div class="heatmap-legend-cell" style="background: rgba(236, 72, 153, 0.2);"></div>';
+    html += '<div class="heatmap-legend-cell" style="background: rgba(236, 72, 153, 0.4);"></div>';
+    html += '<div class="heatmap-legend-cell" style="background: rgba(236, 72, 153, 0.65);"></div>';
+    html += '<div class="heatmap-legend-cell" style="background: rgba(236, 72, 153, 0.85);"></div>';
+    html += '<div class="heatmap-legend-cell" style="background: var(--pink);"></div>';
+    html += '<span>More</span></div>';
+    return `<div class="heatmap-container">${html}</div>`;
+  }
+
+  function renderSearchMessages(messages) {
+    const filtered = messageSearch
+      ? messages.filter(m => m.message.toLowerCase().includes(messageSearch.toLowerCase()) ||
+                              m.repo.toLowerCase().includes(messageSearch.toLowerCase()))
+      : messages;
+    const html = filtered.slice(0, 200).map(m => {
+      let msg = escapeHtml(m.message || '');
+      if (messageSearch) {
+        const regex = new RegExp(`(${escapeHtml(messageSearch)})`, 'gi');
+        msg = msg.replace(regex, '<mark>$1</mark>');
+      }
+      return `<div class="message-row"><div class="message-date">${m.date}</div><div class="message-repo">${escapeHtml(m.repo)}</div><div class="message-text">${msg} <span style="color: var(--slate-3); font-size: 11px;">· ${m.sha}</span></div></div>`;
+    }).join('');
+    return `
+      <div class="commits-section">
+        <h3>🔍 Commit Search
+          <span class="count">${filtered.length} messages</span>
+          <button class="export-btn export-btn-primary" id="exportCsvBtn" style="margin-left: auto;">📧 Export CSV</button>
+        </h3>
+        <div class="search-messages">
+          <input type="text" id="messageSearch" placeholder="Search commit messages or repo names..." value="${escapeHtml(messageSearch)}" />
+          <div class="count">${filtered.length} / ${messages.length}</div>
+        </div>
+        <div class="messages-list">
+          ${html || '<div class="empty-result"><div class="emoji">🔍</div><div>No matches</div></div>'}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderAiSummary(patterns) {
+    if (!patterns) return '<div class="commits-section"><div class="ai-summary-card">⏳ Loading AI summary...</div></div>';
+    const max = patterns.patterns.length ? patterns.patterns[0].count : 1;
+    return `
+      <div class="commits-section">
+        <h3>🤖 AI Commit Summary <span class="count">${patterns.total_messages} commits analyzed</span></h3>
+        <div class="ai-summary-card">
+          <div style="display: flex; gap: 16px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(168, 85, 247, 0.15);">
+            <div style="flex: 1;">
+              <div style="font-size: 24px; font-weight: 800; color: var(--slate);">${patterns.matched}</div>
+              <div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase;">Matched patterns</div>
+            </div>
+            <div style="flex: 1;">
+              <div style="font-size: 24px; font-weight: 800; color: var(--slate);">${patterns.other}</div>
+              <div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase;">Unstructured</div>
+            </div>
+            <div style="flex: 2;">
+              <div style="font-size: 12px; color: var(--slate-2); line-height: 1.5;">
+                💡 <strong>Insight:</strong> Mavis ใช้ conventional commits style — <code>feat:</code>, <code>fix:</code>, <code>docs:</code> — ${patterns.total_messages ? Math.round(patterns.matched / patterns.total_messages * 100) : 0}% ของ commits มี pattern
+                ${patterns.other > 0 ? ` · ส่วน ${patterns.other} commits ที่เหลือเป็น ad-hoc เช่น "Initial commit", "Update README"` : ''}
+              </div>
+            </div>
+          </div>
+          <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-3); margin-bottom: 8px;">Top Commit Patterns</h4>
+          ${patterns.patterns.slice(0, 10).map(p => `
+            <div class="pattern-row">
+              <div class="pattern-label">${escapeHtml(p.pattern)}</div>
+              <div class="pattern-count">${p.count}</div>
+              <div class="pattern-bar-wrap"><div class="pattern-bar" style="width: ${(p.count / max * 100).toFixed(0)}%"></div></div>
+            </div>
+          `).join('')}
+          <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate-3); margin: 16px 0 8px;">Most-mentioned words</h4>
+          <div class="word-cloud">
+            ${patterns.top_words.slice(0, 25).map(w => `<span class="word-tag">${escapeHtml(w.word)} <span class="cnt">${w.count}</span></span>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function exportCsv(data) {
+    if (!data || !data.messages) return;
+    const rows = [['date', 'repo', 'sha', 'is_lnwsj', 'message']];
+    data.messages.forEach(m => {
+      const msg = (m.message || '').replace(/"/g, '""').replace(/\n/g, ' ');
+      rows.push([m.date, m.repo, m.sha, m.is_lnwsj ? 'yes' : 'no', `"${msg}"`]);
+    });
+    const csv = rows.map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `lnwsj-commits-${data.summary.date_range_end || 'export'}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   function renderBarChart(data, maxValue, labelKey, limitDays) {
