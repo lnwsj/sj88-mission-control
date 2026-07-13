@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🚀 SJ88 Mission Control · 59 Repos · lnwsj on GitHub</title>
 <meta name="description" content="🚀 SJ88 Mission Control — Live interactive dashboard of all 59 GitHub repositories shipped by Mavis (lnwsj). Single-file web apps, 3D games, booking systems, AI tools.">
+  <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22SJ88%20Mission%20Control%22%2C%22short_name%22%3A%22SJ88%22%2C%22description%22%3A%22Dashboard%20for%20lnwsj%27s%2059%20GitHub%20repos%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23fdf2f8%22%2C%22theme_color%22%3A%22%23ec4899%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520100%2520100%2527%253E%253Crect%2520fill%253D%2527%2523ec4899%2527%2520width%253D%2527100%2527%2520height%253D%2527100%2527%2520rx%253D%252720%2527%252F%253E%253Ctext%2520x%253D%252750%2527%2520y%253D%252767%2527%2520text-anchor%253D%2527middle%2527%2520font-size%253D%252760%2527%253E%F0%9F%9A%A2%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+  <meta name="theme-color" content="#ec4899">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SJ88">
 <style>
   /* === Reset & Base === */
   *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1846,6 +1851,71 @@
     border-radius: 8px;
   }
 
+
+  /* v17: PWA Install Button */
+  .pwa-install-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--indigo) 100%);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(236, 72, 153, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+  .pwa-install-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pwa-install-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(236, 72, 153, 0.6);
+  }
+
+  /* v17: Global Search */
+  .gs-recent, .gs-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .gs-recent-chip, .gs-suggest-chip {
+    background: var(--bg-1);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .gs-recent-chip:hover, .gs-suggest-chip:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .gs-suggest-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+  }
+  .gs-suggest-chip span { font-size: 14px; }
+  .gs-suggest-chip strong { color: var(--accent); font-weight: 600; }
+  .gs-suggest-chip em { color: var(--slate-3); font-style: normal; font-size: 11px; }
+  .gs-suggest-chip:hover strong, .gs-suggest-chip:hover em { color: white; }
+  .gs-result:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .gs-result:hover { transform: translateX(4px); }
+
 </style>
 </head>
 <body>
@@ -1887,6 +1957,7 @@
       <button id="shareBtn" class="hero-tool-btn" title="Copy link to this view">🔗</button>
       <button id="themeBtn" class="hero-tool-btn" title="Switch theme (press T)">🎨</button>
       <button id="accentBtn" class="hero-tool-btn" title="Custom accent (press Z)">🌈</button>
+      <button id="globalSearchBtn" class="hero-tool-btn" title="Global search (press / or Cmd+K)">🔍</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
       <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
@@ -2494,7 +2565,13 @@
     else if (key === 'a') showAchievements();
     else if (key === 'c' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); showChat(); return; }
     else if (key === 's') shareCurrentView();
-    else if (key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+    else if (key === '/') {
+      // Only open global search if search input is not focused
+      if (document.activeElement?.id !== 'searchInput' && document.activeElement?.id !== 'globalSearchInput') {
+        e.preventDefault();
+        showGlobalSearch();
+      }
+    }
     else if (key === 'g') document.querySelector('[data-view="grid"]')?.click();
     else if (key === 't') document.querySelector('[data-view="timeline"]')?.click();
     else if (key === 'v') document.querySelector('[data-view="category"]')?.click();
@@ -2507,6 +2584,10 @@
     else if (key === '?') { e.preventDefault(); showShortcuts(); }
     else if (key === 'r') location.reload();
     else if (key === 'escape') closeModal();
+    if ((e.metaKey || e.ctrlKey) && key === 'k') {
+      e.preventDefault();
+      showGlobalSearch();
+    }
   });
 
   /* === Mavis Chat Agent === */
@@ -2620,7 +2701,257 @@
     }
     const accentBtn = document.getElementById('accentBtn');
     if (accentBtn) accentBtn.addEventListener('click', showCustomAccent);
+    const searchBtn = document.getElementById('globalSearchBtn');
+    if (searchBtn) searchBtn.addEventListener('click', showGlobalSearch);
   }
+  /* === v17: PWA Install + Service Worker === */
+  let deferredInstallPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    showInstallButton();
+  });
+
+  function showInstallButton() {
+    const existing = document.getElementById('pwaInstallBtn');
+    if (existing) return;
+    const btn = document.createElement('button');
+    btn.id = 'pwaInstallBtn';
+    btn.className = 'pwa-install-btn';
+    btn.innerHTML = '📥 Install App';
+    btn.title = 'Install SJ88 Mission Control as PWA';
+    btn.addEventListener('click', async () => {
+      if (!deferredInstallPrompt) {
+        showToast('💡 Use browser menu → "Add to Home Screen"', 'info');
+        return;
+      }
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showToast('🎉 Installing SJ88 Mission Control...', 'success');
+        btn.remove();
+      }
+      deferredInstallPrompt = null;
+    });
+    document.body.appendChild(btn);
+    setTimeout(() => btn.classList.add('show'), 100);
+  }
+
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+      const CACHE = 'sj88-mc-v1';
+      const STATIC = ['/', '/index.html'];
+      self.addEventListener('install', (e) => {
+        e.waitUntil(caches.open(CACHE).then(c => c.addAll(STATIC).catch(() => {})));
+        self.skipWaiting();
+      });
+      self.addEventListener('activate', (e) => {
+        e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
+        e.waitUntil(self.clients.claim());
+      });
+      self.addEventListener('fetch', (e) => {
+        if (e.request.method !== 'GET') return;
+        const url = new URL(e.request.url);
+        if (url.hostname === 'api.github.com' || url.hostname === 'git88.sj88ai.com') {
+          e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+          return;
+        }
+        e.respondWith(
+          caches.match(e.request).then(cached => {
+            const network = fetch(e.request).then(resp => {
+              if (resp.ok) {
+                const clone = resp.clone();
+                caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+              }
+              return resp;
+            }).catch(() => cached);
+            return cached || network;
+          })
+        );
+      });
+    `;
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swBlob, { scope: '/' }).then(() => {
+      console.log('✅ PWA: Service worker registered');
+    }).catch(err => console.warn('SW reg failed:', err));
+  }
+
+  /* === v17: Global Search (modal with debounced search) === */
+  let globalSearchDebounce = null;
+  let globalSearchHistory = JSON.parse(localStorage.getItem('sj88-search-history') || '[]');
+
+  function showGlobalSearch() {
+    const recentHtml = globalSearchHistory.length
+      ? '<div class="gs-recent">' + globalSearchHistory.slice(0, 5).map(q => `<button class="gs-recent-chip" data-q="${escapeHtml(q)}">🕒 ${escapeHtml(q)}</button>`).join('') + '</div>'
+      : '';
+    const suggestHtml = '<div class="gs-suggestions">' + [
+      { i: '🧠', q: 'AI', t: 'AI Apps + 3D + Python' },
+      { i: '🎮', q: 'game', t: 'Games (3D + 2D + booking)' },
+      { i: '🌐', q: 'babylon', t: 'Babylon.js projects' },
+      { i: '🐍', q: 'python', t: 'Python Desktop tools' },
+      { i: '🚀', q: 'live', t: 'Live + deployed apps' },
+      { i: '🏷️', q: 'ai', t: 'AI/ML tagged repos' }
+    ].map(s => `<button class="gs-suggest-chip" data-q="${s.q}"><span>${s.i}</span> <strong>${s.q}</strong> <em>${s.t}</em></button>`).join('') + '</div>';
+
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🔍</div>
+        <div class="modal-title">Global Search</div>
+        <div class="modal-cat" style="color: var(--indigo);">Search across all 59 repos · 70+ tags · 4 languages</div>
+      </div>
+      <div class="modal-body" style="max-height: 70vh;">
+        <div style="position: relative; margin-bottom: 16px;">
+          <input type="text" id="globalSearchInput" placeholder="Search repos, tags, stacks, languages..." autocomplete="off" style="
+            width: 100%; padding: 14px 18px 14px 44px;
+            background: var(--bg-1); border: 2px solid var(--card-border);
+            border-radius: 14px; font: inherit; font-size: 15px;
+            color: var(--text); outline: none;
+          " />
+          <div style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none;">🔍</div>
+        </div>
+        <div id="globalSearchResults">
+          ${recentHtml ? `<div style="margin-bottom: 16px;"><div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">🕒 Recent</div>${recentHtml}</div>` : ''}
+          <div style="margin-bottom: 16px;"><div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">💡 Try</div>${suggestHtml}</div>
+        </div>
+        <div style="margin-top: 16px; padding: 10px; background: var(--bg-1); border-radius: 8px; font-size: 11px; color: var(--slate-3);">
+          💡 Tip: <strong>ESC</strong> close · <strong>↑↓</strong> navigate · <strong>Enter</strong> open · <strong>/</strong> open from anywhere
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    setTimeout(() => document.getElementById('globalSearchInput').focus(), 100);
+    wireGlobalSearch();
+  }
+
+  function wireGlobalSearch() {
+    const input = document.getElementById('globalSearchInput');
+    if (!input) return;
+    input.addEventListener('input', () => {
+      clearTimeout(globalSearchDebounce);
+      globalSearchDebounce = setTimeout(() => runGlobalSearch(input.value), 200);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const first = document.querySelector('.gs-result');
+        if (first) {
+          e.preventDefault();
+          first.click();
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const items = document.querySelectorAll('.gs-result');
+        const active = document.activeElement;
+        const idx = Array.from(items).indexOf(active);
+        if (idx >= 0 && idx < items.length - 1) items[idx + 1].focus();
+        else if (items[0]) items[0].focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const items = document.querySelectorAll('.gs-result');
+        const active = document.activeElement;
+        const idx = Array.from(items).indexOf(active);
+        if (idx > 0) items[idx - 1].focus();
+      }
+    });
+    document.querySelectorAll('.gs-recent-chip, .gs-suggest-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        input.value = btn.dataset.q;
+        input.focus();
+        runGlobalSearch(btn.dataset.q);
+      });
+    });
+  }
+
+  function runGlobalSearch(q) {
+    const resultsEl = document.getElementById('globalSearchResults');
+    if (!q || q.length < 2) {
+      const recentHtml = globalSearchHistory.length
+        ? '<div style="margin-bottom: 16px;"><div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">🕒 Recent</div><div class="gs-recent">' + globalSearchHistory.slice(0, 5).map(qq => `<button class="gs-recent-chip" data-q="${escapeHtml(qq)}">🕒 ${escapeHtml(qq)}</button>`).join('') + '</div></div>'
+        : '';
+      const emptySuggest = '<div style="margin-bottom: 16px;"><div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">💡 Try</div><div class="gs-suggestions">' + [
+        { i: '🧠', q: 'AI', t: 'AI Apps + 3D + Python' },
+        { i: '🎮', q: 'game', t: 'Games (3D + 2D + booking)' },
+        { i: '🌐', q: 'babylon', t: 'Babylon.js projects' },
+        { i: '🐍', q: 'python', t: 'Python Desktop tools' },
+        { i: '🚀', q: 'live', t: 'Live + deployed apps' },
+        { i: '🏷️', q: 'ai', t: 'AI/ML tagged repos' }
+      ].map(s => `<button class="gs-suggest-chip" data-q="${s.q}"><span>${s.i}</span> <strong>${s.q}</strong> <em>${s.t}</em></button>`).join('') + '</div></div>';
+      resultsEl.innerHTML = recentHtml + emptySuggest + '<div style="text-align: center; color: var(--slate-3); padding: 12px; font-size: 12px;">Type at least 2 characters to search...</div>';
+      document.querySelectorAll('.gs-recent-chip').forEach(b => b.addEventListener('click', () => {
+        document.getElementById('globalSearchInput').value = b.dataset.q;
+        runGlobalSearch(b.dataset.q);
+      }));
+      return;
+    }
+    // Save to history
+    if (!globalSearchHistory.includes(q)) {
+      globalSearchHistory = [q, ...globalSearchHistory.filter(x => x !== q)].slice(0, 10);
+      localStorage.setItem('sj88-search-history', JSON.stringify(globalSearchHistory));
+    }
+    // Search across repos
+    const ql = q.toLowerCase();
+    const matches = [];
+    REPOS.forEach(r => {
+      const hay = (r.name + ' ' + r.desc + ' ' + r.desc_full + ' ' + (r.highlights || []).join(' ') + ' ' + (r.stack || '') + ' ' + (r.lang || '') + ' ' + (r.tags || []).join(' ') + ' ' + (CATEGORIES[r.cat]?.label || '') + ' ' + (CATEGORIES[r.cat]?.th || '')).toLowerCase();
+      if (hay.includes(ql)) {
+        // Score: exact match = 100, name match = 80, tag = 60, stack = 50, desc = 30
+        let score = 0;
+        if (r.name.toLowerCase().includes(ql)) score = Math.max(score, 80);
+        if ((r.tags || []).some(t => t.toLowerCase() === ql)) score = Math.max(score, 95);
+        if ((r.stack || '').toLowerCase().includes(ql)) score = Math.max(score, 60);
+        if ((r.lang || '').toLowerCase().includes(ql)) score = Math.max(score, 60);
+        if ((r.desc || '').toLowerCase().includes(ql)) score = Math.max(score, 40);
+        if ((r.desc_full || '').toLowerCase().includes(ql)) score = Math.max(score, 30);
+        matches.push({ r, score });
+      }
+    });
+    matches.sort((a, b) => b.score - a.score);
+    if (!matches.length) {
+      resultsEl.innerHTML = '<div style="text-align: center; color: var(--slate-3); padding: 30px;"><div style="font-size: 36px;">🔍</div>No matches for "<strong>' + escapeHtml(q) + '</strong>"<br/><small>Try tags: live, 3d, babylon, python, small</small></div>';
+      return;
+    }
+    const catEmoji = (cat) => (CATEGORIES[cat]?.emoji || '📦');
+    const html2 = '<div style="font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; margin-bottom: 8px;">📊 ' + matches.length + ' matches</div>' + matches.slice(0, 15).map(m => {
+      const r = m.r;
+      const tagsHtml = (r.tags || []).slice(0, 4).map(t => {
+        const isHit = t.toLowerCase().includes(ql);
+        return '<span class="tag-mini" style="' + (isHit ? 'background: var(--accent); color: white; border-color: var(--accent);' : '') + '">#' + t + '</span>';
+      }).join(' ');
+      return '<div class="gs-result" tabindex="0" data-name="' + r.name + '" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--card-border); border-radius: 10px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s;">'
+        + '<div style="font-size: 28px;">' + r.emoji + '</div>'
+        + '<div style="flex: 1; min-width: 0;">'
+        + '<div style="display: flex; align-items: center; gap: 8px;">'
+        + '<strong style="color: var(--text); font-size: 14px;">' + highlightMatch(r.name, q) + '</strong>'
+        + '<span style="font-size: 10px; padding: 2px 6px; background: var(--bg-1); border-radius: 4px; color: var(--slate-2);">' + catEmoji(r.cat) + ' ' + (CATEGORIES[r.cat]?.label || r.cat) + '</span>'
+        + '<span style="font-size: 10px; color: var(--slate-3); margin-left: auto;">⭐ ' + r.stars + ' · ' + fmtSize(r.size_kb) + '</span>'
+        + '</div>'
+        + '<div style="font-size: 12px; color: var(--slate-2); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + highlightMatch(r.desc, q) + '</div>'
+        + '<div style="margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap;">' + tagsHtml + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+    resultsEl.innerHTML = html2;
+    // Wire up result clicks
+    document.querySelectorAll('.gs-result').forEach(r => {
+      r.addEventListener('click', () => {
+        const repo = REPOS.find(x => x.name === r.dataset.name);
+        if (repo) {
+          closeModal();
+          setTimeout(() => showModal(repo), 100);
+        }
+      });
+    });
+  }
+
+  function highlightMatch(text, q) {
+    if (!text || !q) return escapeHtml(text || '');
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    return escapeHtml(text).replace(re, '<mark style="background: var(--accent); color: white; padding: 1px 4px; border-radius: 3px;">$1</mark>');
+  }
+
   initHeroButtons();
 
   /* =========================================================
