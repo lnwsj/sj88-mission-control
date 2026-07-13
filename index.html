@@ -528,7 +528,168 @@
   .footer a { color: var(--pink); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
 
-  /* === Loader === */
+  /* === Commits view === */
+  .commits-view { display: none; padding: 0 0 40px; position: relative; z-index: 1; }
+  .commits-view.active { display: block; }
+  .commits-hero {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin-bottom: 24px;
+  }
+  .commit-stat {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 20px;
+    text-align: left; position: relative; overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .commit-stat::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent, var(--pink));
+  }
+  .commit-stat-emoji { font-size: 28px; margin-bottom: 8px; }
+  .commit-stat-value {
+    font-size: 32px; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--accent, var(--pink)); line-height: 1;
+  }
+  .commit-stat-label { font-size: 13px; color: var(--slate-2); margin-top: 4px; }
+  .commit-stat-sub { font-size: 11px; color: var(--slate-3); margin-top: 2px; }
+  .commit-stat-breakdown {
+    display: flex; gap: 4px; margin-top: 10px;
+    font-size: 11px; color: var(--slate-2);
+  }
+  .commit-stat-breakdown .pip {
+    flex: 1; padding: 3px 6px; border-radius: 4px;
+    font-weight: 600;
+  }
+  .commit-stat-breakdown .pip.lnwsj { background: rgba(236, 72, 153, 0.12); color: var(--pink-deep); }
+  .commit-stat-breakdown .pip.other { background: rgba(99, 102, 241, 0.12); color: var(--indigo-deep); }
+
+  .commits-section { margin-bottom: 32px; }
+  .commits-section h3 {
+    font-size: 18px; font-weight: 700; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .commits-section h3 .count {
+    font-size: 12px; font-weight: 500; color: var(--slate-3);
+    background: var(--bg-1); padding: 2px 10px; border-radius: 999px;
+  }
+
+  /* Bar chart */
+  .bar-chart {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 24px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+  .bar-chart-bars {
+    display: flex; align-items: flex-end; gap: 6px;
+    height: 220px; min-width: 100%;
+    position: relative;
+  }
+  .bar-chart-bars::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: var(--card-border);
+  }
+  .bar-group {
+    flex: 1; min-width: 24px; display: flex; flex-direction: column;
+    align-items: center; gap: 2px; position: relative;
+  }
+  .bar-stack {
+    width: 100%; max-width: 60px; display: flex; flex-direction: column-reverse;
+    border-radius: 6px 6px 0 0; overflow: hidden;
+    transition: filter 0.2s;
+  }
+  .bar-stack:hover { filter: brightness(1.1); }
+  .bar-segment {
+    width: 100%; transition: height 0.6s ease-out;
+    position: relative;
+  }
+  .bar-segment.lnwsj { background: linear-gradient(180deg, var(--pink) 0%, #f472b6 100%); }
+  .bar-segment.other { background: linear-gradient(180deg, var(--indigo) 0%, #818cf8 100%); }
+  .bar-value {
+    font-size: 10px; font-weight: 700; color: var(--slate);
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .bar-label {
+    font-size: 10px; color: var(--slate-3); margin-top: 6px;
+    text-align: center; white-space: nowrap; transform: rotate(-30deg);
+    transform-origin: center; width: 60px; margin-left: -16px;
+  }
+  .bar-chart-legend {
+    display: flex; gap: 16px; margin-top: 16px; font-size: 12px;
+    color: var(--slate-2);
+  }
+  .bar-chart-legend .pip { display: flex; align-items: center; gap: 4px; }
+  .bar-chart-legend .swatch { width: 12px; height: 12px; border-radius: 3px; }
+  .bar-chart-legend .swatch.lnwsj { background: var(--pink); }
+  .bar-chart-legend .swatch.other { background: var(--indigo); }
+
+  /* Donut */
+  .donut-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 768px) { .donut-row { grid-template-columns: 1fr; } }
+  .donut-card {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .donut-svg { width: 100%; max-width: 280px; margin: 0 auto; display: block; }
+  .donut-center-text {
+    font-size: 36px; font-weight: 800; fill: var(--slate);
+    text-anchor: middle;
+  }
+  .donut-center-label {
+    font-size: 12px; fill: var(--slate-3);
+    text-anchor: middle;
+  }
+  .donut-legend { margin-top: 16px; }
+  .donut-legend-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0; font-size: 13px;
+  }
+  .donut-legend-swatch { width: 14px; height: 14px; border-radius: 4px; }
+  .donut-legend-text { flex: 1; color: var(--slate-2); }
+  .donut-legend-value { font-weight: 700; color: var(--slate); }
+
+  /* Authors table */
+  .authors-table {
+    background: var(--card); backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .author-row {
+    display: grid; grid-template-columns: 40px 1fr 80px 100px 80px;
+    gap: 12px; align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--card-border);
+    transition: background 0.2s;
+  }
+  .author-row:last-child { border-bottom: none; }
+  .author-row:hover { background: rgba(236, 72, 153, 0.04); }
+  .author-rank { font-weight: 700; color: var(--slate-3); font-size: 14px; }
+  .author-rank.top { color: var(--pink); }
+  .author-name { font-size: 14px; font-weight: 600; color: var(--slate); }
+  .author-email { font-size: 11px; color: var(--slate-3); font-family: monospace; }
+  .author-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 999px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+  }
+  .author-badge.lnwsj { background: rgba(236, 72, 153, 0.12); color: var(--pink-deep); }
+  .author-badge.other { background: rgba(99, 102, 241, 0.12); color: var(--indigo-deep); }
+  .author-count { font-weight: 700; text-align: right; font-size: 15px; color: var(--slate); }
+  .author-bar-wrap {
+    height: 4px; background: var(--bg-1); border-radius: 2px; overflow: hidden;
+  }
+  .author-bar {
+    height: 100%; background: linear-gradient(90deg, var(--pink), var(--indigo));
+    border-radius: 2px;
+  }
+  .commits-loading { text-align: center; padding: 60px; color: var(--slate-3); }
+  .commits-loading .emoji { font-size: 48px; margin-bottom: 12px; }
   .loader {
     position: fixed; inset: 0; z-index: 200;
     background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
@@ -579,6 +740,8 @@
   [data-cat="infra"] { --cat-color: #64748b; --cat-bg: rgba(100, 116, 139, 0.12); }
   [data-cat="fork"] { --cat-color: #f59e0b; --cat-bg: rgba(245, 158, 11, 0.12); }
   [data-cat="portfolio"] { --cat-color: #ec4899; --cat-bg: rgba(236, 72, 153, 0.12); }
+
+  /* === Loader === */
 </style>
 </head>
 <body>
@@ -632,6 +795,7 @@
       <button class="view-btn active" data-view="grid">▦ Grid</button>
       <button class="view-btn" data-view="timeline">📅 Timeline</button>
       <button class="view-btn" data-view="category">📂 By Category</button>
+      <button class="view-btn" data-view="commits">📊 Commits</button>
     </div>
   </div>
 </div>
@@ -641,6 +805,12 @@
   <div class="container">
     <div class="repos-grid" id="reposGrid"></div>
     <div class="timeline-view" id="timelineView"></div>
+    <div class="commits-view" id="commitsView">
+      <div class="commits-loading">
+        <div class="emoji">📊</div>
+        <div>Loading commit analytics from GitHub...</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1019,6 +1189,7 @@
     if (state.view === 'grid') {
       document.getElementById('reposGrid').style.display = 'grid';
       document.getElementById('timelineView').classList.remove('active');
+      document.getElementById('commitsView').classList.remove('active');
       document.getElementById('reposGrid').innerHTML = repos.length
         ? repos.map(renderCard).join('')
         : `<div class="empty"><div class="empty-emoji">🔍</div><div class="empty-text">No repos match "${state.search}"</div></div>`;
@@ -1026,12 +1197,247 @@
     } else if (state.view === 'timeline') {
       document.getElementById('reposGrid').style.display = 'none';
       document.getElementById('timelineView').classList.add('active');
+      document.getElementById('commitsView').classList.remove('active');
       renderTimeline(repos);
-    } else {
+    } else if (state.view === 'category') {
       document.getElementById('reposGrid').style.display = 'none';
       document.getElementById('timelineView').classList.add('active');
+      document.getElementById('commitsView').classList.remove('active');
       renderCategoryView(repos);
+    } else if (state.view === 'commits') {
+      document.getElementById('reposGrid').style.display = 'none';
+      document.getElementById('timelineView').classList.remove('active');
+      document.getElementById('commitsView').classList.add('active');
+      loadCommitsView();
     }
+  }
+
+  let commitsData = null;
+  let commitsLoading = false;
+
+  async function loadCommitsView() {
+    if (commitsData) {
+      renderCommitsView(commitsData);
+      return;
+    }
+    if (commitsLoading) return;
+    commitsLoading = true;
+    document.getElementById('commitsView').innerHTML = `
+      <div class="commits-loading">
+        <div class="emoji">📊</div>
+        <div>Loading commit analytics from GitHub...</div>
+        <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">⏳ First time: fetching + caching (may take ~30s)</div>
+      </div>
+    `;
+    try {
+      const res = await fetch(`${API_BASE}/commits`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      commitsData = await res.json();
+      renderCommitsView(commitsData);
+    } catch (e) {
+      document.getElementById('commitsView').innerHTML = `
+        <div class="commits-loading">
+          <div class="emoji">⚠️</div>
+          <div style="color: var(--coral);">${e.message}</div>
+        </div>
+      `;
+    } finally {
+      commitsLoading = false;
+    }
+  }
+
+  function renderCommitsView(data) {
+    const s = data.summary;
+    const byDay = data.by_day || [];
+    const byMonth = data.by_month || [];
+    const byAuthor = data.by_author || [];
+
+    // Hero stats
+    const heroHtml = `
+      <div class="commits-hero">
+        <div class="commit-stat" style="--accent: var(--pink);">
+          <div class="commit-stat-emoji">📊</div>
+          <div class="commit-stat-value">${s.total}</div>
+          <div class="commit-stat-label">Total Commits</div>
+          <div class="commit-stat-sub">${s.repos_with_commits} repos · ${s.unique_authors} authors</div>
+          <div class="commit-stat-breakdown">
+            <div class="pip lnwsj">🌊 lnwsj: ${s.lnwsj}</div>
+            <div class="pip other">👥 other: ${s.other}</div>
+          </div>
+        </div>
+        <div class="commit-stat" style="--accent: var(--indigo);">
+          <div class="commit-stat-emoji">📅</div>
+          <div class="commit-stat-value">${s.date_range_start ? (new Date(s.date_range_end) - new Date(s.date_range_start)) / 86400000 : 0}</div>
+          <div class="commit-stat-label">Days active</div>
+          <div class="commit-stat-sub">${s.date_range_start} → ${s.date_range_end}</div>
+        </div>
+        <div class="commit-stat" style="--accent: var(--mint);">
+          <div class="commit-stat-emoji">🔥</div>
+          <div class="commit-stat-value">${Math.max(...byDay.map(d => d.count), 0)}</div>
+          <div class="commit-stat-label">Peak commits in 1 day</div>
+          <div class="commit-stat-sub">${byDay.find(d => d.count === Math.max(...byDay.map(d => d.count)))?.date || '—'}</div>
+        </div>
+        <div class="commit-stat" style="--accent: var(--gold);">
+          <div class="commit-stat-emoji">🌊</div>
+          <div class="commit-stat-value">${(s.lnwsj / s.total * 100).toFixed(0)}%</div>
+          <div class="commit-stat-label">lnwsj ratio</div>
+          <div class="commit-stat-sub">${s.lnwsj} of ${s.total} commits</div>
+        </div>
+      </div>
+    `;
+
+    // By-day bar chart (last 30 days)
+    const last30 = byDay.slice(-30);
+    const maxDay = Math.max(...last30.map(d => d.count), 1);
+    const dayChartHtml = renderBarChart(last30, maxDay, 'date', 30);
+
+    // By-month bar chart
+    const maxMonth = Math.max(...byMonth.map(m => m.count), 1);
+    const monthChartHtml = renderBarChart(byMonth, maxMonth, 'month', null);
+
+    // Donut (lnwsj vs other)
+    const donutHtml = renderDonut(s.lnwsj, s.other);
+
+    // Authors table
+    const authorsHtml = byAuthor.length === 0 ? '' : `
+      <div class="commits-section">
+        <h3>👥 Top Contributors <span class="count">${byAuthor.length} unique authors</span></h3>
+        <div class="authors-table">
+          <div class="author-row" style="background: var(--bg-1); font-size: 11px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.05em;">
+            <div>#</div>
+            <div>Author</div>
+            <div>Type</div>
+            <div>Share</div>
+            <div style="text-align: right;">Commits</div>
+          </div>
+          ${byAuthor.map((a, i) => `
+            <div class="author-row">
+              <div class="author-rank ${i < 3 ? 'top' : ''}">#${i+1}</div>
+              <div>
+                <div class="author-name">${escapeHtml(a.name || '—')}</div>
+                <div class="author-email">${escapeHtml(a.email || '—')}</div>
+              </div>
+              <div>
+                <span class="author-badge ${a.is_lnwsj ? 'lnwsj' : 'other'}">${a.is_lnwsj ? 'lnwsj' : 'other'}</span>
+              </div>
+              <div>
+                <div class="author-bar-wrap">
+                  <div class="author-bar" style="width: ${(a.count / s.total * 100).toFixed(0)}%"></div>
+                </div>
+              </div>
+              <div class="author-count">${a.count}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    document.getElementById('commitsView').innerHTML = heroHtml + `
+      <div class="commits-section">
+        <h3>📅 Commits by Day <span class="count">last ${last30.length} days</span></h3>
+        ${dayChartHtml}
+      </div>
+      <div class="commits-section">
+        <h3>🗓️ Commits by Month <span class="count">${byMonth.length} months</span></h3>
+        ${monthChartHtml}
+      </div>
+      <div class="donut-row">
+        <div class="donut-card">
+          <h3 style="margin-bottom: 12px;">🌊 Who commits?</h3>
+          ${donutHtml}
+        </div>
+        <div class="donut-card">
+          <h3 style="margin-bottom: 12px;">📊 Top repos by commits</h3>
+          ${renderTopRepos(data.by_repo || [])}
+        </div>
+      </div>
+      ${authorsHtml}
+    `;
+  }
+
+  function renderBarChart(data, maxValue, labelKey, limitDays) {
+    if (!data || data.length === 0) {
+      return '<div class="empty-result"><div class="emoji">📭</div><div>No data</div></div>';
+    }
+    const max = maxValue || 1;
+    return `
+      <div class="bar-chart">
+        <div class="bar-chart-bars">
+          ${data.map(d => {
+            const total = d.count;
+            const lnwsjH = (d.lnwsj / max) * 180;
+            const otherH = (d.other / max) * 180;
+            return `
+              <div class="bar-group" title="${d[labelKey]}: ${total} (lnwsj ${d.lnwsj}, other ${d.other})">
+                <div class="bar-stack" style="height: ${(total / max) * 180}px;">
+                  <div class="bar-segment other" style="height: ${otherH}px;"></div>
+                  <div class="bar-segment lnwsj" style="height: ${lnwsjH}px;"></div>
+                </div>
+                <div class="bar-value">${total}</div>
+                <div class="bar-label">${d[labelKey].substring(5)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div class="bar-chart-legend">
+          <div class="pip"><div class="swatch lnwsj"></div> lnwsj (Mavis / AI agent)</div>
+          <div class="pip"><div class="swatch other"></div> other (collaborators, bots)</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderDonut(lnwsj, other) {
+    const total = lnwsj + other;
+    if (total === 0) return '<div class="empty-result">No data</div>';
+    const lnwsjPct = lnwsj / total;
+    const otherPct = other / total;
+    // SVG donut
+    const r = 70, cx = 100, cy = 100, sw = 28;
+    const circumference = 2 * Math.PI * r;
+    const lnwsjArc = lnwsjPct * circumference;
+    const otherArc = otherPct * circumference;
+    return `
+      <svg class="donut-svg" viewBox="0 0 200 200">
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--bg-2)" stroke-width="${sw}"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--pink)" stroke-width="${sw}"
+                stroke-dasharray="${lnwsjArc} ${circumference - lnwsjArc}"
+                stroke-dashoffset="0" transform="rotate(-90 ${cx} ${cy})"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--indigo)" stroke-width="${sw}"
+                stroke-dasharray="${otherArc} ${circumference - otherArc}"
+                stroke-dashoffset="${-lnwsjArc}" transform="rotate(-90 ${cx} ${cy})"/>
+        <text x="${cx}" y="${cy - 4}" class="donut-center-text">${total}</text>
+        <text x="${cx}" y="${cy + 18}" class="donut-center-label">commits</text>
+      </svg>
+      <div class="donut-legend">
+        <div class="donut-legend-item">
+          <div class="donut-legend-swatch" style="background: var(--pink);"></div>
+          <div class="donut-legend-text">🌊 lnwsj (Mavis)</div>
+          <div class="donut-legend-value">${lnwsj} (${(lnwsjPct*100).toFixed(0)}%)</div>
+        </div>
+        <div class="donut-legend-item">
+          <div class="donut-legend-swatch" style="background: var(--indigo);"></div>
+          <div class="donut-legend-text">👥 Others</div>
+          <div class="donut-legend-value">${other} (${(otherPct*100).toFixed(0)}%)</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderTopRepos(byRepo) {
+    if (!byRepo || byRepo.length === 0) return '<div class="empty-result">No data</div>';
+    const max = byRepo[0]?.count || 1;
+    return `
+      <div style="margin-top: 8px;">
+        ${byRepo.slice(0, 10).map((r, i) => `
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px;">
+            <div style="font-weight: 700; color: var(--slate-3); min-width: 22px;">#${i+1}</div>
+            <div style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(r.name)}</div>
+            <div style="font-weight: 700; color: var(--pink);">${r.count}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
   }
 
   function attachCardHandlers() {
