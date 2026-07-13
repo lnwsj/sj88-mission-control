@@ -4097,32 +4097,123 @@
   }
 
   async function cockpitDeploy(name) {
-    showToast(`🚀 Preparing deploy for ${name}...`);
+    showToast(`🚀 Deploying ${name}...`);
+    // First show the modal with loading state
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">🚀</div>
+        <div class="modal-title">Deploying ${escapeHtml(name)}...</div>
+        <div class="modal-cat" style="color: var(--mint-deep);">Fetching from GitHub + running ship.py</div>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 40px;">
+        <div class="commits-loading"><div class="emoji" style="font-size: 48px;">⚙️</div><div style="margin-top: 16px; color: var(--slate-2);">Deploying...</div></div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
     try {
-      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/deploy`);
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/deploy`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          version: 'v' + new Date().toISOString().substring(0, 10).replace(/-/g, '.'),
+          category: 'Web',
+          description: name
+        })
+      });
       const data = await res.json();
+      if (!data.ok) {
+        document.getElementById('modalContent').innerHTML = `
+          <div class="modal-head" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, white 100%);">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-icon">❌</div>
+            <div class="modal-title">Deploy failed</div>
+            <div class="modal-cat" style="color: var(--coral);">${escapeHtml(name)}</div>
+          </div>
+          <div class="modal-body">
+            <div class="result-item" style="border-left-color: var(--coral);">
+              <div class="result-item-title">Error</div>
+              <div class="result-item-detail">${escapeHtml(data.error || 'Unknown error')}</div>
+            </div>
+            <div class="result-item" style="border-left-color: var(--slate-3); margin-top: 12px;">
+              <div class="result-item-title">Stderr</div>
+              <div class="file-content">${escapeHtml((data.stderr || '').substring(0, 500))}</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      // Success — render the result
+      const techs = (data.techs || []).join(', ') || 'vanilla';
+      const previousLive = data.previous_live
+        ? `<div style="margin-top: 8px; font-size: 11px; color: var(--slate-3);">Previous live: <a href="${data.previous_live}" target="_blank" style="color: var(--slate-2);">${data.previous_live}</a></div>`
+        : '';
+      const stubBadge = data.stub_used
+        ? '<span class="tag" style="background: rgba(245, 158, 11, 0.15); color: var(--gold-deep);">⚠ Stub HTML (no source file found)</span>'
+        : '<span class="tag" style="background: rgba(16, 185, 129, 0.15); color: var(--mint-deep);">✓ Real source deployed</span>';
       document.getElementById('modalContent').innerHTML = `
-        <div class="modal-head" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, white 100%);">
+        <div class="modal-head" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, white 100%);">
           <button class="modal-close" onclick="closeModal()">✕</button>
-          <div class="modal-icon">🚀</div>
-          <div class="modal-title">Deploy ${escapeHtml(name)}</div>
-          <div class="modal-cat" style="color: var(--mint-deep);">${data.already_deployed ? 'Already deployed!' : 'Ready to deploy'}</div>
+          <div class="modal-icon">🎉</div>
+          <div class="modal-title">${escapeHtml(data.title || name)}</div>
+          <div class="modal-cat" style="color: var(--mint-deep);">Deployed successfully</div>
         </div>
         <div class="modal-body">
-          <p style="margin-bottom: 16px; color: var(--slate-2);">${data.already_deployed ? `✨ This repo is already live at:` : '📋 Run this command to deploy:'}</p>
-          ${data.already_deployed ? `<div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; margin-bottom: 16px;"><a href="${data.live_url}" target="_blank" style="color: var(--mint-deep); font-weight: 600; font-size: 16px;">${data.live_url} ↗</a></div>` : ''}
-          <div class="result-item" style="border-left-color: var(--indigo);">
-            <div class="result-item-title">📦 Command</div>
-            <div class="file-content">${escapeHtml(data.command)}</div>
+          <div style="text-align: center; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; margin-bottom: 16px;">
+            <div style="font-size: 11px; color: var(--mint-deep); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">✅ Live URL</div>
+            <a href="${data.url}" target="_blank" style="display: block; margin-top: 8px; font-size: 18px; font-weight: 700; color: var(--mint-deep); text-decoration: none;">${data.url} ↗</a>
+            ${stubBadge}
+            ${previousLive}
           </div>
-          <div class="result-item" style="border-left-color: var(--pink); margin-top: 12px;">
-            <div class="result-item-title">📍 Target</div>
-            <div class="result-item-detail">${escapeHtml(data.target)}</div>
+          <div class="drill-stats">
+            <div class="drill-stat">
+              <div class="drill-stat-val">${data.size_kb || 0}</div>
+              <div class="drill-stat-lbl">size (KB)</div>
+            </div>
+            <div class="drill-stat">
+              <div class="drill-stat-val">${data.version || 'v1.0'}</div>
+              <div class="drill-stat-lbl">version</div>
+            </div>
+            <div class="drill-stat">
+              <div class="drill-stat-val">${data.category || 'Web'}</div>
+              <div class="drill-stat-lbl">category</div>
+            </div>
+            <div class="drill-stat">
+              <div class="drill-stat-val">${techs}</div>
+              <div class="drill-stat-lbl">tech stack</div>
+            </div>
+          </div>
+          <div class="result-item" style="border-left-color: var(--mint);">
+            <div class="result-item-title">📁 Deployed to</div>
+            <div class="file-content" style="font-size: 11px;">${escapeHtml(data.path || '')}</div>
+          </div>
+          <div class="result-item" style="border-left-color: var(--indigo); margin-top: 8px;">
+            <div class="result-item-title">⚙️ ship.py command</div>
+            <div class="file-content" style="font-size: 10px;">${escapeHtml(data.command || '')}</div>
+          </div>
+          <div style="margin-top: 12px; display: flex; gap: 8px;">
+            <a href="${data.url}" target="_blank" class="btn btn-primary" style="text-decoration: none; flex: 1; text-align: center;">↗ Open Live Site</a>
+            <a href="https://github.com/lnwsj/${name}" target="_blank" class="btn btn-secondary" style="text-decoration: none;">↗ GitHub</a>
           </div>
         </div>
       `;
-      document.getElementById('modal').classList.add('active');
-    } catch (e) { showToast(`✗ ${e.message}`, 'error'); }
+      showToast(`🎉 ${name} deployed! Live at ${data.url}`, 'success');
+    } catch (e) {
+      showToast(`✗ Deploy failed: ${e.message}`, 'error');
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-head" style="background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, white 100%);">
+          <button class="modal-close" onclick="closeModal()">✕</button>
+          <div class="modal-icon">❌</div>
+          <div class="modal-title">Deploy error</div>
+        </div>
+        <div class="modal-body">
+          <div class="result-item" style="border-left-color: var(--coral);">
+            <div class="result-item-title">Error</div>
+            <div class="result-item-detail">${escapeHtml(e.message)}</div>
+          </div>
+        </div>
+      `;
+    }
   }
 
   async function cockpitScan(name) {
