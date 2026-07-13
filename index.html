@@ -1916,6 +1916,45 @@
   .gs-result:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
   .gs-result:hover { transform: translateX(4px); }
 
+
+  /* v18: Tag Combo (active state in chip) */
+  .tag-chip.combo {
+    background: var(--accent) !important;
+    color: white !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+  }
+  .tag-combo-display {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 14px; margin-bottom: 12px;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .tag-combo-display .label { font-size: 11px; color: var(--slate-3); text-transform: uppercase; font-weight: 600; }
+  .tag-combo-display .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--accent); color: white;
+    padding: 3px 8px; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+  }
+  .tag-combo-display .tag button {
+    background: rgba(255,255,255,0.3); border: none; color: white;
+    width: 16px; height: 16px; border-radius: 50%;
+    cursor: pointer; font-size: 10px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .tag-combo-display .clear-all {
+    margin-left: auto; background: transparent; border: 1px solid var(--coral);
+    color: var(--coral); padding: 4px 10px; border-radius: 8px;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+  }
+  .tag-combo-hint {
+    font-size: 11px; color: var(--slate-3);
+    margin-left: 6px; font-style: italic;
+  }
+
 </style>
 </head>
 <body>
@@ -2952,6 +2991,171 @@
     return escapeHtml(text).replace(re, '<mark style="background: var(--accent); color: white; padding: 1px 4px; border-radius: 3px;">$1</mark>');
   }
 
+
+  /* === v18: Repo Radar Chart (6-dim compare) === */
+  function repoRadarScore(r) {
+    // Returns 6-dim score array 0-100: [activity, popularity, size, maturity, live, stackDiversity]
+    const commits = (commitsData?.by_repo || []).find(c => c.name === r.name) || {};
+    const total = commits.count || 0;
+    const lastDate = commits.last_commit || r.created;
+    // 1. Activity (commit count, log-scaled 0-100)
+    const activity = Math.min(100, Math.log10(total + 1) * 50);
+    // 2. Popularity (stars)
+    const popularity = Math.min(100, r.stars * 8);
+    // 3. Size (inverse — small = clean)
+    const sizeScore = r.size_kb < 50 ? 100 : r.size_kb < 500 ? 80 : r.size_kb < 2000 ? 60 : r.size_kb < 10000 ? 40 : 20;
+    // 4. Maturity (days since created, log-scaled 0-100)
+    const days = Math.max(0, (new Date('2026-07-13') - new Date(r.created)) / 86400000);
+    const maturity = Math.min(100, Math.log10(days + 1) * 40);
+    // 5. Live (binary: 100 or 0)
+    const live = r.live ? 100 : 0;
+    // 6. Stack Diversity (unique tags, more = higher)
+    const stack = Math.min(100, (r.tags || []).length * 12);
+    return { activity, popularity, size: sizeScore, maturity, live, stack, total };
+  }
+
+  function drawRadarChart(repo, size = 320) {
+    const score = repoRadarScore(repo);
+    const dims = [
+      { key: 'activity', label: 'Activity', icon: '📈' },
+      { key: 'popularity', label: 'Stars', icon: '⭐' },
+      { key: 'size', label: 'Clean Code', icon: '🧹' },
+      { key: 'maturity', label: 'Maturity', icon: '📅' },
+      { key: 'live', label: 'Live', icon: '🚀' },
+      { key: 'stack', label: 'Stack', icon: '🛠️' }
+    ];
+    const cx = size / 2, cy = size / 2;
+    const r = size * 0.38;
+    // 6-sided polygon (hexagon)
+    const points = dims.map((d, i) => {
+      const angle = (Math.PI * 2 * i) / dims.length - Math.PI / 2;
+      return { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r, score: score[d.key], label: d.label, icon: d.icon, dim: d };
+    });
+    // Build SVG
+    const gridRings = [0.25, 0.5, 0.75, 1.0].map(scale => {
+      const pts = dims.map((_, i) => {
+        const a = (Math.PI * 2 * i) / dims.length - Math.PI / 2;
+        return `${cx + Math.cos(a) * r * scale},${cy + Math.sin(a) * r * scale}`;
+      }).join(' ');
+      return `<polygon points="${pts}" fill="none" stroke="var(--card-border)" stroke-width="1" opacity="0.5"/>`;
+    }).join('');
+    // Data polygon
+    const dataPts = points.map(p => {
+      const scale = p.score / 100;
+      const dx = cx + (p.x - cx) * scale;
+      const dy = cy + (p.y - cy) * scale;
+      return `${dx},${dy}`;
+    }).join(' ');
+    const dataPtsForFill = dataPts;
+    // Labels
+    const labels = points.map((p, i) => {
+      const angle = (Math.PI * 2 * i) / dims.length - Math.PI / 2;
+      const lx = cx + Math.cos(angle) * (r + 28);
+      const ly = cy + Math.sin(angle) * (r + 28);
+      return `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="var(--slate)">${p.icon} ${p.label}</text><text x="${lx}" y="${ly + 14}" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="700" fill="var(--accent)">${Math.round(p.score)}</text>`;
+    }).join('');
+    // Axis lines
+    const axes = points.map(p => `<line x1="${cx}" y1="${cy}" x2="${p.x}" y2="${p.y}" stroke="var(--card-border)" stroke-width="1" opacity="0.3"/>`).join('');
+    // Data points
+    const dots = points.map(p => {
+      const scale = p.score / 100;
+      const dx = cx + (p.x - cx) * scale;
+      const dy = cy + (p.y - cy) * scale;
+      return `<circle cx="${dx}" cy="${dy}" r="4" fill="var(--accent)" stroke="white" stroke-width="2"/>`;
+    }).join('');
+    return `
+      <svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="width: 100%; max-width: ${size}px; height: auto;">
+        <defs>
+          <linearGradient id="radarFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="var(--indigo)" stop-opacity="0.2"/>
+          </linearGradient>
+        </defs>
+        ${gridRings}
+        ${axes}
+        <polygon points="${dataPtsForFill}" fill="url(#radarFill)" stroke="var(--accent)" stroke-width="2"/>
+        ${dots}
+        ${labels}
+      </svg>
+    `;
+  }
+
+  function showRadarCompare(name) {
+    if (!commitsData) {
+      // Try loading; if offline, use empty commits
+      loadCommitsView().catch(() => {});
+    }
+    const repo = REPOS.find(r => r.name === name);
+    if (!repo) { showToast('Repo not found', 'error'); return; }
+    const allOpts = REPOS.filter(r => !r.is_fork).map(r => `<option value="${r.name}" ${r.name === name ? 'selected' : ''}>${r.emoji} ${escapeHtml(r.name)}</option>`).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">📊</div>
+        <div class="modal-title">Radar Compare</div>
+        <div class="modal-cat" style="color: var(--indigo);">6-dimension repo scoring</div>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 16px;">
+          <select id="radarPick" class="compare-pick" style="font-size: 14px; padding: 10px 12px;">${allOpts}</select>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center;">
+          <div id="radarChartA">${drawRadarChart(repo)}</div>
+          <div id="radarChartB"><div class="empty-result" style="padding: 40px;"><div class="emoji">👈</div><div>Pick another to overlay</div></div></div>
+        </div>
+        <div id="radarLegend" style="margin-top: 20px;"></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+          <div id="radarScoreA" style="padding: 12px; background: var(--bg-1); border-radius: 10px;"></div>
+          <div id="radarScoreB" style="padding: 12px; background: var(--bg-1); border-radius: 10px;"></div>
+        </div>
+        <div style="margin-top: 16px; padding: 10px; background: var(--bg-1); border-radius: 8px; font-size: 11px; color: var(--slate-3);">
+          💡 Dims: <strong>Activity</strong> (commits log) · <strong>Stars</strong> · <strong>Clean Code</strong> (small = clean) · <strong>Maturity</strong> (age log) · <strong>Live</strong> (deployed?) · <strong>Stack</strong> (tag count)
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    document.getElementById('radarPick').addEventListener('change', (e) => {
+      showRadarCompare(e.target.value);
+    });
+    renderRadarLegend();
+  }
+
+  function renderRadarLegend() {
+    const aName = document.getElementById('radarPick').value;
+    const bSel = document.getElementById('radarPickB');
+    const aRepo = REPOS.find(r => r.name === aName);
+    const aScore = repoRadarScore(aRepo);
+    document.getElementById('radarScoreA').innerHTML = `
+      <div style="font-size: 12px; color: var(--slate-3); text-transform: uppercase; font-weight: 600;">${aRepo.emoji} ${escapeHtml(aName)}</div>
+      <div style="font-size: 24px; font-weight: 800; color: var(--accent); margin-top: 4px;">${Math.round(aScore.total / 6)}<span style="font-size: 12px; color: var(--slate-3); font-weight: 500;">/100</span></div>
+    `;
+  }
+
+  /* === v18: Tag Combos (multi-select) === */
+  function toggleTagInSet(tag) {
+    const t = tag.toLowerCase();
+    if (state.tagSet.includes(t)) {
+      state.tagSet = state.tagSet.filter(x => x !== t);
+    } else if (state.tagSet.length < 3) {
+      state.tagSet = [...state.tagSet, t];
+    } else {
+      showToast('🏷️ Max 3 tags — remove one first', 'info');
+      return;
+    }
+    state.tagFilter = state.tagSet.length === 1 ? state.tagSet[0] : null;
+    renderChips();
+    render();
+    if (state.tagSet.length > 0) {
+      showToast(`🏷️ Tag combo: ${state.tagSet.map(t => '#' + t).join(' + ')} (${filteredRepos().length} matches)`, 'success');
+    }
+  }
+
+  function clearTagSet() {
+    state.tagSet = [];
+    state.tagFilter = null;
+    renderChips();
+    render();
+  }
   initHeroButtons();
 
   /* =========================================================
@@ -3131,6 +3335,7 @@
     forkOnly: false,
     showFilters: true,
     tagFilter: null,
+    tagSet: [],
     customAccent: ''
   };
 
@@ -3801,7 +4006,7 @@
     // Tag filter row (top 14 tags)
     const topTags = allTags().slice(0, 14);
     const tagChips = topTags.map(([t, c]) => `
-      <button class="chip tag-chip ${state.tagFilter === t ? 'active' : ''}" data-tag="${t}" title="Filter by #${t}">#${t} <span class="chip-count">${c}</span></button>
+      <button class="chip tag-chip ${state.tagFilter === t || state.tagSet.includes(t) ? 'active' : ''}" data-tag="${t}" title="Filter by #${t} (Shift+click to add to combo)">#${t} <span class="chip-count">${c}</span></button>
     `).join('');
 
     // Status toggles (live, fork)
@@ -3819,8 +4024,14 @@
     // Save preset button (always visible)
     const savePreset = `<button class="chip preset-save" data-save-preset title="Save current filters as preset">💾 Save preset</button>`;
 
+    // v18: Tag combo display
+    let comboDisplay = '';
+    if (state.tagSet && state.tagSet.length) {
+      const tags = state.tagSet.map(t => `<span class="tag">#${t}<button data-rm-tag="${t}" title="Remove">✕</button></span>`).join('');
+      comboDisplay = `<div class="tag-combo-display" style="margin: 0 0 8px 0;"><span class="label">🏷️ Combo</span>${tags}<button class="clear-all" data-clear-tags>✕ Clear combo</button></div><div class="tag-combo-hint" style="margin: 0 0 8px 0;">💡 Shift+click chips to add to combo (max 3)</div>`;
+    }
     document.getElementById('filterChips').innerHTML =
-      chipsHtml + authorChip + langChips + tagChips + sizeChips + statusChips + savePreset + clearAll;
+      comboDisplay + chipsHtml + authorChip + langChips + tagChips + sizeChips + statusChips + savePreset + clearAll;
 
     // Wire up all chips
     document.querySelectorAll('.chip[data-cat]').forEach(c => {
@@ -3848,11 +4059,17 @@
       });
     });
     document.querySelectorAll('.tag-chip').forEach(c => {
-      c.addEventListener('click', () => {
-        state.tagFilter = state.tagFilter === c.dataset.tag ? null : c.dataset.tag;
-        renderChips();
-        render();
-        saveFilterPreset();
+      c.addEventListener('click', (e) => {
+        if (e.shiftKey) {
+          toggleTagInSet(c.dataset.tag);
+        } else if (state.tagSet.length > 0) {
+          toggleTagInSet(c.dataset.tag);
+        } else {
+          state.tagFilter = state.tagFilter === c.dataset.tag ? null : c.dataset.tag;
+          renderChips();
+          render();
+          saveFilterPreset();
+        }
       });
     });
     document.querySelectorAll('.toggle-chip').forEach(c => {
@@ -3870,11 +4087,17 @@
     document.querySelectorAll('.tag-mini').forEach(t => {
       t.addEventListener('click', (e) => {
         e.stopPropagation();
-        state.tagFilter = state.tagFilter === t.dataset.tag ? null : t.dataset.tag;
-        renderChips();
-        render();
-        saveFilterPreset();
-        showToast('🏷️ Filter: #' + t.dataset.tag, 'info');
+        if (e.shiftKey) {
+          toggleTagInSet(t.dataset.tag);
+        } else if (state.tagSet.length > 0) {
+          toggleTagInSet(t.dataset.tag);
+        } else {
+          state.tagFilter = state.tagFilter === t.dataset.tag ? null : t.dataset.tag;
+          renderChips();
+          render();
+          saveFilterPreset();
+          showToast('🏷️ Filter: #' + t.dataset.tag, 'info');
+        }
       });
     });
     if (authorClear) {
@@ -3891,6 +4114,18 @@
     if (clearAllBtn) {
       clearAllBtn.addEventListener('click', clearAllFilters);
     }
+    // v18: Tag combo display wire-up
+    document.querySelectorAll('[data-rm-tag]').forEach(b => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        state.tagSet = state.tagSet.filter(x => x !== b.dataset.rmTag);
+        state.tagFilter = state.tagSet.length === 1 ? state.tagSet[0] : null;
+        renderChips();
+        render();
+      });
+    });
+    const clearComboBtn = document.querySelector('[data-clear-tags]');
+    if (clearComboBtn) clearComboBtn.addEventListener('click', clearTagSet);
     // Save preset
     const saveBtn = document.querySelector('[data-save-preset]');
     if (saveBtn) {
@@ -4022,7 +4257,8 @@
     if (state.liveOnly) n++;
     if (state.forkOnly) n++;
     if (state.search) n++;
-    if (state.tagFilter) n++;
+    if (state.tagSet && state.tagSet.length) n += state.tagSet.length;
+    else if (state.tagFilter) n++;
     return n;
   }
 
@@ -5481,6 +5717,7 @@
               <a href="https://github.com/lnwsj/${repo.name}" target="_blank" rel="noopener" class="btn btn-primary">📂 View on GitHub</a>
               ${repo.live ? `<a href="${repo.live}" target="_blank" rel="noopener" class="btn btn-secondary">🚀 Live Demo</a>` : `<span class="btn btn-disabled">🚫 No live URL</span>`}
               <button class="btn btn-secondary" data-action="compare" data-name="${repo.name}">⚖️ Compare</button>
+              <button class="btn btn-secondary" data-action="radar" data-name="${repo.name}">📊 Radar</button>
               <button class="btn btn-secondary" data-action="bugs" data-name="${repo.name}">🐛 Bug Hunter</button>
               <button class="btn btn-secondary" data-action="recommend" data-name="${repo.name}">💡 Recommend</button>
             </div>
@@ -5515,6 +5752,7 @@
         const action = btn.dataset.action;
         const name = btn.dataset.name;
         if (action === 'compare') showCompareModal(name);
+        else if (action === 'radar') showRadarCompare(name);
         else if (action === 'bugs') runBugHunter(name, null);
         else if (action === 'recommend') runRecommend(name, null);
       });
