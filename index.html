@@ -1327,6 +1327,76 @@
     .timeline-row { grid-template-columns: 100px 1fr; gap: 8px; }
   }
 
+  /* === Goal Tracker === */
+  .goal-tracker {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(236, 72, 153, 0.06) 50%, rgba(99, 102, 241, 0.08) 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+  }
+  .gt-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .gt-title { font-size: 18px; font-weight: 700; color: var(--slate); }
+  html[data-theme="dark"] .gt-title { color: white; }
+  .gt-sub { font-size: 12px; color: var(--slate-3); margin-top: 2px; }
+  .gt-overall {
+    text-align: center; padding: 8px 16px;
+    background: white; border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  html[data-theme="dark"] .gt-overall { background: rgba(15, 23, 42, 0.6); }
+  .gt-overall-num {
+    font-size: 28px; font-weight: 800; color: var(--gold);
+    letter-spacing: -1px; line-height: 1;
+  }
+  .gt-overall-num .suffix { font-size: 16px; opacity: 0.6; }
+  .gt-overall-lbl { font-size: 10px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; }
+  .gt-list { display: flex; flex-direction: column; gap: 10px; }
+  .gt-goal {
+    display: grid; grid-template-columns: 56px 1fr auto; gap: 14px;
+    align-items: center;
+    background: white; border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--slate-3);
+  }
+  html[data-theme="dark"] .gt-goal { background: rgba(15, 23, 42, 0.6); }
+  .gt-goal.complete { border-left-color: var(--mint); }
+  .gt-goal.in-progress { border-left-color: var(--gold); }
+  .gt-goal .emoji { font-size: 36px; line-height: 1; text-align: center; }
+  .gt-goal .info { min-width: 0; }
+  .gt-goal .name { font-size: 14px; font-weight: 700; color: var(--slate); }
+  html[data-theme="dark"] .gt-goal .name { color: white; }
+  .gt-goal .desc { font-size: 11px; color: var(--slate-3); margin-top: 2px; }
+  .gt-goal .progress-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .gt-goal .progress-bar {
+    flex: 1; height: 6px; background: var(--bg-2);
+    border-radius: 3px; overflow: hidden;
+  }
+  .gt-goal .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--pink));
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .gt-goal.complete .progress-fill { background: var(--mint); }
+  .gt-goal .progress-text {
+    font-size: 11px; color: var(--slate-2); font-weight: 700;
+    min-width: 70px; text-align: right;
+  }
+  .gt-goal .reward {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 6px 10px; background: var(--bg-1);
+    border-radius: 10px; min-width: 90px;
+  }
+  .gt-goal.complete .reward { background: rgba(16, 185, 129, 0.15); }
+  .gt-goal .reward .badge { font-size: 9px; color: var(--slate-3); text-transform: uppercase; font-weight: 700; }
+  .gt-goal .reward .label { font-size: 10px; color: var(--slate-2); margin-top: 2px; }
+  .gt-goal.complete .reward .label { color: var(--mint); font-weight: 700; }
+
   /* === Full-year heatmap (flagship) === */
   .heatmap-flagship {
     background: white;
@@ -1596,6 +1666,23 @@
   <div class="mom-compare">
     <div class="mom-title">📈 Month-over-Month</div>
     <div class="mom-row" id="momRow"></div>
+  </div>
+</div>
+
+<!-- Goal Tracker (Phase 22) -->
+<div class="container" style="margin-top: 24px; margin-bottom: 8px;">
+  <div class="goal-tracker">
+    <div class="gt-head">
+      <div>
+        <div class="gt-title">🎯 Goal Tracker — July 2026</div>
+        <div class="gt-sub" id="gtSub">3 goals · 0 completed · 18 days left</div>
+      </div>
+      <div class="gt-overall" id="gtOverall">
+        <div class="gt-overall-num">0<span class="suffix">/3</span></div>
+        <div class="gt-overall-lbl">completed</div>
+      </div>
+    </div>
+    <div class="gt-list" id="gtList"></div>
   </div>
 </div>
   </div>
@@ -2228,6 +2315,95 @@
       </div>`;
     }).join('');
     document.getElementById('momRow').innerHTML = html;
+  }
+
+  /* === Goal Tracker (Phase 22) === */
+  function renderGoalTracker() {
+    if (!commitsData || !commitsData.messages) return;
+    const msgs = commitsData.messages;
+    const today = new Date();
+    const july = msgs.filter(m => m.date.startsWith('2026-07'));
+    // Days left in July
+    const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    const daysLeft = lastDay - today.getDate();
+    // Streak
+    const byDay = {};
+    msgs.forEach(m => { byDay[m.date] = (byDay[m.date] || 0) + 1; });
+    let current = 0;
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const ds = d.toISOString().substring(0, 10);
+      if (byDay[ds] > 0) current++;
+      else if (i > 0) break;
+    }
+    // Achievements
+    fetch(`${API_BASE}/achievements`).then(r => r.json()).then(data => {
+      const unlocked = data.achievements.filter(a => a.unlocked).length;
+      const total = data.achievements.length;
+      // Goals
+      const goals = [
+        {
+          id: 'goal_200',
+          emoji: '🎯',
+          name: '200 commits in July',
+          desc: 'Ship 200+ commits this month',
+          progress: Math.min(july.length, 200),
+          target: 200,
+          reward: 'Goal Crusher',
+          rewardEmoji: '💎'
+        },
+        {
+          id: 'goal_streak',
+          emoji: '🔥',
+          name: '30-day commit streak',
+          desc: 'Commit every day for 30 days straight',
+          progress: current,
+          target: 30,
+          reward: 'Streak Legend',
+          rewardEmoji: '🌟'
+        },
+        {
+          id: 'goal_half',
+          emoji: '🏆',
+          name: '7/15 achievements',
+          desc: 'Unlock 7 out of 15 achievements',
+          progress: unlocked,
+          target: 7,
+          reward: 'Halfway Hero',
+          rewardEmoji: '⭐'
+        }
+      ];
+      const list = document.getElementById('gtList');
+      list.innerHTML = goals.map(g => {
+        const pct = Math.min(100, Math.round(g.progress / g.target * 100));
+        const done = g.progress >= g.target;
+        const cls = done ? 'complete' : (pct > 0 ? 'in-progress' : '');
+        return `<div class="gt-goal ${cls}">
+          <div class="emoji">${done ? '✅' : g.emoji}</div>
+          <div class="info">
+            <div class="name">${g.name}</div>
+            <div class="desc">${g.desc}</div>
+            <div class="progress-row">
+              <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%;"></div></div>
+              <div class="progress-text">${g.progress} / ${g.target} (${pct}%)</div>
+            </div>
+          </div>
+          <div class="reward">
+            <div class="badge">REWARD</div>
+            <div class="label">${g.rewardEmoji} ${g.reward}</div>
+          </div>
+        </div>`;
+      }).join('');
+      // Overall
+      const done = goals.filter(g => g.progress >= g.target).length;
+      document.getElementById('gtOverall').innerHTML = `
+        <div class="gt-overall-num">${done}<span class="suffix">/${goals.length}</span></div>
+        <div class="gt-overall-lbl">completed</div>
+      `;
+      document.getElementById('gtSub').textContent =
+        `${goals.length} goals · ${done} completed · ${daysLeft} days left in July`;
+    }).catch(e => console.warn('Goals fetch failed:', e));
   }
 
   function renderStats() {
@@ -3729,6 +3905,8 @@
     preloadCommitsForCards();
     // Render month highlight from any available data
     renderMonthHighlight();
+    // Render goal tracker
+    renderGoalTracker();
     // Start live commit ticker
     startLiveTicker();
     // Apply URL state if any
@@ -3765,6 +3943,8 @@
         render();
         // Re-render month highlight with fresh data
         renderMonthHighlight();
+        // Re-render goal tracker
+        renderGoalTracker();
       }
     } catch (e) { console.warn('Preload commits failed:', e); }
   }
