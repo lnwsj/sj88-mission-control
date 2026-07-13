@@ -8,6 +8,76 @@
 <style>
   /* === Reset & Base === */
   *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* === Dark mode (auto-applied if data-theme=dark on <html>) === */
+  html[data-theme="dark"] {
+    --pink: #f472b6;
+    --pink-deep: #ec4899;
+    --pink-soft: rgba(244, 114, 182, 0.18);
+    --pink-glow: rgba(244, 114, 182, 0.4);
+    --indigo: #818cf8;
+    --indigo-deep: #6366f1;
+    --mint: #34d399;
+    --mint-deep: #10b981;
+    --gold: #fbbf24;
+    --gold-deep: #f59e0b;
+    --coral: #fb7185;
+    --slate: #f1f5f9;
+    --slate-2: #cbd5e1;
+    --slate-3: #94a3b8;
+    --bg-1: rgba(30, 41, 59, 0.5);
+    --bg-2: rgba(51, 65, 85, 0.5);
+    --bg-3: rgba(71, 85, 105, 0.5);
+    --card: rgba(15, 23, 42, 0.85);
+    --card-border: rgba(244, 114, 182, 0.25);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+    --shadow-lg: 0 12px 40px rgba(244, 114, 182, 0.25);
+    --shadow-xl: 0 20px 60px rgba(129, 140, 248, 0.3);
+  }
+  html[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  }
+  html[data-theme="dark"] .orb-1 { background: var(--pink); }
+  html[data-theme="dark"] .orb-2 { background: var(--indigo); }
+  html[data-theme="dark"] .orb-3 { background: var(--mint); }
+  html[data-theme="dark"] .bar-stack .bar-segment { border: 1px solid rgba(255,255,255,0.05); }
+  html[data-theme="dark"] .repo-card { background: rgba(15, 23, 42, 0.7); }
+  html[data-theme="dark"] .heatmap-cell { border: 1px solid rgba(0,0,0,0.2); }
+  html[data-theme="dark"] .modal { background: #1e293b; color: var(--slate); }
+  html[data-theme="dark"] .modal-head { background: linear-gradient(135deg, var(--cat-bg) 0%, #1e293b 100%) !important; }
+  html[data-theme="dark"] .action-btn { background: rgba(15, 23, 42, 0.8); }
+  html[data-theme="dark"] .action-btn.bugs { color: var(--coral); }
+  html[data-theme="dark"] .action-btn.recommend { color: var(--gold); }
+  html[data-theme="dark"] .author-row:hover { background: rgba(244, 114, 182, 0.08); }
+  html[data-theme="dark"] .export-btn { background: rgba(15, 23, 42, 0.8); }
+  html[data-theme="dark"] .export-btn:hover { background: rgba(244, 114, 182, 0.15); }
+  html[data-theme="dark"] .search-messages input { background: rgba(15, 23, 42, 0.6); color: var(--slate); }
+  html[data-theme="dark"] .messages-list { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .chip { background: rgba(15, 23, 42, 0.7); color: var(--slate-2); }
+  html[data-theme="dark"] .chip.active { background: var(--pink); color: white; }
+  html[data-theme="dark"] .view-btn { color: var(--slate-2); }
+  html[data-theme="dark"] .view-btn.active { background: rgba(15, 23, 42, 0.6); color: var(--pink); }
+  html[data-theme="dark"] .chart-toggle { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .chart-toggle button.active { background: rgba(244, 114, 182, 0.2); }
+  html[data-theme="dark"] .tag.lang { background: rgba(129, 140, 248, 0.2); }
+  html[data-theme="dark"] .tag.fork { background: rgba(251, 191, 36, 0.2); }
+  html[data-theme="dark"] .tag.live { background: rgba(52, 211, 153, 0.2); }
+  html[data-theme="dark"] .result-item { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .donut-card { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .authors-table { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .bar-chart { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .heatmap-container { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .heatmap-cell.l1 { background: rgba(244, 114, 182, 0.2); }
+  html[data-theme="dark"] .ai-summary-card { background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(244, 114, 182, 0.08) 100%); }
+  html[data-theme="dark"] .search-messages .count { background: rgba(15, 23, 42, 0.6); }
+  html[data-theme="dark"] .modal-close { background: rgba(15, 23, 42, 0.8); color: var(--slate); }
+  html[data-theme="dark"] .modal-close:hover { background: var(--pink); color: white; }
+  html[data-theme="dark"] .api-pill { background: rgba(52, 211, 153, 0.2); }
+  html[data-theme="dark"] .ai-rangomark { background: rgba(251, 191, 36, 0.3); color: var(--gold); }
+  html[data-theme="dark"] mark { background: rgba(251, 191, 36, 0.4); color: var(--gold); }
+  html[data-theme="dark"] code { background: rgba(15, 23, 42, 0.6); color: #fbbf24; padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+  html[data-theme="dark"] pre { background: #0f172a; color: #cbd5e1; }
   :root {
     --pink: #ec4899;
     --pink-deep: #db2777;
@@ -84,6 +154,232 @@
     content: ''; position: absolute; inset: -4px; border-radius: 50%;
     border: 2px solid var(--mint); animation: pulse 1.5s ease-out infinite;
   }
+
+  /* Hero tool buttons */
+  .hero-tool-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; cursor: pointer; font-size: 16px;
+    transition: all 0.2s;
+    backdrop-filter: blur(20px);
+  }
+  .hero-tool-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--pink); }
+  .hero-tool-btn.active { background: var(--pink); border-color: var(--pink); }
+
+  /* Shortcuts modal */
+  .shortcuts-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .shortcut-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px; background: var(--bg-1);
+    border-radius: 10px;
+  }
+  .shortcut-key {
+    padding: 4px 10px; background: var(--slate); color: white;
+    border-radius: 6px; font-family: monospace; font-size: 12px;
+    font-weight: 600; min-width: 40px; text-align: center;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+  }
+  .shortcut-desc { font-size: 13px; color: var(--slate-2); }
+
+  /* Achievement badge */
+  .achievement-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--card-border);
+    transition: all 0.2s;
+  }
+  .achievement-card.unlocked { border-color: var(--gold); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--card) 100%); }
+  .achievement-card.locked { opacity: 0.6; }
+  .achievement-emoji { font-size: 32px; }
+  .achievement-title { font-size: 14px; font-weight: 700; color: var(--slate); }
+  .achievement-desc { font-size: 12px; color: var(--slate-2); margin-top: 2px; }
+  .achievement-status {
+    margin-left: auto; font-size: 10px; font-weight: 700;
+    padding: 3px 8px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .achievement-status.unlocked { background: var(--gold); color: white; }
+  .achievement-status.locked { background: var(--bg-2); color: var(--slate-3); }
+
+  /* Favorite star */
+  .fav-btn {
+    position: absolute; top: 12px; right: 12px;
+    width: 28px; height: 28px; border: none; background: transparent;
+    cursor: pointer; font-size: 16px; opacity: 0.5;
+    transition: all 0.2s; z-index: 2;
+  }
+  .fav-btn:hover { opacity: 1; transform: scale(1.2); }
+  .fav-btn.active { opacity: 1; color: var(--gold); }
+
+  /* Compare modal */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center;
+  }
+  .compare-side {
+    background: var(--bg-1); border-radius: 14px; padding: 16px;
+  }
+  .compare-vs {
+    font-size: 24px; font-weight: 800; color: var(--pink);
+    text-align: center;
+  }
+  .compare-row {
+    display: flex; justify-content: space-between;
+    padding: 6px 0; font-size: 13px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .label { color: var(--slate-3); }
+  .compare-row .value { font-weight: 700; color: var(--slate); }
+  .compare-pick {
+    width: 100%; padding: 8px 12px; margin-bottom: 12px;
+    background: white; border: 1px solid var(--card-border);
+    border-radius: 10px; font: inherit; font-size: 13px;
+  }
+  html[data-theme="dark"] .compare-pick { background: rgba(15, 23, 42, 0.6); color: var(--slate); }
+  html[data-theme="dark"] .compare-side { background: rgba(15, 23, 42, 0.6); }
+
+  /* Mini heatmap on card */
+  .mini-heatmap {
+    display: grid; grid-template-columns: repeat(13, 1fr);
+    gap: 1px; padding: 8px 12px 4px;
+  }
+  .mini-heatmap .m-cell {
+    aspect-ratio: 1; border-radius: 1px; background: var(--bg-2);
+  }
+  .mini-heatmap .m-cell.l1 { background: rgba(236, 72, 153, 0.2); }
+  .mini-heatmap .m-cell.l2 { background: rgba(236, 72, 153, 0.4); }
+  .mini-heatmap .m-cell.l3 { background: rgba(236, 72, 153, 0.7); }
+  .mini-heatmap .m-cell.l4 { background: var(--pink); }
+
+  /* Issue/PR badges on card */
+  .issue-badges {
+    display: flex; gap: 4px; padding: 0 20px 8px;
+  }
+  .issue-badge {
+    font-size: 10px; padding: 2px 6px; border-radius: 4px;
+    font-weight: 600;
+  }
+  .issue-badge.issues { background: rgba(251, 113, 133, 0.15); color: var(--coral); }
+  .issue-badge.prs { background: rgba(99, 102, 241, 0.15); color: var(--indigo); }
+  .issue-badge.commits { background: rgba(16, 185, 129, 0.15); color: var(--mint-deep); }
+
+  /* Cockpit actions */
+  .cockpit-actions {
+    display: flex; gap: 6px; padding: 0 20px 12px; flex-wrap: wrap;
+  }
+  .cockpit-btn {
+    flex: 1; min-width: 100px; padding: 6px 10px;
+    background: white; border: 1px solid var(--card-border);
+    border-radius: 8px; cursor: pointer;
+    font: inherit; font-size: 11px; font-weight: 600;
+    color: var(--slate-2); transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .cockpit-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+  .cockpit-btn.refresh { color: var(--indigo); }
+  .cockpit-btn.refresh:hover { background: rgba(99, 102, 241, 0.1); border-color: var(--indigo); }
+  .cockpit-btn.deploy { color: var(--mint-deep); }
+  .cockpit-btn.deploy:hover { background: rgba(16, 185, 129, 0.1); border-color: var(--mint); }
+  .cockpit-btn.scan { color: var(--coral); }
+  .cockpit-btn.scan:hover { background: rgba(244, 63, 94, 0.1); border-color: var(--coral); }
+  .cockpit-btn.spec { color: var(--gold-deep); }
+  .cockpit-btn.spec:hover { background: rgba(245, 158, 11, 0.1); border-color: var(--gold); }
+  html[data-theme="dark"] .cockpit-btn { background: rgba(15, 23, 42, 0.5); }
+
+  /* Modal tabs */
+  .modal-tabs {
+    display: flex; gap: 4px; padding: 0 28px;
+    border-bottom: 1px solid var(--card-border);
+    margin: 0 -28px 20px;
+  }
+  .modal-tab {
+    padding: 10px 14px; border: none; background: transparent;
+    font: inherit; font-size: 13px; font-weight: 600;
+    color: var(--slate-3); cursor: pointer; transition: all 0.2s;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .modal-tab:hover { color: var(--slate); }
+  .modal-tab.active { color: var(--pink); border-bottom-color: var(--pink); }
+  .modal-tab-content { display: none; }
+  .modal-tab-content.active { display: block; }
+
+  /* File viewer */
+  .file-list {
+    max-height: 300px; overflow-y: auto;
+    background: rgba(15, 23, 42, 0.03);
+    border-radius: 12px; padding: 8px;
+  }
+  html[data-theme="dark"] .file-list { background: rgba(0,0,0,0.2); }
+  .file-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 6px;
+    cursor: pointer; font-size: 12px; transition: background 0.2s;
+  }
+  .file-item:hover { background: rgba(236, 72, 153, 0.08); }
+  .file-icon { color: var(--slate-3); }
+  .file-name { font-family: monospace; color: var(--slate); }
+  .file-size { color: var(--slate-3); font-size: 11px; margin-left: auto; }
+  .file-content {
+    background: var(--slate); color: #e2e8f0;
+    padding: 12px; border-radius: 8px;
+    font-family: monospace; font-size: 12px;
+    max-height: 400px; overflow: auto;
+    white-space: pre-wrap; line-height: 1.5;
+  }
+  html[data-theme="dark"] .file-content { background: #0f172a; }
+
+  /* README content */
+  .readme-content {
+    max-height: 500px; overflow-y: auto;
+    font-size: 14px; line-height: 1.7; color: var(--slate);
+    padding: 0 4px;
+  }
+  .readme-content h1, .readme-content h2, .readme-content h3 {
+    margin: 16px 0 8px; color: var(--slate);
+  }
+  .readme-content h1 { font-size: 22px; }
+  .readme-content h2 { font-size: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 4px; }
+  .readme-content h3 { font-size: 16px; }
+  .readme-content p { margin: 8px 0; }
+  .readme-content a { color: var(--pink); }
+  .readme-content code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+  .readme-content pre { background: var(--slate); color: #e2e8f0; padding: 12px; border-radius: 8px; overflow-x: auto; }
+  .readme-content pre code { background: transparent; padding: 0; color: inherit; }
+  .readme-content ul, .readme-content ol { padding-left: 24px; margin: 8px 0; }
+  .readme-content li { margin: 4px 0; }
+  .readme-content blockquote { border-left: 3px solid var(--pink); padding-left: 12px; color: var(--slate-2); margin: 8px 0; }
+  .readme-content img { max-width: 100%; border-radius: 8px; }
+  .readme-content table { border-collapse: collapse; margin: 8px 0; }
+  .readme-content th, .readme-content td { padding: 6px 12px; border: 1px solid var(--card-border); }
+  .readme-content th { background: var(--bg-1); font-weight: 700; }
+
+  /* Velocity chart */
+  .velocity-section {
+    display: flex; align-items: center; gap: 16px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+    border-radius: 14px;
+  }
+  .velocity-trend { font-size: 24px; font-weight: 800; }
+  .velocity-trend.up { color: var(--mint-deep); }
+  .velocity-trend.down { color: var(--coral); }
+  .velocity-trend.stable { color: var(--slate-3); }
+  .velocity-info { font-size: 12px; color: var(--slate-2); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--slate); color: white; padding: 12px 20px;
+    border-radius: 12px; font-size: 14px; font-weight: 500;
+    box-shadow: var(--shadow-xl); z-index: 200;
+    animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  .toast.success { background: var(--mint-deep); }
+  .toast.error { background: var(--coral); }
   @keyframes pulse {
     0% { transform: scale(0.6); opacity: 1; }
     100% { transform: scale(1.6); opacity: 0; }
@@ -935,6 +1231,10 @@
     <h1>SJ88 Mission Control</h1>
     <p>59 repositories shipped by a single AI agent — from a cozy Tokyo slice-of-life to a DirectAdmin clone, from Babylon.js tycoons to single-file Thai booking apps. Welcome to the bridge.</p>
     <p class="hero-sub" style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center;">
+      <button id="darkModeBtn" class="hero-tool-btn" title="Toggle dark mode (press D)">🌙</button>
+      <button id="shortcutsBtn" class="hero-tool-btn" title="Keyboard shortcuts (press ?)">⌨️</button>
+      <button id="achievementsBtn" class="hero-tool-btn" title="Achievements (press A)">🏆</button>
+      <button id="shareBtn" class="hero-tool-btn" title="Copy link to this view">🔗</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
       <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
@@ -993,6 +1293,166 @@
 </footer>
 
 <script>
+  /* =========================================================
+   * GLOBAL STATE & UTILITIES
+   * ========================================================= */
+  const globalState = {
+    darkMode: localStorage.getItem('sj88-dark') === '1',
+    favorites: JSON.parse(localStorage.getItem('sj88-favs') || '[]'),
+    compareSelection: null,
+    repoMeta: {}  // cached issues/PRs/commits per repo
+  };
+  if (globalState.darkMode) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  function showToast(msg, type = 'info') {
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
+  }
+
+  function toggleDarkMode() {
+    globalState.darkMode = !globalState.darkMode;
+    localStorage.setItem('sj88-dark', globalState.darkMode ? '1' : '0');
+    document.documentElement.setAttribute('data-theme', globalState.darkMode ? 'dark' : '');
+    const btn = document.getElementById('darkModeBtn');
+    if (btn) btn.textContent = globalState.darkMode ? '☀️' : '🌙';
+    showToast(globalState.darkMode ? '🌙 Dark mode on' : '☀️ Light mode on', 'success');
+  }
+
+  function toggleFavorite(name, btn) {
+    const idx = globalState.favorites.indexOf(name);
+    if (idx >= 0) {
+      globalState.favorites.splice(idx, 1);
+      if (btn) btn.classList.remove('active');
+      showToast(`💔 Removed ${name} from favorites`);
+    } else {
+      globalState.favorites.push(name);
+      if (btn) btn.classList.add('active');
+      showToast(`⭐ ${name} added to favorites`, 'success');
+    }
+    localStorage.setItem('sj88-favs', JSON.stringify(globalState.favorites));
+    if (state.view === 'grid' || state.view === 'category') render();
+  }
+
+  function isFavorite(name) {
+    return globalState.favorites.includes(name);
+  }
+
+  function showShortcuts() {
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">⌨️</div>
+        <div class="modal-title">Keyboard Shortcuts</div>
+        <div class="modal-cat" style="color: var(--indigo);">Power user features</div>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-row"><div class="shortcut-key">D</div><div class="shortcut-desc">Toggle dark mode</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">A</div><div class="shortcut-desc">Achievements</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">/</div><div class="shortcut-desc">Focus search</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">G</div><div class="shortcut-desc">Grid view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">T</div><div class="shortcut-desc">Timeline view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">C</div><div class="shortcut-desc">Category view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">M</div><div class="shortcut-desc">Commits view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">F</div><div class="shortcut-desc">Favorites only</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">S</div><div class="shortcut-desc">Share link</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">R</div><div class="shortcut-desc">Refresh data</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">?</div><div class="shortcut-desc">Show this</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">ESC</div><div class="shortcut-desc">Close modal</div></div>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  async function showAchievements() {
+    document.getElementById('modalContent').innerHTML = `<div class="commits-loading"><div class="emoji">🏆</div>Loading achievements...</div>`;
+    document.getElementById('modal').classList.add('active');
+    try {
+      const res = await fetch(`${API_BASE}/achievements`);
+      const data = await res.json();
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-head" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, white 100%);">
+          <button class="modal-close" onclick="closeModal()">✕</button>
+          <div class="modal-icon">🏆</div>
+          <div class="modal-title">Achievements</div>
+          <div class="modal-cat" style="color: var(--gold-deep);">${data.unlocked} / ${data.total} unlocked · ${Math.round(data.unlocked / data.total * 100)}%</div>
+        </div>
+        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          ${data.achievements.map(a => `
+            <div class="achievement-card ${a.unlocked ? 'unlocked' : 'locked'}">
+              <div class="achievement-emoji">${a.emoji}</div>
+              <div style="flex: 1; min-width: 0;">
+                <div class="achievement-title">${escapeHtml(a.title)}</div>
+                <div class="achievement-desc">${escapeHtml(a.desc)}</div>
+                ${a.progress !== undefined ? `<div style="font-size: 11px; color: var(--slate-3); margin-top: 2px;">Progress: ${a.progress}${a.target ? ' / ' + a.target : ''}</div>` : ''}
+              </div>
+              <div class="achievement-status ${a.unlocked ? 'unlocked' : 'locked'}">${a.unlocked ? '✓' : '🔒'}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } catch (e) {
+      document.getElementById('modalContent').innerHTML = `<div class="commits-loading"><div class="emoji">⚠️</div><div>${e.message}</div></div>`;
+    }
+  }
+
+  async function shareCurrentView() {
+    const params = new URLSearchParams();
+    params.set('view', state.view);
+    if (state.filter !== 'all') params.set('cat', state.filter);
+    if (state.search) params.set('q', state.search);
+    const url = `${location.origin}${location.pathname}?${params.toString()}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast('🔗 Link copied to clipboard!', 'success');
+    } catch {
+      prompt('Copy this URL:', url);
+    }
+    history.replaceState(null, '', `?${params.toString()}`);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const key = e.key.toLowerCase();
+    if (key === 'd') toggleDarkMode();
+    else if (key === 'a') showAchievements();
+    else if (key === 's') shareCurrentView();
+    else if (key === '/') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+    else if (key === 'g') document.querySelector('[data-view="grid"]')?.click();
+    else if (key === 't') document.querySelector('[data-view="timeline"]')?.click();
+    else if (key === 'c') document.querySelector('[data-view="category"]')?.click();
+    else if (key === 'm') document.querySelector('[data-view="commits"]')?.click();
+    else if (key === 'f') {
+      state.filter = 'favorites';
+      renderChips(); render();
+    }
+    else if (key === '?') { e.preventDefault(); showShortcuts(); }
+    else if (key === 'r') location.reload();
+    else if (key === 'escape') closeModal();
+  });
+
+  // === Init hero tool buttons ===
+  function initHeroButtons() {
+    const darkBtn = document.getElementById('darkModeBtn');
+    if (darkBtn) {
+      darkBtn.textContent = globalState.darkMode ? '☀️' : '🌙';
+      darkBtn.addEventListener('click', toggleDarkMode);
+    }
+    const scBtn = document.getElementById('shortcutsBtn');
+    if (scBtn) scBtn.addEventListener('click', showShortcuts);
+    const achBtn = document.getElementById('achievementsBtn');
+    if (achBtn) achBtn.addEventListener('click', showAchievements);
+    const shBtn = document.getElementById('shareBtn');
+    if (shBtn) shBtn.addEventListener('click', shareCurrentView);
+  }
+  initHeroButtons();
+
   /* =========================================================
    * DATA: 59 repos of lnwsj (Mavis)
    * ========================================================= */
@@ -1189,14 +1649,19 @@
     const counts = {};
     REPOS.forEach(r => counts[r.cat] = (counts[r.cat] || 0) + 1);
     counts.all = REPOS.length;
+    counts.favorites = globalState.favorites.length;
 
-    const chips = Object.entries({ all: { label: 'All', th: 'ทั้งหมด', emoji: '🌊' }, ...CATEGORIES })
-      .map(([key, info]) => `
-        <button class="chip ${state.filter === key ? 'active' : ''}" data-cat="${key}">
-          ${info.emoji} ${info.label} <span class="chip-count">${counts[key] || 0}</span>
-        </button>
-      `).join('');
-    document.getElementById('filterChips').innerHTML = chips;
+    const chips = [
+      { key: 'all', label: 'All', emoji: '🌊', count: counts.all },
+      { key: 'favorites', label: 'Favorites', emoji: '⭐', count: counts.favorites },
+      ...Object.entries(CATEGORIES).map(([key, info]) => ({ key, label: info.label, emoji: info.emoji, count: counts[key] || 0 }))
+    ];
+
+    document.getElementById('filterChips').innerHTML = chips.map(c => `
+      <button class="chip ${state.filter === c.key ? 'active' : ''}" data-cat="${c.key}">
+        ${c.emoji} ${c.label} <span class="chip-count">${c.count}</span>
+      </button>
+    `).join('');
 
     document.querySelectorAll('.chip').forEach(c => {
       c.addEventListener('click', () => {
@@ -1212,7 +1677,11 @@
    * ========================================================= */
   function filteredRepos() {
     return REPOS.filter(r => {
-      if (state.filter !== 'all' && r.cat !== state.filter) return false;
+      if (state.filter === 'favorites') {
+        if (!isFavorite(r.name)) return false;
+      } else if (state.filter !== 'all' && r.cat !== state.filter) {
+        return false;
+      }
       if (state.search) {
         const q = state.search.toLowerCase();
         const hay = `${r.name} ${r.desc} ${r.desc_full} ${r.stack} ${r.lang}`.toLowerCase();
@@ -1226,8 +1695,10 @@
     const cat = catMeta(r.cat);
     const bucket = sizeBucket(r.size_kb);
     const maxSize = 11215; // Tokyo Student Life
+    const isFav = isFavorite(r.name);
     return `
       <div class="repo-card" data-cat="${r.cat}" data-name="${r.name}" style="--cat-color: ${cat.accent}; --cat-bg: ${cat.accent}1f; animation-delay: ${Math.random() * 200}ms;">
+        <button class="fav-btn ${isFav ? 'active' : ''}" data-fav="${r.name}" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '⭐' : '☆'}</button>
         <div class="repo-head">
           <div class="repo-icon">${r.emoji}</div>
           <div>
@@ -1247,6 +1718,12 @@
         <div class="size-bar">
           <div class="size-bar-fill" style="width: ${Math.min(100, r.size_kb / maxSize * 100)}%"></div>
         </div>
+        <div class="issue-badges" id="meta-${r.name}">${renderIssueBadges(r.name)}</div>
+        <div class="cockpit-actions">
+          <button class="cockpit-btn refresh" data-cockpit="refresh" data-name="${r.name}" title="Re-fetch from GitHub">🔄 Refresh</button>
+          <button class="cockpit-btn deploy" data-cockpit="deploy" data-name="${r.name}" title="Show deploy command">🚀 Deploy</button>
+          <button class="cockpit-btn scan" data-cockpit="scan" data-name="${r.name}" title="Re-run Bug Hunter">🐛 Scan</button>
+        </div>
         <div class="repo-actions">
           <button class="action-btn bugs" data-action="bugs" data-name="${r.name}" title="Run Bug Hunter">
             🐛 Bug Hunter
@@ -1265,6 +1742,16 @@
         </div>
       </div>
     `;
+  }
+
+  function renderIssueBadges(name) {
+    const meta = globalState.repoMeta[name];
+    if (!meta) return '';
+    const parts = [];
+    if (meta.issues) parts.push(`<span class="issue-badge issues">${meta.issues} issues</span>`);
+    if (meta.prs) parts.push(`<span class="issue-badge prs">${meta.prs} PRs</span>`);
+    if (meta.commits) parts.push(`<span class="issue-badge commits">${meta.commits} commits</span>`);
+    return parts.join('');
   }
 
   /* =========================================================
@@ -1419,6 +1906,29 @@
     }
   }
 
+  /* === Commit velocity === */
+  function calcVelocity(byWeek) {
+    if (!byWeek || byWeek.length < 2) return { trend: 'stable', pct: 0, recent: 0, previous: 0 };
+    const sorted = [...byWeek].sort((a, b) => a.week.localeCompare(b.week));
+    const recent = sorted.slice(-2).reduce((a, w) => a + w.count, 0) / 2;
+    const previous = sorted.slice(-4, -2).reduce((a, w) => a + w.count, 0) / 2;
+    if (previous === 0) return { trend: 'stable', pct: 0, recent, previous };
+    const pct = ((recent - previous) / previous * 100).toFixed(0);
+    const trend = pct > 10 ? 'up' : pct < -10 ? 'down' : 'stable';
+    return { trend, pct: Math.abs(pct), recent: recent.toFixed(1), previous: previous.toFixed(1) };
+  }
+
+  async function loadRepoMeta() {
+    if (Object.keys(globalState.repoMeta).length > 0) return;
+    try {
+      const res = await fetch(`${API_BASE}/repos/all-meta`);
+      const data = await res.json();
+      globalState.repoMeta = data;
+      // Re-render cards to show badges
+      if (state.view === 'grid' || state.view === 'category') render();
+    } catch (e) { console.warn('Failed to load repo meta:', e); }
+  }
+
   function renderCommitsView(data) {
     const s = data.summary;
     const byDay = data.by_day || [];
@@ -1497,6 +2007,22 @@
     const heatmapHtml = renderHeatmap(heatmap, heatmapWeeks, heatmapMax);
     const donutHtml = renderDonut(s.lnwsj, s.other);
     const searchHtml = renderSearchMessages(messages);
+    const velocity = calcVelocity(byWeek);
+    const velocityHtml = `
+      <div class="commits-section">
+        <h3>📈 Commit Velocity <span class="count">trend this week vs last</span></h3>
+        <div class="velocity-section">
+          <div class="velocity-trend ${velocity.trend}">
+            ${velocity.trend === 'up' ? '📈' : velocity.trend === 'down' ? '📉' : '➡️'}
+            ${velocity.pct}%
+          </div>
+          <div style="flex: 1;">
+            <div class="velocity-info">Recent: <strong>${velocity.recent}</strong> commits/week · Previous: <strong>${velocity.previous}</strong> commits/week</div>
+            <div class="velocity-info" style="margin-top: 4px;">${velocity.trend === 'up' ? '🚀 Mavis is shipping faster!' : velocity.trend === 'down' ? '🐢 Slower than usual' : '➡️ Steady pace'}</div>
+          </div>
+        </div>
+      </div>
+    `;
 
     const authorsHtml = byAuthor.length === 0 ? '' : `
       <div class="commits-section">
@@ -1533,7 +2059,7 @@
 
     const aiHtml = renderAiSummary(patternsData);
 
-    document.getElementById('commitsView').innerHTML = heroHtml + streakHtml + `
+    document.getElementById('commitsView').innerHTML = heroHtml + streakHtml + velocityHtml + `
       <div class="commits-section">
         <h3>📊 Activity Chart
           <div class="chart-toggle" style="margin-left: auto;">
@@ -1818,8 +2344,7 @@
   function attachCardHandlers() {
     document.querySelectorAll('.repo-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        // Don't trigger card click when clicking action button or live link
-        if (e.target.closest('.action-btn') || e.target.closest('a')) return;
+        if (e.target.closest('.action-btn') || e.target.closest('.cockpit-btn') || e.target.closest('.fav-btn') || e.target.closest('a')) return;
         const repo = REPOS.find(r => r.name === card.dataset.name);
         if (repo) showModal(repo);
       });
@@ -1835,6 +2360,70 @@
         else if (action === 'recommend') runRecommend(name, btn);
       });
     });
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(btn.dataset.fav, btn);
+      });
+    });
+    document.querySelectorAll('.cockpit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = btn.dataset.cockpit;
+        const name = btn.dataset.name;
+        if (action === 'refresh') cockpitRefresh(name);
+        else if (action === 'deploy') cockpitDeploy(name);
+        else if (action === 'scan') cockpitScan(name);
+      });
+    });
+  }
+
+  async function cockpitRefresh(name) {
+    showToast(`🔄 Refreshing ${name} from GitHub...`);
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/refresh`, { method: 'POST' });
+      const data = await res.json();
+      if (data.ok) {
+        showToast(`✓ ${name} refreshed from GitHub`, 'success');
+        setTimeout(() => location.reload(), 800);
+      } else {
+        showToast(`⚠️ ${data.detail || 'Failed'}`, 'error');
+      }
+    } catch (e) { showToast(`✗ ${e.message}`, 'error'); }
+  }
+
+  async function cockpitDeploy(name) {
+    showToast(`🚀 Preparing deploy for ${name}...`);
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/deploy`);
+      const data = await res.json();
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-head" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, white 100%);">
+          <button class="modal-close" onclick="closeModal()">✕</button>
+          <div class="modal-icon">🚀</div>
+          <div class="modal-title">Deploy ${escapeHtml(name)}</div>
+          <div class="modal-cat" style="color: var(--mint-deep);">${data.already_deployed ? 'Already deployed!' : 'Ready to deploy'}</div>
+        </div>
+        <div class="modal-body">
+          <p style="margin-bottom: 16px; color: var(--slate-2);">${data.already_deployed ? `✨ This repo is already live at:` : '📋 Run this command to deploy:'}</p>
+          ${data.already_deployed ? `<div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; margin-bottom: 16px;"><a href="${data.live_url}" target="_blank" style="color: var(--mint-deep); font-weight: 600; font-size: 16px;">${data.live_url} ↗</a></div>` : ''}
+          <div class="result-item" style="border-left-color: var(--indigo);">
+            <div class="result-item-title">📦 Command</div>
+            <div class="file-content">${escapeHtml(data.command)}</div>
+          </div>
+          <div class="result-item" style="border-left-color: var(--pink); margin-top: 12px;">
+            <div class="result-item-title">📍 Target</div>
+            <div class="result-item-detail">${escapeHtml(data.target)}</div>
+          </div>
+        </div>
+      `;
+      document.getElementById('modal').classList.add('active');
+    } catch (e) { showToast(`✗ ${e.message}`, 'error'); }
+  }
+
+  async function cockpitScan(name) {
+    showToast(`🐛 Re-running Bug Hunter for ${name}...`);
+    await runBugHunter(name, null);
   }
 
   /* === API calls === */
@@ -1987,6 +2576,60 @@
     return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  async function showCompareModal(name1) {
+    if (!commitsData) await loadCommitsView();
+    if (!commitsData) return;
+    const all = commitsData.by_repo || [];
+    const opts = all.map(r => `<option value="${r.name}">${escapeHtml(r.name)}</option>`).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div class="modal-head" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, white 100%);">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-icon">⚖️</div>
+        <div class="modal-title">Compare Repos</div>
+        <div class="modal-cat" style="color: var(--indigo);">side-by-side metrics</div>
+      </div>
+      <div class="modal-body">
+        <div class="compare-grid">
+          <div>
+            <select class="compare-pick" id="compareA">${opts.replace(`value="${name1}"`, `value="${name1}" selected`)}</select>
+            <div class="compare-side" id="compareAData"></div>
+          </div>
+          <div class="compare-vs">VS</div>
+          <div>
+            <select class="compare-pick" id="compareB"><option value="">— pick repo —</option>${opts}</select>
+            <div class="compare-side" id="compareBData"><div class="empty-result"><div class="emoji">👈</div><div>Pick another repo</div></div></div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    const selA = document.getElementById('compareA');
+    const selB = document.getElementById('compareB');
+    const updA = () => renderCompareSide(selA.value, 'compareAData');
+    const updB = () => renderCompareSide(selB.value, 'compareBData');
+    selA.addEventListener('change', updA);
+    selB.addEventListener('change', updB);
+    updA();
+  }
+
+  function renderCompareSide(name, containerId) {
+    if (!name) { document.getElementById(containerId).innerHTML = ''; return; }
+    const repo = REPOS.find(r => r.name === name);
+    const meta = (commitsData?.by_repo || []).find(r => r.name === name) || {};
+    if (!repo) { document.getElementById(containerId).innerHTML = '<div class="empty-result">Not found</div>'; return; }
+    document.getElementById(containerId).innerHTML = `
+      <h4 style="margin-bottom: 8px; color: var(--pink-deep);">${repo.emoji} ${escapeHtml(name)}</h4>
+      <div class="compare-row"><span class="label">Category</span><span class="value">${repo.cat}</span></div>
+      <div class="compare-row"><span class="label">Stack</span><span class="value">${repo.stack || repo.lang || '—'}</span></div>
+      <div class="compare-row"><span class="label">Size</span><span class="value">${fmtSize(repo.size_kb)}</span></div>
+      <div class="compare-row"><span class="label">Stars</span><span class="value">⭐ ${repo.stars}</span></div>
+      <div class="compare-row"><span class="label">Commits</span><span class="value">${meta.count || 0}</span></div>
+      <div class="compare-row"><span class="label">Last commit</span><span class="value">${meta.last_commit || '—'}</span></div>
+      <div class="compare-row"><span class="label">Created</span><span class="value">${fmtDate(repo.created)}</span></div>
+      <div class="compare-row"><span class="label">Live?</span><span class="value">${repo.live ? '✓' : '—'}</span></div>
+    `;
+  }
+
   /* =========================================================
    * MODAL
    * ========================================================= */
@@ -1999,60 +2642,140 @@
         <div class="modal-title">${repo.name}</div>
         <div class="modal-cat" style="color: ${cat.accent};">${cat.emoji} ${cat.label} · ${cat.th}</div>
       </div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="overview">📋 Overview</button>
+        <button class="modal-tab" data-tab="readme">📖 README</button>
+        <button class="modal-tab" data-tab="files">📁 Files</button>
+      </div>
       <div class="modal-body">
-        <div class="modal-section">
-          <div class="modal-section-title">📝 Description</div>
-          <div class="modal-desc">${repo.desc_full}</div>
-        </div>
-        ${repo.highlights && repo.highlights.length ? `
+        <div class="modal-tab-content active" data-tab-content="overview">
           <div class="modal-section">
-            <div class="modal-section-title">✨ Highlights</div>
-            <ul class="highlight">
-              ${repo.highlights.map(h => `<li>${h}</li>`).join('')}
-            </ul>
+            <div class="modal-section-title">📝 Description</div>
+            <div class="modal-desc">${repo.desc_full}</div>
           </div>
-        ` : ''}
-        <div class="modal-section">
-          <div class="modal-section-title">📊 Stats</div>
-          <div class="modal-grid">
-            <div class="modal-stat">
-              <div class="modal-stat-label">Stack</div>
-              <div class="modal-stat-value">${repo.stack || repo.lang}</div>
+          ${repo.highlights && repo.highlights.length ? `
+            <div class="modal-section">
+              <div class="modal-section-title">✨ Highlights</div>
+              <ul class="highlight">
+                ${repo.highlights.map(h => `<li>${h}</li>`).join('')}
+              </ul>
             </div>
-            <div class="modal-stat">
-              <div class="modal-stat-label">Language</div>
-              <div class="modal-stat-value">${repo.lang}</div>
+          ` : ''}
+          <div class="modal-section">
+            <div class="modal-section-title">📊 Stats</div>
+            <div class="modal-grid">
+              <div class="modal-stat"><div class="modal-stat-label">Stack</div><div class="modal-stat-value">${repo.stack || repo.lang}</div></div>
+              <div class="modal-stat"><div class="modal-stat-label">Language</div><div class="modal-stat-value">${repo.lang}</div></div>
+              <div class="modal-stat"><div class="modal-stat-label">Size</div><div class="modal-stat-value">${fmtSize(repo.size_kb)}</div></div>
+              <div class="modal-stat"><div class="modal-stat-label">Created</div><div class="modal-stat-value">${fmtDate(repo.created)}</div></div>
+              <div class="modal-stat"><div class="modal-stat-label">Stars</div><div class="modal-stat-value">${repo.stars}</div></div>
+              <div class="modal-stat"><div class="modal-stat-label">Fork?</div><div class="modal-stat-value">${repo.is_fork ? 'Yes 🍴' : 'No (own)'}</div></div>
             </div>
-            <div class="modal-stat">
-              <div class="modal-stat-label">Size</div>
-              <div class="modal-stat-value">${fmtSize(repo.size_kb)}</div>
-            </div>
-            <div class="modal-stat">
-              <div class="modal-stat-label">Created</div>
-              <div class="modal-stat-value">${fmtDate(repo.created)}</div>
-            </div>
-            <div class="modal-stat">
-              <div class="modal-stat-label">Stars</div>
-              <div class="modal-stat-value">${repo.stars}</div>
-            </div>
-            <div class="modal-stat">
-              <div class="modal-stat-label">Fork?</div>
-              <div class="modal-stat-value">${repo.is_fork ? 'Yes 🍴' : 'No (own)'}</div>
+          </div>
+          <div class="modal-section">
+            <div class="modal-section-title">🔗 Links</div>
+            <div class="modal-actions">
+              <a href="https://github.com/lnwsj/${repo.name}" target="_blank" rel="noopener" class="btn btn-primary">📂 View on GitHub</a>
+              ${repo.live ? `<a href="${repo.live}" target="_blank" rel="noopener" class="btn btn-secondary">🚀 Live Demo</a>` : `<span class="btn btn-disabled">🚫 No live URL</span>`}
+              <button class="btn btn-secondary" data-action="compare" data-name="${repo.name}">⚖️ Compare</button>
+              <button class="btn btn-secondary" data-action="bugs" data-name="${repo.name}">🐛 Bug Hunter</button>
+              <button class="btn btn-secondary" data-action="recommend" data-name="${repo.name}">💡 Recommend</button>
             </div>
           </div>
         </div>
-        <div class="modal-section">
-          <div class="modal-section-title">🔗 Links</div>
-          <div class="modal-actions">
-            <a href="https://github.com/lnwsj/${repo.name}" target="_blank" rel="noopener" class="btn btn-primary">📂 View on GitHub</a>
-            ${repo.live
-              ? `<a href="${repo.live}" target="_blank" rel="noopener" class="btn btn-secondary">🚀 Live Demo</a>`
-              : `<span class="btn btn-disabled">🚫 No live URL</span>`}
-          </div>
+        <div class="modal-tab-content" data-tab-content="readme">
+          <div class="commits-loading"><div class="emoji">📖</div><div>Loading README from GitHub...</div></div>
+        </div>
+        <div class="modal-tab-content" data-tab-content="files">
+          <div class="commits-loading"><div class="emoji">📁</div><div>Loading files from GitHub...</div></div>
         </div>
       </div>
     `;
     document.getElementById('modal').classList.add('active');
+    // Attach tab handlers
+    document.querySelectorAll('.modal-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.modal-tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        const content = document.querySelector(`[data-tab-content="${target}"]`);
+        content.classList.add('active');
+        if (target === 'readme') loadReadme(repo.name, content);
+        else if (target === 'files') loadFiles(repo.name, content);
+      });
+    });
+    // Attach action buttons in modal
+    document.querySelectorAll('.modal-actions [data-action]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = btn.dataset.action;
+        const name = btn.dataset.name;
+        if (action === 'compare') showCompareModal(name);
+        else if (action === 'bugs') runBugHunter(name, null);
+        else if (action === 'recommend') runRecommend(name, null);
+      });
+    });
+  }
+
+  async function loadReadme(name, container) {
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/readme`);
+      const data = await res.json();
+      if (data.found && data.html) {
+        container.innerHTML = `<div class="readme-content">${data.html}</div>`;
+      } else if (data.found && data.raw) {
+        container.innerHTML = `<div class="readme-content"><pre>${escapeHtml(data.raw)}</pre></div>`;
+      } else {
+        container.innerHTML = `<div class="empty-result"><div class="emoji">📭</div><div>No README found</div></div>`;
+      }
+    } catch (e) {
+      container.innerHTML = `<div class="empty-result"><div class="emoji">⚠️</div><div>${e.message}</div></div>`;
+    }
+  }
+
+  async function loadFiles(name, container) {
+    try {
+      const res = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/files`);
+      const data = await res.json();
+      if (data.files && data.files.length) {
+        container.innerHTML = `
+          <div class="file-list" id="fileList-${name}">
+            ${data.files.map(f => `
+              <div class="file-item" data-path="${f.path}" data-name="${name}">
+                <span class="file-icon">${f.path.endsWith('.html') ? '🌐' : f.path.endsWith('.py') ? '🐍' : f.path.endsWith('.md') ? '📝' : f.path.endsWith('.json') ? '📋' : f.path.endsWith('.yml') || f.path.endsWith('.yaml') ? '⚙️' : '📄'}</span>
+                <span class="file-name">${escapeHtml(f.path)}</span>
+                <span class="file-size">${fmtSize(f.size)}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div id="fileContent-${name}" style="margin-top: 12px;"></div>
+        `;
+        // Wire up file clicks
+        container.querySelectorAll('.file-item').forEach(item => {
+          item.addEventListener('click', async () => {
+            const path = item.dataset.path;
+            const contentEl = document.getElementById(`fileContent-${name}`);
+            contentEl.innerHTML = '<div class="commits-loading"><div class="emoji">⏳</div></div>';
+            try {
+              const r = await fetch(`${API_BASE}/repos/${encodeURIComponent(name)}/files/${encodeURIComponent(path)}`);
+              const d = await r.json();
+              if (d.content !== undefined) {
+                contentEl.innerHTML = `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;"><strong style="font-family: monospace; font-size: 13px;">${escapeHtml(path)}</strong><button class="export-btn" onclick="this.parentElement.nextElementSibling.remove(); this.parentElement.remove();" style="padding: 4px 8px;">✕</button></div><div class="file-content">${escapeHtml(d.content)}</div>`;
+              } else {
+                contentEl.innerHTML = `<div class="empty-result">No content</div>`;
+              }
+            } catch (e) {
+              contentEl.innerHTML = `<div class="empty-result">${e.message}</div>`;
+            }
+          });
+        });
+      } else {
+        container.innerHTML = `<div class="empty-result"><div class="emoji">📭</div><div>No files found</div></div>`;
+      }
+    } catch (e) {
+      container.innerHTML = `<div class="empty-result"><div class="emoji">⚠️</div><div>${e.message}</div></div>`;
+    }
   }
   function closeModal() {
     document.getElementById('modal').classList.remove('active');
@@ -2104,6 +2827,23 @@
     tick();
     // Ping API in background
     pingAPI();
+    loadRepoMeta();
+    // Apply URL state if any
+    const params = new URLSearchParams(location.search);
+    if (params.get('view') && ['grid','timeline','category','commits'].includes(params.get('view'))) {
+      state.view = params.get('view');
+      setTimeout(() => document.querySelector(`[data-view="${state.view}"]`)?.click(), 100);
+    }
+    if (params.get('cat')) {
+      state.filter = params.get('cat');
+      renderChips();
+      render();
+    }
+    if (params.get('q')) {
+      state.search = params.get('q');
+      document.getElementById('searchInput').value = state.search;
+      render();
+    }
   }
 
   async function pingAPI() {
