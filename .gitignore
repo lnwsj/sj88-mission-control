@@ -1,0 +1,17 @@
+# Editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test screenshots
+screenshot-*.png
