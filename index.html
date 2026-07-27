@@ -1327,6 +1327,111 @@
   .heatmap-cell.l2 { background: rgba(236, 72, 153, 0.4); }
   .heatmap-cell.l3 { background: rgba(236, 72, 153, 0.65); }
   .heatmap-cell.l4 { background: rgba(236, 72, 153, 0.85); }
+
+  /* === Calendar View (v19) === */
+  .calendar-wrap { padding: 20px 0 40px; }
+  .calendar-head {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
+  }
+  .calendar-title { font-size: 22px; font-weight: 800; color: var(--slate); }
+  html[data-theme="dark"] .calendar-title { color: white; }
+  .calendar-nav { display: flex; gap: 6px; align-items: center; }
+  .calendar-nav button {
+    padding: 6px 12px; border-radius: 8px; border: 1px solid var(--card-border);
+    background: var(--card); color: var(--slate); cursor: pointer; font-size: 13px;
+    transition: all 0.2s;
+  }
+  .calendar-nav button:hover { background: var(--pink); color: white; border-color: var(--pink); }
+  .calendar-month-label { font-size: 16px; font-weight: 700; color: var(--pink); min-width: 160px; text-align: center; }
+  .calendar-source {
+    font-size: 11px; color: var(--slate-3); padding: 4px 10px;
+    background: var(--bg-2); border-radius: 999px;
+  }
+  .calendar-source.live { color: #16a34a; }
+  .calendar-source.cache { color: #f59e0b; }
+  .calendar-source.error { color: #ef4444; }
+
+  .calendar-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    margin-top: 12px;
+  }
+  .calendar-dow {
+    text-align: center; font-size: 11px; font-weight: 700; color: var(--slate-3);
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+  }
+  .calendar-day {
+    aspect-ratio: 1; min-height: 64px; padding: 6px;
+    border-radius: 8px; background: var(--card); border: 1px solid var(--card-border);
+    cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column;
+    justify-content: space-between; position: relative;
+  }
+  .calendar-day:hover { transform: translateY(-1px); border-color: var(--pink); box-shadow: 0 4px 12px -4px rgba(236, 72, 153, 0.25); }
+  .calendar-day.empty { background: transparent; border: none; cursor: default; }
+  .calendar-day.empty:hover { transform: none; box-shadow: none; }
+  .calendar-day.today {
+    border: 2px solid var(--pink);
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(99, 102, 241, 0.05) 100%);
+  }
+  .calendar-day.future { opacity: 0.4; cursor: default; }
+  .calendar-day.future:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
+  .calendar-day-num { font-size: 13px; font-weight: 700; color: var(--slate); }
+  html[data-theme="dark"] .calendar-day-num { color: white; }
+  .calendar-day.today .calendar-day-num { color: var(--pink); }
+  .calendar-day-count {
+    font-size: 11px; font-weight: 600; color: var(--slate-2);
+    display: flex; align-items: center; gap: 3px;
+  }
+  .calendar-day-count .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--pink);
+  }
+  .calendar-day.l0 .dot { background: var(--bg-2); }
+  .calendar-day.l1 .dot { background: rgba(236, 72, 153, 0.4); }
+  .calendar-day.l2 .dot { background: rgba(236, 72, 153, 0.65); }
+  .calendar-day.l3 .dot { background: rgba(236, 72, 153, 0.85); }
+  .calendar-day.l4 .dot { background: var(--pink); box-shadow: 0 0 6px var(--pink); }
+
+  .calendar-summary {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin: 20px 0;
+  }
+  .calendar-stat {
+    padding: 14px 16px; background: var(--card); border-radius: 12px;
+    border: 1px solid var(--card-border);
+  }
+  .calendar-stat-label { font-size: 11px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .calendar-stat-val { font-size: 24px; font-weight: 800; color: var(--slate); margin-top: 4px; }
+  .calendar-stat-val .unit { font-size: 13px; color: var(--slate-3); font-weight: 600; }
+  html[data-theme="dark"] .calendar-stat-val { color: white; }
+  .calendar-stat.today-card { background: linear-gradient(135deg, var(--pink) 0%, var(--indigo) 100%); border: none; }
+  .calendar-stat.today-card .calendar-stat-label,
+  .calendar-stat.today-card .calendar-stat-val { color: white; }
+  .calendar-stat.today-card .calendar-stat-val .unit { color: rgba(255, 255, 255, 0.7); }
+
+  /* Day detail modal */
+  .day-modal-list { display: flex; flex-direction: column; gap: 8px; }
+  .day-modal-item {
+    padding: 12px 14px; background: var(--bg-2); border-radius: 10px;
+    border-left: 3px solid var(--pink);
+  }
+  .day-modal-item-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .day-modal-repo {
+    font-size: 12px; font-weight: 700; color: var(--pink);
+  }
+  .day-modal-time { font-size: 11px; color: var(--slate-3); }
+  .day-modal-msg { font-size: 13px; color: var(--slate); line-height: 1.5; }
+  html[data-theme="dark"] .day-modal-msg { color: white; }
+  .day-modal-empty { text-align: center; padding: 40px; color: var(--slate-3); }
+  .day-modal-empty .emoji { font-size: 48px; margin-bottom: 8px; }
+
+  @media (max-width: 640px) {
+    .calendar-summary { grid-template-columns: repeat(2, 1fr); }
+    .calendar-day { min-height: 52px; }
+  }
   .heatmap-cell.l5 { background: var(--pink); }
   .heatmap-legend {
     display: flex; align-items: center; gap: 6px;
@@ -2166,6 +2271,7 @@
       <button class="view-btn" data-view="category">📂 By Category</button>
       <button class="view-btn" data-view="commits">📊 Commits</button>
       <button class="view-btn" data-view="roadmap">🗺️ Roadmap</button>
+      <button class="view-btn" data-view="calendar">🗓️ GitHub Calendar</button>
     </div>
   </div>
 </div>
@@ -2181,6 +2287,7 @@
         <div>Loading commit analytics from GitHub...</div>
       </div>
     </div>
+    <div class="commits-view" id="calendarView"></div>
   </div>
 </section>
 
@@ -2329,6 +2436,8 @@
           <div class="shortcut-row"><div class="shortcut-key">T</div><div class="shortcut-desc">Timeline view</div></div>
           <div class="shortcut-row"><div class="shortcut-key">V</div><div class="shortcut-desc">Category view</div></div>
           <div class="shortcut-row"><div class="shortcut-key">M</div><div class="shortcut-desc">Commits view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">O</div><div class="shortcut-desc">Roadmap view</div></div>
+          <div class="shortcut-row"><div class="shortcut-key">L</div><div class="shortcut-desc">GitHub Calendar</div></div>
           <div class="shortcut-row"><div class="shortcut-key">F</div><div class="shortcut-desc">Favorites only</div></div>
           <div class="shortcut-row"><div class="shortcut-key">S</div><div class="shortcut-desc">Share link</div></div>
           <div class="shortcut-row"><div class="shortcut-key">R</div><div class="shortcut-desc">Refresh data</div></div>
@@ -2616,6 +2725,7 @@
     else if (key === 'v') document.querySelector('[data-view="category"]')?.click();
     else if (key === 'm') document.querySelector('[data-view="commits"]')?.click();
     else if (key === 'o') document.querySelector('[data-view="roadmap"]')?.click();
+    else if (key === 'l') document.querySelector('[data-view="calendar"]')?.click();
     else if (key === 'f') {
       state.filter = 'favorites';
       renderChips(); render();
@@ -4524,6 +4634,255 @@
     }).join('');
   }
 
+  /* === GitHub Calendar View (v19) — Live from GitHub API === */
+  let ghEvents = null;          // raw events from GitHub /users/lnwsj/events/public
+  let ghEventsFetchedAt = 0;    // ms timestamp
+  let ghEventsError = null;
+  let calMonth = null;          // Date object for the month being viewed
+
+  async function loadGitHubCalendar() {
+    const now = Date.now();
+    // Cache 2 min
+    if (ghEvents && (now - ghEventsFetchedAt) < 120000) {
+      renderCalendarView();
+      return;
+    }
+    if (!calMonth) {
+      calMonth = new Date();
+      calMonth.setDate(1);
+    }
+    const calView = document.getElementById('calendarView');
+    if (!ghEvents) {
+      calView.innerHTML = `
+        <div class="commits-loading">
+          <div class="emoji">🐙</div>
+          <div>Fetching events from <code>api.github.com/users/lnwsj/events/public</code>...</div>
+          <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">⏳ Direct GitHub API · 60 req/hr limit</div>
+        </div>
+      `;
+    }
+    try {
+      const res = await fetch('https://api.github.com/users/lnwsj/events/public?per_page=100');
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+      ghEvents = await res.json();
+      ghEventsFetchedAt = Date.now();
+      ghEventsError = null;
+      renderCalendarView();
+    } catch (e) {
+      ghEventsError = e.message;
+      calView.innerHTML = `
+        <div class="commits-loading">
+          <div class="emoji">⚠️</div>
+          <div style="color: var(--coral);">${e.message}</div>
+          <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">GitHub API may be rate-limited (60 req/hr). Try again in a few minutes.</div>
+        </div>
+      `;
+    }
+  }
+
+  function getCommitsByDay(events) {
+    // Returns Map<dateString (YYYY-MM-DD), [{repo, msg, time, sha, url}]>
+    const byDay = new Map();
+    if (!Array.isArray(events)) return byDay;
+    events.forEach(ev => {
+      if (ev.type !== 'PushEvent') return;
+      const repo = ev.repo?.name?.replace(/^lnwsj\//, '') || '?';
+      const date = ev.created_at?.slice(0, 10);
+      if (!date) return;
+      const time = ev.created_at?.slice(11, 16) || '';
+      const commits = ev.payload?.commits || [];
+      if (!byDay.has(date)) byDay.set(date, []);
+      commits.forEach(c => {
+        byDay.get(date).push({
+          repo, msg: c.message || '(no message)', time,
+          sha: c.sha?.slice(0, 7) || '',
+          url: `https://github.com/${ev.repo.name}/commit/${c.sha}`
+        });
+      });
+    });
+    return byDay;
+  }
+
+  function renderCalendarView() {
+    if (!ghEvents) return;
+    const calView = document.getElementById('calendarView');
+    const byDay = getCommitsByDay(ghEvents);
+    const today = new Date();
+    const todayStr = today.toISOString().slice(0, 10);
+    const month = calMonth;
+    const year = month.getFullYear();
+    const mo = month.getMonth();
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const monthShort = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    // First day of month, last day, days in month
+    const firstDay = new Date(year, mo, 1);
+    const lastDay = new Date(year, mo + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startDow = firstDay.getDay(); // 0 = Sun
+
+    // Stats
+    const monthCommits = [];
+    byDay.forEach((arr, date) => {
+      if (date.startsWith(`${year}-${String(mo + 1).padStart(2, '0')}`)) {
+        monthCommits.push(...arr);
+      }
+    });
+    const monthCount = monthCommits.length;
+    const activeDays = Array.from(byDay.keys()).filter(d => d.startsWith(`${year}-${String(mo + 1).padStart(2, '0')}`)).length;
+    const todayCount = byDay.get(todayStr)?.length || 0;
+    const maxDay = Math.max(1, ...Array.from(byDay.entries())
+      .filter(([d]) => d.startsWith(`${year}-${String(mo + 1).padStart(2, '0')}`))
+      .map(([, arr]) => arr.length));
+
+    // Build grid
+    const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const cells = [];
+    // Empty cells before start
+    for (let i = 0; i < startDow; i++) {
+      cells.push(`<div class="calendar-day empty"></div>`);
+    }
+    // Day cells
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${year}-${String(mo + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const arr = byDay.get(dateStr) || [];
+      const cnt = arr.length;
+      let level = 0;
+      if (cnt > 0) {
+        const ratio = cnt / maxDay;
+        if (ratio >= 0.75) level = 4;
+        else if (ratio >= 0.5) level = 3;
+        else if (ratio >= 0.25) level = 2;
+        else level = 1;
+      }
+      const isToday = dateStr === todayStr;
+      const isFuture = new Date(dateStr) > today;
+      const repos = [...new Set(arr.map(c => c.repo))].slice(0, 3);
+      const tipTitle = arr.length
+        ? `${arr.length} commit${arr.length > 1 ? 's' : ''} on ${dateStr}\\nRepos: ${repos.join(', ')}${repos.length < arr.length ? '...' : ''}`
+        : `No commits on ${dateStr}`;
+      const todayBadge = isToday ? '<span style="font-size:9px; background:var(--pink); color:white; padding:1px 5px; border-radius:4px; margin-left:4px;">TODAY</span>' : '';
+      cells.push(`
+        <div class="calendar-day ${isToday ? 'today' : ''} ${isFuture ? 'future' : ''} l${level}"
+             ${isFuture ? '' : `onclick="showDayDetail('${dateStr}')"`}
+             title="${tipTitle}">
+          <div class="calendar-day-num">${d}${todayBadge}</div>
+          <div class="calendar-day-count">
+            ${cnt > 0 ? `<span class="dot"></span>${cnt}` : ''}
+          </div>
+        </div>
+      `);
+    }
+
+    // Source pill
+    const ago = Math.round((Date.now() - ghEventsFetchedAt) / 1000);
+    const sourceClass = ghEventsError ? 'error' : (ghEvents && ghEventsFetchedAt ? 'live' : 'cache');
+    const sourceText = ghEventsError
+      ? `⚠ ${ghEventsError}`
+      : `🐙 GitHub API · ${ago}s ago · ${ghEvents.length} events`;
+
+    calView.innerHTML = `
+      <div class="calendar-wrap">
+        <div class="calendar-head">
+          <div>
+            <div class="calendar-title">🐙 GitHub Activity Calendar</div>
+            <div style="font-size: 12px; color: var(--slate-3); margin-top: 4px;">Live from <code>api.github.com/users/lnwsj/events/public</code> · Click any day to see commits</div>
+          </div>
+          <div class="calendar-nav">
+            <button onclick="calMonthShift(-1)" title="Previous month">◀</button>
+            <div class="calendar-month-label">${monthNames[mo]} ${year}</div>
+            <button onclick="calMonthShift(1)" title="Next month">▶</button>
+            <button onclick="calMonthToday()" title="Jump to current month" style="font-size: 11px;">Today</button>
+          </div>
+        </div>
+
+        <div class="calendar-summary">
+          <div class="calendar-stat today-card">
+            <div class="calendar-stat-label">📅 Today</div>
+            <div class="calendar-stat-val">${todayCount}<span class="unit"> commits</span></div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 4px;">${todayStr}</div>
+          </div>
+          <div class="calendar-stat">
+            <div class="calendar-stat-label">📆 This Month</div>
+            <div class="calendar-stat-val">${monthCount}<span class="unit"> commits</span></div>
+            <div style="font-size: 11px; color: var(--slate-3); margin-top: 4px;">${monthShort[mo]} ${year}</div>
+          </div>
+          <div class="calendar-stat">
+            <div class="calendar-stat-label">🔥 Active Days</div>
+            <div class="calendar-stat-val">${activeDays}<span class="unit"> / ${daysInMonth}</span></div>
+            <div style="font-size: 11px; color: var(--slate-3); margin-top: 4px;">${Math.round(activeDays/daysInMonth*100)}% of month</div>
+          </div>
+          <div class="calendar-stat">
+            <div class="calendar-stat-label">🏆 Best Day</div>
+            <div class="calendar-stat-val">${maxDay}<span class="unit"> commits</span></div>
+            <div style="font-size: 11px; color: var(--slate-3); margin-top: 4px;">peak single day</div>
+          </div>
+        </div>
+
+        <div class="calendar-grid">
+          ${dows.map(d => `<div class="calendar-dow">${d}</div>`).join('')}
+          ${cells.join('')}
+        </div>
+
+        <div style="margin-top: 16px; text-align: center;">
+          <span class="calendar-source ${sourceClass}">${sourceText}</span>
+          <button onclick="loadGitHubCalendar()" style="margin-left: 8px; padding: 4px 10px; font-size: 11px; border: 1px solid var(--card-border); background: var(--card); color: var(--slate); border-radius: 999px; cursor: pointer;">🔄 Refresh</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function calMonthShift(delta) {
+    calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + delta, 1);
+    renderCalendarView();
+  }
+
+  function calMonthToday() {
+    calMonth = new Date();
+    calMonth.setDate(1);
+    renderCalendarView();
+  }
+
+  function showDayDetail(dateStr) {
+    if (!ghEvents) return;
+    const byDay = getCommitsByDay(ghEvents);
+    const commits = byDay.get(dateStr) || [];
+    const d = new Date(dateStr + 'T00:00:00');
+    const dateLabel = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const repos = [...new Set(commits.map(c => c.repo))];
+
+    const listHtml = commits.length
+      ? commits.sort((a, b) => b.time.localeCompare(a.time)).map(c => `
+        <div class="day-modal-item">
+          <div class="day-modal-item-head">
+            <a href="${c.url}" target="_blank" class="day-modal-repo">📦 ${escapeHtml(c.repo)}</a>
+            <span class="day-modal-time">${c.time} · <code>${c.sha}</code></span>
+          </div>
+          <div class="day-modal-msg">${escapeHtml(c.msg.split('\\n')[0])}</div>
+        </div>
+      `).join('')
+      : `<div class="day-modal-empty"><div class="emoji">📭</div><div>No commits on this day</div></div>`;
+
+    const reposList = repos.length
+      ? repos.map(r => `<code style="background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 11px;">${escapeHtml(r)}</code>`).join(' ')
+      : '<span style="color: var(--slate-3);">—</span>';
+
+    document.getElementById('modalContent').innerHTML = `
+      <div style="padding: 8px 4px;">
+        <h2 style="margin: 0 0 4px; font-size: 22px;">📅 ${dateLabel}</h2>
+        <p style="margin: 0 0 16px; color: var(--slate-3); font-size: 13px;">
+          ${commits.length} commit${commits.length !== 1 ? 's' : ''} across ${repos.length} repo${repos.length !== 1 ? 's' : ''}
+        </p>
+        <div style="margin-bottom: 16px; padding: 10px 14px; background: var(--bg-2); border-radius: 8px;">
+          <div style="font-size: 11px; color: var(--slate-3); margin-bottom: 4px;">REPOS TOUCHED</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">${reposList}</div>
+        </div>
+        <div class="day-modal-list">${listHtml}</div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+
   /* === Roadmap view (Phase 25) === */
   function renderRoadmap() {
     if (!commitsData) return;
@@ -4660,6 +5019,13 @@
       document.getElementById('commitsView').classList.add('active');
       document.getElementById('commitsView').innerHTML = '<div class="commits-loading"><div class="emoji">🗺️</div>Loading roadmap...</div>';
       renderRoadmap();
+    } else if (state.view === 'calendar') {
+      document.getElementById('reposGrid').style.display = 'none';
+      document.getElementById('timelineView').classList.remove('active');
+      document.getElementById('commitsView').classList.remove('active');
+      const calView = document.getElementById('calendarView');
+      calView.classList.add('active');
+      loadGitHubCalendar();
     }
   }
 
