@@ -2102,6 +2102,7 @@
       <button id="themeBtn" class="hero-tool-btn" title="Switch theme (press T)">🎨</button>
       <button id="accentBtn" class="hero-tool-btn" title="Custom accent (press Z)">🌈</button>
       <button id="globalSearchBtn" class="hero-tool-btn" title="Global search (press / or Cmd+K)">🔍</button>
+      <button id="patBtn" class="hero-tool-btn" title="Set GitHub PAT (5000 req/hr)" onclick="showPatSettings()">🔑</button>
       <a href="https://github.com/lnwsj" style="color:var(--pink); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(236,72,153,0.08)'" onmouseout="this.style.background='transparent'" title="https://github.com/lnwsj">🌊 <strong>github.com/lnwsj</strong></a>
       <span style="color: var(--slate-3);">·</span>
       <a href="https://codehub.sj88ai.com" style="color:var(--indigo); text-decoration: none; padding: 4px 10px; border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.08)'" onmouseout="this.style.background='transparent'" title="https://codehub.sj88ai.com">🚀 <strong>CodeHub</strong></a>
@@ -3603,7 +3604,7 @@
     bg.addEventListener('click', e => { if (e.target === bg || e.target.hasAttribute('data-close-star')) bg.remove(); });
     // Fetch from GitHub
     try {
-      const resp = await fetch(`https://api.github.com/repos/lnwsj/${name}`);
+      const resp = await ghFetch(`https://api.github.com/repos/lnwsj/${name}`);
       const data = await resp.json();
       if (data.stargazers_count === undefined) { renderStarMock(name); return; }
       const stars = data.stargazers_count || 0;
@@ -4641,6 +4642,109 @@
   let ghCommitsError = null;
   let calMonth = null;          // Date object for the month being viewed
   const CACHE_TTL_MS = 30 * 60 * 1000;  // 30 min
+  let ghRateLimit = null;       // {limit, remaining, reset} from response headers
+
+  /* === GitHub PAT support (v19.2) === */
+  function getPat() {
+    try { return localStorage.getItem('gh_pat') || null; } catch { return null; }
+  }
+  function setPat(pat) {
+    try { pat ? localStorage.setItem('gh_pat', pat) : localStorage.removeItem('gh_pat'); } catch {}
+  }
+  async function ghFetch(url, opts = {}) {
+    const pat = getPat();
+    const headers = {
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(opts.headers || {})
+    };
+    if (pat) headers['Authorization'] = `Bearer ${pat}`;
+    const res = await fetch(url, { ...opts, headers });
+    // Capture rate limit from any response
+    const lim = res.headers.get('x-ratelimit-limit');
+    const rem = res.headers.get('x-ratelimit-remaining');
+    const rst = res.headers.get('x-ratelimit-reset');
+    if (lim && rem) {
+      ghRateLimit = {
+        limit: parseInt(lim),
+        remaining: parseInt(rem),
+        reset: parseInt(rst),
+        hasPat: !!pat
+      };
+    }
+    return res;
+  }
+  function showPatSettings() {
+    const cur = getPat();
+    const hasPat = !!cur;
+    const masked = cur ? cur.slice(0, 7) + '...' + cur.slice(-4) : '';
+    document.getElementById('modalContent').innerHTML = `
+      <div style="padding: 8px 4px;">
+        <h2 style="margin: 0 0 8px; font-size: 22px;">🔑 GitHub Personal Access Token</h2>
+        <p style="margin: 0 0 16px; color: var(--slate-3); font-size: 13px;">
+          เพิ่ม rate limit จาก <strong>60 → 5000 req/hr</strong> · เก็บใน localStorage (เครื่องคุณเท่านั้น)
+        </p>
+        <div class="callout info" style="margin-bottom: 16px;">
+          <div class="title">🔒 Security</div>
+          <p>Token เก็บใน <code>localStorage</code> ฝั่ง client เท่านั้น · ไม่ส่งไปไหน · ลบได้ทุกเมื่อ</p>
+        </div>
+        ${hasPat ? `
+          <div style="background: var(--bg-2); padding: 12px 14px; border-radius: 10px; margin-bottom: 12px;">
+            <div style="font-size: 11px; color: var(--slate-3); margin-bottom: 4px;">CURRENT TOKEN</div>
+            <div style="font-family: monospace; font-size: 13px; color: var(--pink);">${masked}</div>
+          </div>
+        ` : `
+          <div style="background: #fef3c7; padding: 12px 14px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid #f59e0b;">
+            <div style="font-size: 12px; color: #92400e;">⚠️ No token — using anonymous (60 req/hr)</div>
+          </div>
+        `}
+        <label style="display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--slate);">${hasPat ? 'Replace Token' : 'Paste Token'}</label>
+        <input type="password" id="patInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" 
+               style="width: 100%; padding: 10px 12px; border: 1px solid var(--card-border); border-radius: 8px; 
+                      font-family: monospace; font-size: 13px; background: var(--card); color: var(--slate);" />
+        <p style="font-size: 11px; color: var(--slate-3); margin-top: 6px;">
+          สร้าง token ได้ที่ <a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color: var(--pink);">github.com/settings/tokens</a> · เลือก "Public Repos" (read-only)
+        </p>
+        <div style="display: flex; gap: 8px; margin-top: 20px;">
+          <button onclick="savePat()" style="flex: 1; padding: 10px 16px; background: var(--pink); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;">💾 Save Token</button>
+          ${hasPat ? `<button onclick="clearPat()" style="padding: 10px 16px; background: #fee2e2; color: #dc2626; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;">🗑️ Remove</button>` : ''}
+          <button onclick="closeModal()" style="padding: 10px 16px; background: var(--bg-2); color: var(--slate); border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">Cancel</button>
+        </div>
+        <div id="patStatus" style="margin-top: 12px; font-size: 12px; text-align: center;"></div>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('active');
+  }
+  function savePat() {
+    const inp = document.getElementById('patInput');
+    const pat = inp.value.trim();
+    if (!pat) { showToast('⚠️ กรุณาใส่ token', 'warn'); return; }
+    if (!pat.startsWith('ghp_') && !pat.startsWith('github_pat_')) {
+      showToast('⚠️ Token ควรขึ้นต้นด้วย ghp_ หรือ github_pat_', 'warn');
+      return;
+    }
+    setPat(pat);
+    showToast('✅ Token saved · rate limit → 5000/hr', 'success');
+    closeModal();
+    // Clear cache + reload calendar
+    ghCommits = null;
+    if (state.view === 'calendar') loadGitHubCalendar();
+    updatePatIndicator();
+  }
+  function clearPat() {
+    setPat(null);
+    showToast('🗑️ Token removed', 'info');
+    closeModal();
+    ghCommits = null;
+    if (state.view === 'calendar') loadGitHubCalendar();
+    updatePatIndicator();
+  }
+  function updatePatIndicator() {
+    const btn = document.getElementById('patBtn');
+    if (!btn) return;
+    btn.textContent = getPat() ? '🔑✓' : '🔑';
+    btn.title = getPat() ? 'GitHub PAT: connected (5000 req/hr)' : 'Set GitHub PAT (5000 req/hr)';
+  }
 
   function isRateLimitError(msg) {
     return /403|rate.?limit/i.test(msg || '');
@@ -4672,7 +4776,7 @@
 
     try {
       // STEP 1: Get list of all repos
-      const reposRes = await fetch('https://api.github.com/users/lnwsj/repos?per_page=100&sort=pushed');
+      const reposRes = await ghFetch('https://api.github.com/users/lnwsj/repos?per_page=100&sort=pushed');
       if (!reposRes.ok) throw new Error(`GitHub API ${reposRes.status}`);
       const repos = await reposRes.json();
       ghRepos = repos;
@@ -4696,7 +4800,7 @@
           progressEl.textContent = `⏳ Step 2/2: fetching commits (${i+1}/${total} repos: ${r.name})`;
         }
         try {
-          const cRes = await fetch(`https://api.github.com/repos/${r.full_name}/commits?per_page=30&since=${sinceStr}T00:00:00Z`);
+          const cRes = await ghFetch(`https://api.github.com/repos/${r.full_name}/commits?per_page=30&since=${sinceStr}T00:00:00Z`);
           if (!cRes.ok) {
             if (cRes.status === 403) throw new Error('rate limited (60 req/hr)');
             continue;
@@ -6273,6 +6377,7 @@
     renderStats();
     renderChips();
     render();
+    updatePatIndicator();
     // Hide loader
     const bar = document.getElementById('loaderBar');
     let progress = 0;

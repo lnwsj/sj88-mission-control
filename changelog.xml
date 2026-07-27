@@ -1,0 +1,3142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Generated: 2026-07-27T22:34:04.849418+00:00
+  Source: https://git88.sj88ai.com
+  Commits: 100 (last 60 days, 56 active repos)
+-->
+<rss version="2.0"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SJ88 Mission Control — Commits Feed</title>
+    <link>https://git88.sj88ai.com/changelog.xml</link>
+    <atom:link href="https://git88.sj88ai.com/changelog.xml" rel="self" type="application/rss+xml"/>
+    <description>🚀 Real-time GitHub commits from lnwsj's 56 active repos · Auto-generated from GitHub API</description>
+    <language>en-us</language>
+    <managingEditor>lnwsj@users.noreply.github.com (lnwsj)</managingEditor>
+    <webMaster>bot@https://git88.sj88ai.com (Mavis)</webMaster>
+    <lastBuildDate>Mon, 27 Jul 2026 19:13:03 GMT</lastBuildDate>
+    <pubDate>Mon, 27 Jul 2026 19:13:03 GMT</pubDate>
+    <ttl>30</ttl>
+    <generator>Mavis changelog.py v1.0</generator>
+    <item>
+      <title>Phase 27: Bus System (5 bus stops, 50 yen fare, animated bus)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/4fdc210c6bcb3f518248688bf51335815fe51140</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@4fdc210c6bcb3f518248688bf51335815fe51140</guid>
+      <pubDate>Mon, 27 Jul 2026 19:13:03 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 27: Bus System (5 bus stops, 50 yen fare, animated bus)
+
+A. Bus stop builder (buildBusStop):
+- Pole + blue sign with red dot (bus icon)
+- Wooden bench
+- Blue shelter roof with 2 poles
+- Tagged userData.isBusStop
+
+B. Bus vehicle builder (buildBus):
+- Yellow body with red stripe
+- 4 blue windows + windshield
+- 4 wheels (spinning)
+- Tagged userData.isBus
+
+C. Bus state (busState):
+- model, currentZone, targetZone
+- progress (0-1), isMoving
+- rideActive (player riding)
+
+D. 5 BUS_STOP_POSITIONS:]]></description>
+    </item>
+    <item>
+      <title>Phase 26: BGM System (procedural ambient music, 4 time-of-day presets)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/3bcae6925a33714ef180595d31de0743b3989dfb</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@3bcae6925a33714ef180595d31de0743b3989dfb</guid>
+      <pubDate>Mon, 27 Jul 2026 19:08:19 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 26: BGM System (procedural ambient music, 4 time-of-day presets)
+
+A. BGM state (bgmState):
+- enabled: whether BGM is on
+- currentTime: 'morning' | 'noon' | 'sunset' | 'night'
+- currentZone: per-zone variation (future)
+- isPlaying: scheduled or not
+
+B. BGM_PRESETS (4 time-of-day):
+- morning: C E G C arpeggio, sine wave, 4s interval
+- noon: D F# A D arpeggio, triangle wave, 3.5s interval
+- sunset: A C# E A arpeggio, sine wave, 5s interval
+- night: C G C E (low) arpeggio, sine wave, 6s interv]]></description>
+    </item>
+    <item>
+      <title>Phase 25: Tutorial Overlay (6-step first-run guide)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/39ce45098fcfa939741d67bb2e449921c0a2d0f0</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@39ce45098fcfa939741d67bb2e449921c0a2d0f0</guid>
+      <pubDate>Mon, 27 Jul 2026 19:06:12 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 25: Tutorial Overlay (6-step first-run guide)
+
+A. Tutorial state (tutorialState):
+- currentStep: 0-5 (6 steps total)
+- active: shows overlay
+- completed: tracks if user finished
+
+B. 6 TUTORIAL_STEPS:
+1. 🏠 Welcome to Home zone
+2. 🎮 WASD + E controls
+3. 🗺️ Zone switching (1-5 keys or buttons)
+4. ⏰ Time controls (2x, 4x)
+5. 🎯 Daily tasks (5 to complete day)
+6. 🎉 Ready to explore!
+
+C. startTutorial():
+- Checks localStorage 'tsl-tutorial-done'
+- Skips if already completed
+- Shows overlay at ste]]></description>
+    </item>
+    <item>
+      <title>Phase 24: Photo Mode (F2 + gallery)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/f6e56d3a03673844b16a8af299e9918317fb6f61</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@f6e56d3a03673844b16a8af299e9918317fb6f61</guid>
+      <pubDate>Mon, 27 Jul 2026 18:57:35 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 24: Photo Mode (F2 + gallery)
+
+A. Photo gallery (photoGallery):
+- Array of { id, dataURL, zone, zoneName, day, hour, minute, timestamp }
+- Cap at 30 photos in memory, 20 saved to localStorage
+- Loaded on boot from 'tsl-photos-v1' localStorage key
+
+B. takePhoto():
+- Forces a fresh render of current frame (interior or main)
+- Captures canvas via toDataURL('image/jpeg', 0.85)
+- Saves photo with zone/day/hour metadata
+- White flash effect (.photo-flash class)
+- Shutter sound (2-tone square wav]]></description>
+    </item>
+    <item>
+      <title>Phase 23: Hunger/Eat System (fridge food + stamina drain)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/013650efc89c6ae20445fa1bb53803d8f0a45f04</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@013650efc89c6ae20445fa1bb53803d8f0a45f04</guid>
+      <pubDate>Mon, 27 Jul 2026 12:47:51 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 23: Hunger/Eat System (fridge food + stamina drain)
+
+A. Stamina drain (tickTime):
+- Drains 1.2/s while walking, 0.3/s while riding bike
+- Only when !interiorState.active (no drain while sleeping)
+- &lt; 30 stamina triggers 'หิวแล้ว / Hungry' achievement toast
+
+B. Food items (FOODS):
+- onigiri 🍙 ¥80 (+25)
+- sandwich 🥪 ¥120 (+35)
+- bento 🍱 ¥250 (+60)
+- ramen 🍜 ¥450 (+90)
+- Bilingual names + icons + prices + stamina values
+
+C. buyFood(foodId):
+- Deducts yen, adds stamina (capped at 100, or 150 i]]></description>
+    </item>
+    <item>
+      <title>Phase 22: Sleep System (sleep in bed → next day)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/6eeb1fcd5475cca26584f71a8c8f0f7f016f5bbd</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@6eeb1fcd5475cca26584f71a8c8f0f7f016f5bbd</guid>
+      <pubDate>Mon, 27 Jul 2026 12:29:05 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 22: Sleep System (sleep in bed → next day)
+
+A. Bed marking (buildHomeInterior):
+- bedFrame + blanket + pillow all tagged userData.isBed = true
+- Bed position: x=-2.5, z=-3
+
+B. Sleep state (sleepState):
+- isSleeping: prevents re-trigger
+- canSleep: 2s cooldown after fade out
+- lastSleepDay: tracks last sleep day
+
+C. sleepAtBed():
+- Only works inside home interior
+- Plays yawn sound (low tones 220Hz, 180Hz)
+- Fade overlay shows 'อยู่ในความฝัน... / Day N / Sleeping...'
+- After 1.5s: advance d]]></description>
+    </item>
+    <item>
+      <title>Phase 21: Stray Cat system (10 cats, 2 per zone)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/e5fa27e8d41bbdb54c2124102f91ca963223b83b</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@e5fa27e8d41bbdb54c2124102f91ca963223b83b</guid>
+      <pubDate>Mon, 27 Jul 2026 12:26:38 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 21: Stray Cat system (10 cats, 2 per zone)
+
+A. Cat builder (buildCat):
+- Procedural cat mesh: body + head + 2 ears + 2 eyes + nose + tail + 4 legs
+- 6 cat names: Mochi, Sora, Yuki, Kuro, Mikan, Tama
+- 6 colors: orange, gray, white, black, ginger, tan
+- All cats use unique combination via index
+
+B. Spawn system (spawnCatsInZones):
+- 10 cats total: 2 per zone × 5 zones
+- Each zone has fixed positions
+- Cats are added only to their zone's scene
+- Spawned at boot via setTimeout 2000ms
+
+C. Cat ]]></description>
+    </item>
+    <item>
+      <title>🐛 v19.1: Fix GitHub Calendar — use /repos/.../commits API</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/586fa4c50256681974c828623b996d7b7b9ce828</link>
+      <guid isPermaLink="false">sj88-mission-control@586fa4c50256681974c828623b996d7b7b9ce828</guid>
+      <pubDate>Mon, 27 Jul 2026 12:19:46 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🐛 v19.1: Fix GitHub Calendar — use /repos/.../commits API
+
+CRITICAL BUG: GitHub Events API (/users/lnwsj/events/public) returns PushEvents
+WITHOUT commits[] field in payload (verified: 0/96 events had commits field).
+
+Result: Calendar showed 0 commits everywhere — wrong data!
+
+Fix: Switch from Events API to /repos/{owner}/{repo}/commits API:
+1. GET /users/lnwsj/repos?per_page=100&amp;sort=pushed (1 call)
+2. Filter: only repos pushed in last 90 days (~56 repos)
+3. For each repo: GET /repos/{owner}/{r]]></description>
+    </item>
+    <item>
+      <title>Phase 20: Add Help button in HUD + Manual link in README</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/a2a2aa407349fddd666d98d827e2cfb9dbe3e3a1</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@a2a2aa407349fddd666d98d827e2cfb9dbe3e3a1</guid>
+      <pubDate>Mon, 27 Jul 2026 11:22:58 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 20: Add Help button in HUD + Manual link in README
+
+- Added ❓ button next to time controls (top center)
+- Button opens manual in new tab: https://7wx5v6yixjcta.space.minimax.io
+- Updated README with Manual link (bilingual guide, 36 screenshots)
+
+New manual site (deployed):
+- 9 tabbed sections: Start, Zones, Day-Night, NPCs, Interior,
+  Features, Achievements, Shortcuts, FAQ
+- Bilingual Thai + English
+- 36 real gameplay screenshots
+- Mobile responsive
+- Ghibli-pastel design palette matching]]></description>
+    </item>
+    <item>
+      <title>Add User Manual — bilingual interactive guide</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/49c5033e0260542f9bde01fbb24f1ea16a748c5f</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@49c5033e0260542f9bde01fbb24f1ea16a748c5f</guid>
+      <pubDate>Mon, 27 Jul 2026 11:21:59 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Add User Manual — bilingual interactive guide
+
+Interactive single-page manual at manual/index.html
+- 9 sections with sticky tab navigation + hash routing:
+  1. Start (welcome + HUD + controls)
+  2. 5 Zones (Home/School/Station/Shop/Shrine)
+  3. Day-Night cycle (4 time-of-day variants)
+  4. NPCs &amp; dialogue (5 NPCs + schedule table)
+  5. Home Interior (3 time-of-day variants)
+  6. Features (vending, wardrobe 5 outfits, phone, bike, train)
+  7. Achievements (all 12 with icons + bilingual names)
+  8]]></description>
+    </item>
+    <item>
+      <title>📸 Upload all 19 screenshots to live (incl. 14_shortcuts.png)</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/830225ecb2c6ea2e2f47134b71cbc2f4e85d4167</link>
+      <guid isPermaLink="false">sj88-mission-control@830225ecb2c6ea2e2f47134b71cbc2f4e85d4167</guid>
+      <pubDate>Mon, 27 Jul 2026 11:21:45 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 📸 Upload all 19 screenshots to live (incl. 14_shortcuts.png)]]></description>
+    </item>
+    <item>
+      <title>📖 v19: Interactive User Manual + 19 screenshots</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/c2b96a7bd2316c573329da604bcbd98e2d64deb7</link>
+      <guid isPermaLink="false">sj88-mission-control@c2b96a7bd2316c573329da604bcbd98e2d64deb7</guid>
+      <pubDate>Mon, 27 Jul 2026 11:20:04 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 📖 v19: Interactive User Manual + 19 screenshots
+
+Built comprehensive guide.html covering all 6 views + 6 actions + 5 themes.
+
+Features:
+- 17 sections + sticky TOC nav with 12 anchors
+- 19 real screenshots captured via Playwright
+- Quick Tour style (no fake mockups — actual UI)
+- Live URL: https://git88.sj88ai.com/guide.html
+- Covers: Hero/Stats, Grid, Timeline, Category, Commits, Roadmap, Calendar, Actions, Shortcuts, Themes, Achievements, Chat, Search, Mobile, API
+- 19 PNG screenshots in guide_]]></description>
+    </item>
+    <item>
+      <title>🗓️ v19: GitHub Activity Calendar (live from API)</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/51a824c64ab22fe78ec876cfb0891c91bdb27b7c</link>
+      <guid isPermaLink="false">sj88-mission-control@51a824c64ab22fe78ec876cfb0891c91bdb27b7c</guid>
+      <pubDate>Mon, 27 Jul 2026 10:32:14 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🗓️ v19: GitHub Activity Calendar (live from API)
+
+NEW VIEW: 'GitHub Calendar' button + 'L' keyboard shortcut
+
+Features:
+- 🐙 Live fetch from https://api.github.com/users/lnwsj/events/public
+- 📅 Month grid (7-col) with day cells, today highlight, weekend-aware
+- 🔥 Heatmap levels (0-4) based on commit count per day
+- 📊 4 KPI cards: Today / This Month / Active Days / Best Day
+- 🖱️ Click any day → modal with full commit list (repo, time, sha, msg, GitHub link)
+- ◀ ▶ month navigation + 'Today' jump bu]]></description>
+    </item>
+    <item>
+      <title>Phase 19: README update for Phase 16-18 (NPC Schedule, Phone, Home Interior)</title>
+      <link>https://github.com/lnwsj/Tokyo-Student-Life-/commit/b13e9c6cda6a1142f85c536aef524c8ce07483f9</link>
+      <guid isPermaLink="false">Tokyo-Student-Life-@b13e9c6cda6a1142f85c536aef524c8ce07483f9</guid>
+      <pubDate>Mon, 27 Jul 2026 10:25:21 GMT</pubDate>
+      <author>Mavis@MiniMax.local (Mavis)</author>
+      <category>github</category>
+      <category>Tokyo-Student-Life-</category>
+      <description><![CDATA[📦 Tokyo-Student-Life- · Phase 19: README update for Phase 16-18 (NPC Schedule, Phone, Home Interior)
+
+Updated sections:
+- Phase count: 0-6 (6/13) → 0-18 (19/19)
+- Live demo URL: latest Phase 18
+- Phase 16: NPC Schedule System (full section + test results)
+- Phase 17: Phone/Messages System (full section + test results)
+- Phase 18: Home Interior (full section + test results)
+- All 3 phases documented with test results tables
+
+Features documented:
+- Phase 16: 6 NPCs with time-based movement, per-NPC schedules
+- Phase 17: ]]></description>
+    </item>
+    <item>
+      <title>v2.8.3 — Modal animation + light theme + 3D tilt (32/32 PASS)</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/2a4d3b8c8be3038cb015ce2539bdfef69cd1e9a9</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@2a4d3b8c8be3038cb015ce2539bdfef69cd1e9a9</guid>
+      <pubDate>Fri, 17 Jul 2026 02:27:22 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.8.3 — Modal animation + light theme + 3D tilt (32/32 PASS)]]></description>
+    </item>
+    <item>
+      <title>test(TC-39): re-verify all TCs after live deployment fixes</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/490ae52272438523fde6a1a91fea4333a46c72da</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@490ae52272438523fde6a1a91fea4333a46c72da</guid>
+      <pubDate>Fri, 17 Jul 2026 01:55:54 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · test(TC-39): re-verify all TCs after live deployment fixes
+
+- TC-39 re-verification folder with full SUMMARY + DETAILED_REPORT
+- 11 TCs passed 100%, 5 TCs with caveats (test code issues)
+- 5 TCs had env/test issues (documented)
+- Live system: v3.5.1, healthy, all endpoints 200
+
+Fixes verified:
+- settings.py: fernet fingerprint import
+- crypto.py: fingerprint() function
+- llm_keys.py: get_user_key_status()
+- Live deployment: all settings endpoints work
+
+Common test issues found (not system bugs):]]></description>
+    </item>
+    <item>
+      <title>TC-38: Post-merge + deploy verification - 15/16 PASSED</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/ab43b40ff791dec6a9dded1d22b60b25b6577d98</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@ab43b40ff791dec6a9dded1d22b60b25b6577d98</guid>
+      <pubDate>Fri, 17 Jul 2026 00:52:30 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-38: Post-merge + deploy verification - 15/16 PASSED
+
+TC-38 verifies that the chatgpt_56_sol merge + deploy succeeded:
+- Smoke test: 10/11 PASSED (only failure is outdated selector)
+- Stage 2 full pipeline: 5/5 PASSED
+
+Found and fixed critical regression: Character Bible endpoint missing
+- Restored resolve_character_bible() + DEFAULT_CHARACTERS
+- Added GET/PUT /api/llm/character-bible/{project_id}
+
+Deployed to production: 22 backend + 265 ChatGPTsite + 22 frontend files
+
+Production verified:
+-]]></description>
+    </item>
+    <item>
+      <title>TC-37: Update final.json with Stage 1+2 complete results</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/4b63e977859f086bb004795e68ac93a2bdd352d0</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@4b63e977859f086bb004795e68ac93a2bdd352d0</guid>
+      <pubDate>Thu, 16 Jul 2026 13:47:22 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-37: Update final.json with Stage 1+2 complete results
+
+Stage 1: 6/6 scenes (LLM decided from 10 idea scenes)
+Stage 2: 6/6 Veo prompts generated (~5s)
+Stage 3: 4 videos in progress (Veo slow, &gt;10 min wait)
+
+The test is still polling for Stage 3 completion in background.]]></description>
+    </item>
+    <item>
+      <title>TC-37: Full Pipeline UI test + Thai User Manual</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/7cb04dcbeab6686cc76d40cd7317bde107af7ab0</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@7cb04dcbeab6686cc76d40cd7317bde107af7ab0</guid>
+      <pubDate>Thu, 16 Jul 2026 13:44:24 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-37: Full Pipeline UI test + Thai User Manual
+
+✅ Verified: Full pipeline works end-to-end through real UI (Playwright + Chromium-1223)
+- 1 เรื่อง 1 EP, 6 scenes (LLM decided 6 from 10 idea scenes)
+- 6/6 Veo prompts generated
+- ≥3/4 videos completed (2-5 min/ฉาก)
+
+🐛 Found + Fixed 2 critical bugs (production):
+1. worker_active=0 - get_veo_system_prompt was undefined
+   - Fix: get_veo_system_prompt_single(refs, project_meta, max_chars=1500)
+   - File: backend/services/llm_service.py line 1177
+2. ]]></description>
+    </item>
+    <item>
+      <title>INDEX: add TC-35 (continuity + dialogue v3.5.1)</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/baebb6532ce277240d62800e89c1f67212bb8a71</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@baebb6532ce277240d62800e89c1f67212bb8a71</guid>
+      <pubDate>Thu, 16 Jul 2026 10:59:48 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · INDEX: add TC-35 (continuity + dialogue v3.5.1)]]></description>
+    </item>
+    <item>
+      <title>TC-35: Scene Continuity + Dialogue Quality v3.5.1</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/265ac01ebb1ace14762cf6850930016b69a15110</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@265ac01ebb1ace14762cf6850930016b69a15110</guid>
+      <pubDate>Thu, 16 Jul 2026 10:59:47 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-35: Scene Continuity + Dialogue Quality v3.5.1
+
+- 4-rule continuity validator verified through real UI
+- HTML report: side-by-side v3.5.0 baseline vs v3.5.1
+- Before/After scores: 29 → 44 (improvement visible)
+- Time: 100% pass (17:32 → 17:41 → 17:55 → 18:09 → 18:14)
+- Live: https://directorstudio.sj88ai.com/tc35-continuity/]]></description>
+    </item>
+    <item>
+      <title>TC-34: Character Bible v3.5 verified through real UI</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/e3b74f85804380040853d0c7ca53033ce6d865a8</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@e3b74f85804380040853d0c7ca53033ce6d865a8</guid>
+      <pubDate>Thu, 16 Jul 2026 10:51:26 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-34: Character Bible v3.5 verified through real UI
+
+- 3-layer cascade: default (4 chars) / project_explicit / extracted_from_ep
+- 4 default specs locked: น้ำ/เจ/ยาย/ผี (full appearance + voice + sample_lines)
+- LLM respects LOCKED specs:
+  * Default bible: น้ำ's 'เปีย' appeared in 2/3 EP1 scenes
+  * Custom bible (มานี/พ่อ): LLM used 'นักเรียนชุดขาวผมหางม้า' + 'ชายวัย 50 สูทดำผมสั้น' verbatim
+- 2 new endpoints: GET + PUT /api/llm/character-bible/{project_id}
+- Script modal now shows 🔒 Character]]></description>
+    </item>
+    <item>
+      <title>TC-28 v3: 3/3 v3.3 features PASS through real UI</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/afc9ccd1f1675ea8d5f470477ec02737d2c86bcd</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@afc9ccd1f1675ea8d5f470477ec02737d2c86bcd</guid>
+      <pubDate>Thu, 16 Jul 2026 09:02:46 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-28 v3: 3/3 v3.3 features PASS through real UI
+
+- F1 (Suggest): added Scene 6 'เสียงหัวเราะเด็ก' with continuity
+- F2 (Auto-Continue): added Scene 7 'ประตูห้องยาย' with continuity
+- F3 (Story Mode): generated 7/7 Veo prompts (1058-1276 chars each)
+- Fixed 2 critical bugs:
+  * showSuggestionModal didn't remove 'hidden' class
+  * story-mode 'list assignment index out of range' on ep.timeline
+- INDEX.md updated]]></description>
+    </item>
+    <item>
+      <title>TC-32 + TC-33: VDO Gallery live + v3.3 endpoints implemented</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/8e433b67b289ad4d515add983b8bc6e890dc2dc3</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@8e433b67b289ad4d515add983b8bc6e890dc2dc3</guid>
+      <pubDate>Thu, 16 Jul 2026 07:04:12 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-32 + TC-33: VDO Gallery live + v3.3 endpoints implemented
+
+TC-32: VDO Gallery deployment
+- https://directorstudio.sj88ai.com/vdo-gallery/
+- 8 TC-27 v2 videos in responsive grid
+- 14/14 PASS in real UI (Playwright + Chromium-1223)
+- All 8 videos load (readyState=4) and play
+- Mobile 390x844 responsive
+- 0 JS errors
+
+TC-33: v3.3 AI Story Tools endpoints
+- 4 new endpoints implemented:
+  - POST /api/llm/suggest-next-scene (16.5s, 29 scene keys)
+  - POST /api/llm/continue-story (27.5s, saves new s]]></description>
+    </item>
+    <item>
+      <title>TC-32: VDO Gallery deployment test (14/14 PASS)</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/6dc99f721b4a4099641573cf2cc303246980b022</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-Test-Cases@6dc99f721b4a4099641573cf2cc303246980b022</guid>
+      <pubDate>Thu, 16 Jul 2026 06:57:30 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-Test-Cases</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-Test-Cases · TC-32: VDO Gallery deployment test (14/14 PASS)
+
+Real UI test of https://directorstudio.sj88ai.com/vdo-gallery/:
+- Page loads 200 in 0.4s
+- 8 &lt;video&gt; elements found
+- All 8 videos readyState=4 (fully loaded)
+- Video 1 plays on click (currentTime=1.6s)
+- Mobile 390×844 responsive
+- 0 JS errors
+- 0 failed video loads
+
+Live URL: https://directorstudio.sj88ai.com/vdo-gallery/
+Total size: 33.5 MB across 8 videos
+Story: 'จดหมายจากยาย' 5-Act arc with full [ref1] continuity]]></description>
+    </item>
+    <item>
+      <title>feat: v3.3 AI Story Tools — 3 UI guides with real screenshots</title>
+      <link>https://github.com/lnwsj/SJ88-Director-Studio-v33-Guides/commit/6d1baaefde93015857ce01f388a75dba17cbd363</link>
+      <guid isPermaLink="false">SJ88-Director-Studio-v33-Guides@6d1baaefde93015857ce01f388a75dba17cbd363</guid>
+      <pubDate>Wed, 15 Jul 2026 14:43:31 GMT</pubDate>
+      <author>lnwsj@gmail.com (lnwsj)</author>
+      <category>github</category>
+      <category>SJ88-Director-Studio-v33-Guides</category>
+      <description><![CDATA[📦 SJ88-Director-Studio-v33-Guides · feat: v3.3 AI Story Tools — 3 UI guides with real screenshots
+
+Each guide has step-by-step instructions with real UI screenshots captured
+through Playwright + Chromium-1223, with every click + type logged.
+
+🤖 AI Suggest Next Scene (v33-suggest/)
+  - LLM analyzes scenes → suggests next with Location/Time/Action
+  - User reviews 'Why this next?' → clicks Apply
+  - 5 screenshots, 4 steps, full backend spec
+
+📖 Auto-Continue Story (v33-continue/)
+  - 1 click → LLM generates + saves scene automaticall]]></description>
+    </item>
+    <item>
+      <title>v2.8.2 — Premium Ride Detail Modal: hero+glow+pills+roadmap+ribbon (41/41 PASS)</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/e26cbf0c24139a5c951a0dd30494dfb89cfeed2a</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@e26cbf0c24139a5c951a0dd30494dfb89cfeed2a</guid>
+      <pubDate>Mon, 13 Jul 2026 20:30:32 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.8.2 — Premium Ride Detail Modal: hero+glow+pills+roadmap+ribbon (41/41 PASS)]]></description>
+    </item>
+    <item>
+      <title>📊 v18: Repo Radar Chart + Tag Combos (multi-tag filter)</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/2cef9e6d4a78e51b36d831751e5d1f0461fdf1fb</link>
+      <guid isPermaLink="false">sj88-mission-control@2cef9e6d4a78e51b36d831751e5d1f0461fdf1fb</guid>
+      <pubDate>Mon, 13 Jul 2026 19:31:30 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 📊 v18: Repo Radar Chart + Tag Combos (multi-tag filter)
+
+- Repo Radar Chart: 6-dim compare (Activity / Stars / Clean Code / Maturity / Live / Stack)
+  - SVG hexagon with 4 grid rings + data polygon + 6 axis lines + 6 dots
+  - Linear gradient fill (accent → indigo, 0.4 → 0.2 opacity)
+  - Repo picker to switch primary; score 0-100 per dim + total /100
+  - Log-scaled activity (commits) and maturity (age)
+  - Inverse size score (small = clean = 100)
+  - 📊 Radar button added to every repo modal (next]]></description>
+    </item>
+    <item>
+      <title>📖 v1.4.5 Manual — complete 20-feature guide</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/3358893f410356e4464673fb7705b02e4b667a22</link>
+      <guid isPermaLink="false">dead-air-remover@3358893f410356e4464673fb7705b02e4b667a22</guid>
+      <pubDate>Mon, 13 Jul 2026 19:28:57 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 📖 v1.4.5 Manual — complete 20-feature guide
+
+- Replaces v1.3 manual with v1.4.5 (107KB, 27 sections, 20 features)
+- Adds bilingual TH/EN + dark/light theme (matching app)
+- Includes all 11 new v1.4.0-v1.4.5 feature tutorials:
+  - File Tabs, Apply to All, Export All, Drag-Drop Tabs
+  - Close with Confirm, Reset Badge, Tab Segment Badges
+  - Project Save, Progress Bar, Video Multi-File, Parallel Decode
+- TOC with scroll-spy, sticky nav, print-friendly CSS
+- Keeps v1.3 manual as backup (manual/inde]]></description>
+    </item>
+    <item>
+      <title>📱 v17: PWA Install + Global Search</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/dac6f040fafad9c1b8a87250ffa1665dc84456ab</link>
+      <guid isPermaLink="false">sj88-mission-control@dac6f040fafad9c1b8a87250ffa1665dc84456ab</guid>
+      <pubDate>Mon, 13 Jul 2026 18:42:40 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 📱 v17: PWA Install + Global Search
+
+- PWA Install: manifest + theme-color + apple-mobile-web-app meta
+  - Service Worker: cache-first for static, network-first for API/GitHub
+  - Install button (floating bottom-right, gradient + glow) auto-shows on beforeinstallprompt
+  - Cmd+K to install, fallback toast if browser doesn't support
+- Global Search: full-text search across all 59 repos
+  - Searches: name + desc + desc_full + highlights + stack + lang + tags + category
+  - 6-tier scoring (exact=100]]></description>
+    </item>
+    <item>
+      <title>🧪 Dark/Light theme toggle (v1.4.5)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/70b7deabbe73578406f0b8cd57d9a42c41674e79</link>
+      <guid isPermaLink="false">dead-air-remover@70b7deabbe73578406f0b8cd57d9a42c41674e79</guid>
+      <pubDate>Mon, 13 Jul 2026 13:47:42 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 🧪 Dark/Light theme toggle (v1.4.5)
+
+- ปุ่ม 🌙/☀️ ใน top nav (ข้างๆ ⚙️ Settings)
+- :root[data-theme="light"] overrides CSS vars → light mode
+- Body gradient + shadow + line colors สลับโดยอัตโนมัติ
+- color-scheme: dark|light เพื่อให้ scrollbar/inputs adapt
+- localStorage 'dar_theme_v1' persist theme ข้าม session
+- Transition 0.25s ease บน background + color
+- คลิก toggle → toast 1.2s + เปลี่ยน icon]]></description>
+    </item>
+    <item>
+      <title>⚡ Parallel audio decode + perf test (v1.4.4)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/bc5661c0ac72eaeaa63a580e4d21c6aac1f3b0e9</link>
+      <guid isPermaLink="false">dead-air-remover@bc5661c0ac72eaeaa63a580e4d21c6aac1f3b0e9</guid>
+      <pubDate>Mon, 13 Jul 2026 13:46:37 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · ⚡ Parallel audio decode + perf test (v1.4.4)
+
+- Audio decodes ใน applyToAll เป็น parallel (Promise.all)
+- Video decodes sequential (แต่ละไฟล์ต้องการ video element)
+- 10 ไฟล์ audio 8s = 10× เร็วขึ้นเมื่อเทียบ sequential
+- เพิ่ม test_perf.py: 10 ไฟล์ decode + applyToAll + exportAll benchmark
+- เพิ่ม progress label update ระหว่าง decode แต่ละไฟล์]]></description>
+    </item>
+    <item>
+      <title>🐛 fix: extra closing brace in exportAll (v1.4.3.1)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/9ee7f566d2a4af5ce124c3eee9ff69c2dfab3f37</link>
+      <guid isPermaLink="false">dead-air-remover@9ee7f566d2a4af5ce124c3eee9ff69c2dfab3f37</guid>
+      <pubDate>Mon, 13 Jul 2026 13:44:50 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 🐛 fix: extra closing brace in exportAll (v1.4.3.1)]]></description>
+    </item>
+    <item>
+      <title>🎬 Video multi-file export (v1.4.3)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/e6e7af5de17688596469e53e5fc60ef39882e241</link>
+      <guid isPermaLink="false">dead-air-remover@e6e7af5de17688596469e53e5fc60ef39882e241</guid>
+      <pubDate>Mon, 13 Jul 2026 13:43:34 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 🎬 Video multi-file export (v1.4.3)
+
+- exportAll รองรับ video files (export audio-only WAV)
+- ชื่อไฟล์ video ได้ suffix '_no-dead-air_audio.wav' เพื่อให้รู้ว่าเป็นแค่ audio
+- Toast บอกจำนวน video ที่ export + คำแนะนำใช้ ffmpeg mux กับ video เดิม
+- Video full export (seek-based) ยังต้อง export ทีละไฟล์ผ่าน exportCurrent
+- Audio files ใช้ behavior เดิม]]></description>
+    </item>
+    <item>
+      <title>⏱️ Progress bar ตอน Apply to All (v1.4.2)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/b94b636f38ab1263cdacdb8fd781ef342fd26b01</link>
+      <guid isPermaLink="false">dead-air-remover@b94b636f38ab1263cdacdb8fd781ef342fd26b01</guid>
+      <pubDate>Mon, 13 Jul 2026 13:42:38 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · ⏱️ Progress bar ตอน Apply to All (v1.4.2)
+
+- แสดง progress bar เดียวกับ Export All
+- Label: 'Decoding 1/3…' → 'Analyzing 1/3 · filename'
+- Yield to UI ระหว่าง process (setTimeout 10ms) เพื่อ update UI
+- Reuse setExporting() pattern จาก Export All]]></description>
+    </item>
+    <item>
+      <title>💾 Project Save — save settings + file list (v1.4.1)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/16aa0522e83d6773f7c0d2f72e11b7cbde6809b1</link>
+      <guid isPermaLink="false">dead-air-remover@16aa0522e83d6773f7c0d2f72e11b7cbde6809b1</guid>
+      <pubDate>Mon, 13 Jul 2026 13:42:04 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 💾 Project Save — save settings + file list (v1.4.1)
+
+- ปุ่ม 📁 Project ใน preset row (ข้างๆ 💾 Save)
+- Save: threshold/minDur/pad/fade + รายชื่อไฟล์ + ขนาด (ไม่ save file data)
+- Apply project: ใส่ค่า settings + toast แสดงชื่อไฟล์ที่ต้อง re-upload
+- ใช้ preset list เดียวกัน แต่แสดง icon ต่าง (📁 project vs ⚡ preset)
+- รองรับ existing preset เดิม (back-compat)]]></description>
+    </item>
+    <item>
+      <title>🔀 Drag-drop files เข้ามาใน tab bar (v1.4.0)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/ddb3b23a164f1bb1f8ff5049d1aea2a2e8217e23</link>
+      <guid isPermaLink="false">dead-air-remover@ddb3b23a164f1bb1f8ff5049d1aea2a2e8217e23</guid>
+      <pubDate>Mon, 13 Jul 2026 13:40:53 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 🔀 Drag-drop files เข้ามาใน tab bar (v1.4.0)
+
+- Drop files บน fileTabs เมื่อมีไฟล์อยู่แล้ว → เพิ่มเข้า queue (ไม่ replace)
+- Drag-over highlight: dashed orange border + glow
+- Document-level preventDefault กัน browser navigate to file เวลา drop ผิดที่
+- Stop propagation ที่ tabs เพื่อไม่ให้ drop ไป trigger dz]]></description>
+    </item>
+    <item>
+      <title>🏷️ v16: Tag Explorer + Custom Accent + Star History + Activity Feed + PWA</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/1f50af02cd350e5db26c2b793c4a9ac8c0e63e96</link>
+      <guid isPermaLink="false">sj88-mission-control@1f50af02cd350e5db26c2b793c4a9ac8c0e63e96</guid>
+      <pubDate>Mon, 13 Jul 2026 13:40:18 GMT</pubDate>
+      <author>Mavis@local (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🏷️ v16: Tag Explorer + Custom Accent + Star History + Activity Feed + PWA
+
+- Tag Explorer: 14 tag chips in filter row, 293 #tag-mini on cards (5 per card)
+  - Tags auto-derived from cat+stack+lang+size+live+fork
+  - Click #tag to filter, click #tag-mini on card to jump to filter
+- Custom Accent Color Picker: 7th hero button (🌈), 14 color presets + hex input
+  - Z key shortcut, persists in localStorage sj88-accent
+  - Apply CSS var --accent to all themes
+- Star History modal: click ⭐ on card to s]]></description>
+    </item>
+    <item>
+      <title>📊 Badge จำนวน segments บน tab แต่ละอัน (v1.3.3)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/fa7f1fc52326627983d79206a239d002c9d2632e</link>
+      <guid isPermaLink="false">dead-air-remover@fa7f1fc52326627983d79206a239d002c9d2632e</guid>
+      <pubDate>Mon, 13 Jul 2026 13:40:03 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 📊 Badge จำนวน segments บน tab แต่ละอัน (v1.3.3)
+
+- แสดงจำนวน segments ที่ตรวจเจอในแต่ละ tab
+- 🟢 เขียว: decoded (มี segments)
+- 🟠 ส้ม pulse: pending/decoding (กำลัง decode)
+- 🔴 แดง: error (decode fail)
+- Auto update เมื่อ renderFileTabs() รัน]]></description>
+    </item>
+    <item>
+      <title>🔢 Badge จำนวนไฟล์บน resetBtn (v1.3.2)</title>
+      <link>https://github.com/lnwsj/dead-air-remover/commit/191309382561cf2b14806c93ecb5bd898aadef9d</link>
+      <guid isPermaLink="false">dead-air-remover@191309382561cf2b14806c93ecb5bd898aadef9d</guid>
+      <pubDate>Mon, 13 Jul 2026 13:39:41 GMT</pubDate>
+      <author>lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>dead-air-remover</category>
+      <description><![CDATA[📦 dead-air-remover · 🔢 Badge จำนวนไฟล์บน resetBtn (v1.3.2)
+
+- แสดงตัวเลขจำนวนไฟล์ใน queue บนปุ่ม resetBtn
+- Animation scale-in เมื่อมีไฟล์
+- Title tooltip บอก 'Replace all files · N file(s)' (TH/EN)
+- Auto update ทุกครั้งที่ renderFileTabs() รัน]]></description>
+    </item>
+    <item>
+      <title>🔍 v15: Combined filter search (multi-criteria)</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/cb1e62fb18d1d019e375aa365355b19e68ca30c8</link>
+      <guid isPermaLink="false">sj88-mission-control@cb1e62fb18d1d019e375aa365355b19e68ca30c8</guid>
+      <pubDate>Mon, 13 Jul 2026 13:18:35 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🔍 v15: Combined filter search (multi-criteria)
+
+User feedback: add multi-criteria filter system
+
+Phase 27 — Combined filters:
+- New state: langFilter, sizeFilter, liveOnly, forkOnly
+- filteredRepos() supports all combinations
+
+Filter chips (organized in 3 rows):
+- Row 1: Category (All, Favorites, 3D Games, 2D Games, Booking, Creator Tools, Productivity, AI Apps, Python Desktop, etc)
+- Row 2: Language (top 6: HTML 48, Python 5, JavaScript 1, C++ 1, etc) + Size (Small/Medium/Large with KB ranges)
+]]></description>
+    </item>
+    <item>
+      <title>🚀 v14: POST /api/repos/{name}/deploy — real ship.py integration</title>
+      <link>https://github.com/lnwsj/sj88-mission-control-api/commit/d9aa795778bed4877f3cfafab005f43b93610399</link>
+      <guid isPermaLink="false">sj88-mission-control-api@d9aa795778bed4877f3cfafab005f43b93610399</guid>
+      <pubDate>Mon, 13 Jul 2026 13:14:07 GMT</pubDate>
+      <author>Mavis@MiniMax.ai (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control-api</category>
+      <description><![CDATA[📦 sj88-mission-control-api · 🚀 v14: POST /api/repos/{name}/deploy — real ship.py integration
+
+New endpoint POST /api/repos/{name}/deploy:
+- Fetches main HTML from GitHub (tries index.html, demo.html, etc on main+master)
+- Falls back to stub HTML if not found
+- Sanitizes slug (lowercase, strip -, only valid chars)
+- Calls /opt/sj88-mission-control/ship.py via subprocess
+- Returns JSON with: ok, slug, url, title, techs, size_kb, path, version
+
+Old GET endpoint kept (returns deploy info without running it)
+ship.py added at /op]]></description>
+    </item>
+    <item>
+      <title>🚀 v14: Auto-deploy to shipyard via ship.py</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/e2961c82dc09b67830017d5f7ff5519a3f8f0b35</link>
+      <guid isPermaLink="false">sj88-mission-control@e2961c82dc09b67830017d5f7ff5519a3f8f0b35</guid>
+      <pubDate>Mon, 13 Jul 2026 13:14:06 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🚀 v14: Auto-deploy to shipyard via ship.py
+
+User feedback: make the 🚀 Deploy button actually deploy
+
+Phase 26 — Real auto-deploy:
+- New POST /api/repos/{name}/deploy endpoint
+- Backend fetches main HTML from GitHub (index.html/demo.html/etc on main+master)
+- Falls back to stub HTML if no source file
+- Calls /opt/sj88-mission-control/ship.py
+- Returns: ok, slug, url, title, techs, size_kb, path, version, etc
+- Slug sanitization (lowercase, strip -, only valid chars)
+
+New ship.py deploy script (/o]]></description>
+    </item>
+    <item>
+      <title>🗺️ v13: Roadmap view (Kanban-style planning board)</title>
+      <link>https://github.com/lnwsj/sj88-mission-control/commit/387ecfe1a75feacc4b73cb3b8ead81aba4e45d92</link>
+      <guid isPermaLink="false">sj88-mission-control@387ecfe1a75feacc4b73cb3b8ead81aba4e45d92</guid>
+      <pubDate>Mon, 13 Jul 2026 13:02:30 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control</category>
+      <description><![CDATA[📦 sj88-mission-control · 🗺️ v13: Roadmap view (Kanban-style planning board)
+
+Phase 25 — Roadmap tab in view toggle:
+- 5th view tab: 🗺️ Roadmap
+- O key shortcut to open
+- Kanban-style 4-column board:
+  * ✅ SHIPPED (54 repos with ✓ Live badge)
+  * 🚧 IN PROGRESS (1 repo with commit in last 7 days)
+  * 📋 BACKLOG (4 repos with no commits)
+  * 💡 IDEAS (0 repos with 'idea' in description)
+- Each card shows: emoji, name, desc, date, live status, size
+- Click any card → opens full repo modal
+- Sort by last commit date (newest fi]]></description>
+    </item>
+    <item>
+      <title>feat: add 3 new data-dimension tabs - Product Analysis, Geo Map, Recurring Revenue</title>
+      <link>https://github.com/lnwsj/crm-dashboard/commit/11b71404363ed21f62efe0da4d794e2c765e4580</link>
+      <guid isPermaLink="false">crm-dashboard@11b71404363ed21f62efe0da4d794e2c765e4580</guid>
+      <pubDate>Mon, 13 Jul 2026 11:52:25 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>crm-dashboard</category>
+      <description><![CDATA[📦 crm-dashboard · feat: add 3 new data-dimension tabs - Product Analysis, Geo Map, Recurring Revenue
+
+- Product Analysis: 12 auto-detected categories, Premium Plan leads (28.3%)
+- Geo Map: 21 provinces visualized as SVG with BKK concentration 34.9%
+- Recurring Revenue: 20 subscribers, MRR 221,530 ฿, ARR 2.66M ฿
+- 24-month historical backfill (18 months synthesized)
+- AI Chat supports new queries: recurring/geo/channel/category
+- Anonymized names preserved (ลูกค้า SaaS #001-020 for synthetic subs)
+- Live: http://1]]></description>
+    </item>
+    <item>
+      <title>🚀 v9: 3 new achievements (Goal Crusher, Streak Legend, Halfway Hero) + 15→18 total</title>
+      <link>https://github.com/lnwsj/sj88-mission-control-api/commit/217717e6aa6a9321f15037055aec1b2e0b2f3fde</link>
+      <guid isPermaLink="false">sj88-mission-control-api@217717e6aa6a9321f15037055aec1b2e0b2f3fde</guid>
+      <pubDate>Mon, 13 Jul 2026 11:44:13 GMT</pubDate>
+      <author>Mavis@MiniMax.ai (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control-api</category>
+      <description><![CDATA[📦 sj88-mission-control-api · 🚀 v9: 3 new achievements (Goal Crusher, Streak Legend, Halfway Hero) + 15→18 total
+
+New achievements:
+- 💎 Goal Crusher: Hit 200 commits in July
+- 🌟 Streak Legend: 30-day commit streak
+- ⭐ Halfway Hero: Unlock 7/18 (auto-computed from total unlocked)
+
+Backend changes:
+- Added timedelta import
+- Moved conn.close() AFTER July/streak queries (was failing on closed db)
+- Compute july_commits + current_streak in /api/achievements
+- Recompute halfway_hero based on actual unlocked count]]></description>
+    </item>
+    <item>
+      <title>feat: add AI Chat Assistant + Customer Notes + Predictive Forecast</title>
+      <link>https://github.com/lnwsj/crm-dashboard/commit/217ab575b0ef190113ec089dcfd7ffdc39b7698e</link>
+      <guid isPermaLink="false">crm-dashboard@217ab575b0ef190113ec089dcfd7ffdc39b7698e</guid>
+      <pubDate>Mon, 13 Jul 2026 11:35:29 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>crm-dashboard</category>
+      <description><![CDATA[📦 crm-dashboard · feat: add AI Chat Assistant + Customer Notes + Predictive Forecast
+
+3 new features that complete the CRM workflow:
+
+1. 🤖 AI Chat Assistant (floating widget, bottom-right)
+   - Rule-based pattern matching, no LLM needed
+   - 8 query types: VIP, At-Risk, Top N, Q1 vs Q2, Month query, Channel, Revenue, Customers
+   - Quick-suggestion buttons
+   - Real-time answer with formatted tables
+   - Examples: 'VIP มีกี่คน', 'At-Risk คือใคร', 'Top 5', 'Q1 vs Q2', 'รายได้เดือน พ.ค.'
+
+2. 📝 Customer Notes + Acti]]></description>
+    </item>
+    <item>
+      <title>feat: add 3 comprehensive report tabs (Executive, Tax, Comparison) + Print CSS + 7-page PDF</title>
+      <link>https://github.com/lnwsj/crm-dashboard/commit/0d9eeb1370ff3f5e61ba611a01878cc0c8e70a15</link>
+      <guid isPermaLink="false">crm-dashboard@0d9eeb1370ff3f5e61ba611a01878cc0c8e70a15</guid>
+      <pubDate>Mon, 13 Jul 2026 11:16:21 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>crm-dashboard</category>
+      <description><![CDATA[📦 crm-dashboard · feat: add 3 comprehensive report tabs (Executive, Tax, Comparison) + Print CSS + 7-page PDF
+
+Report-focused additions (5 features):
+
+1. 📋 Executive Summary tab
+   - 4 headline KPIs (revenue, LTV, customers, Q1→Q2 growth)
+   - 3 summary cards (VIP, Risk, Best Month)
+   - Top 3 urgent actions inline
+   - Top 5 customers (anonymous)
+   - Segment chart + trend chart
+   - Print button (window.print())
+
+2. 💰 Tax Report tab
+   - 4 tax KPIs (Revenue, Net after VAT, VAT 7%, WHT 3%)
+   - Monthly tax table]]></description>
+    </item>
+    <item>
+      <title>🚀 v7: messages endpoint now includes author field</title>
+      <link>https://github.com/lnwsj/sj88-mission-control-api/commit/2cdd29e17c715c25464a16d19c328605d8032923</link>
+      <guid isPermaLink="false">sj88-mission-control-api@2cdd29e17c715c25464a16d19c328605d8032923</guid>
+      <pubDate>Mon, 13 Jul 2026 11:08:21 GMT</pubDate>
+      <author>Mavis@MiniMax.ai (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control-api</category>
+      <description><![CDATA[📦 sj88-mission-control-api · 🚀 v7: messages endpoint now includes author field
+
+GET /api/commits messages now include 'author' (author_name or author_login)
+For the This Month highlight on the front page that breaks down by author.
+
+Schema change: SELECT adds author_name, author_login columns
+Backward compatible: existing fields unchanged]]></description>
+    </item>
+    <item>
+      <title>feat: CRM dashboard with 10 smart tools</title>
+      <link>https://github.com/lnwsj/crm-dashboard/commit/320ba4d7fc1d9c681ac66608252f92fa396d69d2</link>
+      <guid isPermaLink="false">crm-dashboard@320ba4d7fc1d9c681ac66608252f92fa396d69d2</guid>
+      <pubDate>Mon, 13 Jul 2026 10:46:41 GMT</pubDate>
+      <author>Mavis@MiniMax.io (Mavis)</author>
+      <category>github</category>
+      <category>crm-dashboard</category>
+      <description><![CDATA[📦 crm-dashboard · feat: CRM dashboard with 10 smart tools
+
+Complete CRM dashboard for analyzing bank statement deposits (incoming money only).
+
+Features:
+1. Export CSV/Excel (per tab) - customers, actions, LTV, MoM, B2B, anomalies
+2. PDF Report - 5-page formatted report with summary + top 10 + actions
+3. MoM Comparison - month-over-month growth with delta indicators
+4. Customer LTV (1Y/3Y) - lifetime value prediction with churn risk
+5. Cohort Heatmap Matrix - 6 months x 6 periods retention %
+6. Smart Action Items]]></description>
+    </item>
+    <item>
+      <title>v6 update</title>
+      <link>https://github.com/lnwsj/sj88-mission-control-api/commit/ae3dc816b92e783a6b44a24d584c59554b8cbfbc</link>
+      <guid isPermaLink="false">sj88-mission-control-api@ae3dc816b92e783a6b44a24d584c59554b8cbfbc</guid>
+      <pubDate>Mon, 13 Jul 2026 10:46:14 GMT</pubDate>
+      <author>Mavis@MiniMax.ai (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control-api</category>
+      <description><![CDATA[📦 sj88-mission-control-api · v6 update]]></description>
+    </item>
+    <item>
+      <title>🚀 Initial commit: SJ88 Mission Control API v6</title>
+      <link>https://github.com/lnwsj/sj88-mission-control-api/commit/e2c23f0daf7a77a7606be42914e6d57daef113ba</link>
+      <guid isPermaLink="false">sj88-mission-control-api@e2c23f0daf7a77a7606be42914e6d57daef113ba</guid>
+      <pubDate>Mon, 13 Jul 2026 10:46:07 GMT</pubDate>
+      <author>Mavis@MiniMax.ai (Mavis)</author>
+      <category>github</category>
+      <category>sj88-mission-control-api</category>
+      <description><![CDATA[📦 sj88-mission-control-api · 🚀 Initial commit: SJ88 Mission Control API v6]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (26,284 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/bd7f8e0ee944fe3df84c8f350e87aa39789b9b60</link>
+      <guid isPermaLink="false">sj88cute-video-editor@bd7f8e0ee944fe3df84c8f350e87aa39789b9b60</guid>
+      <pubDate>Sat, 11 Jul 2026 23:00:18 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · 🔄 Auto-sync from VPS (26,284 bytes)]]></description>
+    </item>
+    <item>
+      <title>v2.8 — Ride Shop: SVG previews for 21 rides + paging 6/page + fixed prevDay bug</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/ad11f421a4243ee699dce462a53cf25f6b8806b7</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@ad11f421a4243ee699dce462a53cf25f6b8806b7</guid>
+      <pubDate>Sat, 11 Jul 2026 21:55:59 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.8 — Ride Shop: SVG previews for 21 rides + paging 6/page + fixed prevDay bug]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (35,290 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/6e3feefa76a8a365987e1d28901166633a87be60</link>
+      <guid isPermaLink="false">sj88cute-video-editor@6e3feefa76a8a365987e1d28901166633a87be60</guid>
+      <pubDate>Sat, 11 Jul 2026 17:00:19 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · 🔄 Auto-sync from VPS (35,290 bytes)]]></description>
+    </item>
+    <item>
+      <title>fix: remove vendor brand mentions from landing page</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/bed411a16b43154d097e133757d8ec761e708307</link>
+      <guid isPermaLink="false">sj88cute-video-editor@bed411a16b43154d097e133757d8ec761e708307</guid>
+      <pubDate>Sat, 11 Jul 2026 15:13:09 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · fix: remove vendor brand mentions from landing page]]></description>
+    </item>
+    <item>
+      <title>docs: rewrite README — make it repo-consistent and remove vendor brand</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/871f28683a92ec3b2d4007ed7658670165ce41dd</link>
+      <guid isPermaLink="false">sj88cute-video-editor@871f28683a92ec3b2d4007ed7658670165ce41dd</guid>
+      <pubDate>Sat, 11 Jul 2026 15:13:08 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · docs: rewrite README — make it repo-consistent and remove vendor brand]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (35,290 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/844cdd594af709a9f18114d8bc0d60dccf0acd1e</link>
+      <guid isPermaLink="false">sj88cute-video-editor@844cdd594af709a9f18114d8bc0d60dccf0acd1e</guid>
+      <pubDate>Sat, 11 Jul 2026 11:00:13 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · 🔄 Auto-sync from VPS (35,290 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌟 Initial portfolio site with live GitHub API integration</title>
+      <link>https://github.com/lnwsj/sj88-portfolio/commit/a2b4dcabae1df7d351f40b82bef93c9fe1e13cf6</link>
+      <guid isPermaLink="false">sj88-portfolio@a2b4dcabae1df7d351f40b82bef93c9fe1e13cf6</guid>
+      <pubDate>Sat, 11 Jul 2026 08:11:00 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-portfolio</category>
+      <description><![CDATA[📦 sj88-portfolio · 🌟 Initial portfolio site with live GitHub API integration]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (31,672 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/cc997cc12b21cf9b357e3ae0458e5a3df6c7cdbd</link>
+      <guid isPermaLink="false">sj88cute-video-editor@cc997cc12b21cf9b357e3ae0458e5a3df6c7cdbd</guid>
+      <pubDate>Sat, 11 Jul 2026 08:09:54 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · 🔄 Auto-sync from VPS (31,672 bytes)]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (201,752 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-quick-note/commit/04e7ba3e914e27844479440e92d2906cebfb2062</link>
+      <guid isPermaLink="false">sj88-quick-note@04e7ba3e914e27844479440e92d2906cebfb2062</guid>
+      <pubDate>Sat, 11 Jul 2026 08:09:52 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-quick-note</category>
+      <description><![CDATA[📦 sj88-quick-note · 🔄 Auto-sync from VPS (201,752 bytes)]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (327,697 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-fps-cops-vs-robbers/commit/5107ae66ba2f19726d0ff4a364ed1f68118f85a9</link>
+      <guid isPermaLink="false">sj88-fps-cops-vs-robbers@5107ae66ba2f19726d0ff4a364ed1f68118f85a9</guid>
+      <pubDate>Sat, 11 Jul 2026 08:09:47 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-fps-cops-vs-robbers</category>
+      <description><![CDATA[📦 sj88-fps-cops-vs-robbers · 🔄 Auto-sync from VPS (327,697 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌟 Profile README with portfolio + featured apps</title>
+      <link>https://github.com/lnwsj/lnwsj/commit/ad1050a52ad835798f9369c110f99b0a8391dfdd</link>
+      <guid isPermaLink="false">lnwsj@ad1050a52ad835798f9369c110f99b0a8391dfdd</guid>
+      <pubDate>Sat, 11 Jul 2026 08:09:10 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>lnwsj</category>
+      <description><![CDATA[📦 lnwsj · 🌟 Profile README with portfolio + featured apps]]></description>
+    </item>
+    <item>
+      <title>update images/karaoke-mock.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/fca07af693ec5d304368a097ba6dfd2d9f35e826</link>
+      <guid isPermaLink="false">demo-sj88ai@fca07af693ec5d304368a097ba6dfd2d9f35e826</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:54 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/karaoke-mock.png]]></description>
+    </item>
+    <item>
+      <title>update images/v14-live-halloween.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/e3b363e41a414bd56ae0461fe434706d0bbb5ff4</link>
+      <guid isPermaLink="false">demo-sj88ai@e3b363e41a414bd56ae0461fe434706d0bbb5ff4</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:53 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/v14-live-halloween.png]]></description>
+    </item>
+    <item>
+      <title>update images/04-runway.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/a64bcf14034ff6cfbe45d66a6d5a67bdf355231a</link>
+      <guid isPermaLink="false">demo-sj88ai@a64bcf14034ff6cfbe45d66a6d5a67bdf355231a</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:52 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/04-runway.png]]></description>
+    </item>
+    <item>
+      <title>update images/01-ui.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/c69a1af8221aff49f3e815900ffb7dfab8d58385</link>
+      <guid isPermaLink="false">demo-sj88ai@c69a1af8221aff49f3e815900ffb7dfab8d58385</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:51 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/01-ui.png]]></description>
+    </item>
+    <item>
+      <title>update spec.md</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/27f5370f7d61caa48f7eeee9ecd5dd2210b91df6</link>
+      <guid isPermaLink="false">demo-sj88ai@27f5370f7d61caa48f7eeee9ecd5dd2210b91df6</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:50 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update spec.md]]></description>
+    </item>
+    <item>
+      <title>update README.md</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/8a4494ac8ac612e50963879f4c5c7ee05c474060</link>
+      <guid isPermaLink="false">demo-sj88ai@8a4494ac8ac612e50963879f4c5c7ee05c474060</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:49 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update README.md]]></description>
+    </item>
+    <item>
+      <title>update index.html</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/c3552085bccff4f16ca6a9a9fd5400e89b5f3656</link>
+      <guid isPermaLink="false">demo-sj88ai@c3552085bccff4f16ca6a9a9fd5400e89b5f3656</guid>
+      <pubDate>Sat, 11 Jul 2026 07:45:42 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update index.html]]></description>
+    </item>
+    <item>
+      <title>update images/karaoke-mock.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/07914da593dc351789c4a1bd7dafe449c5bcda4e</link>
+      <guid isPermaLink="false">demo-sj88ai@07914da593dc351789c4a1bd7dafe449c5bcda4e</guid>
+      <pubDate>Sat, 11 Jul 2026 07:43:32 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/karaoke-mock.png]]></description>
+    </item>
+    <item>
+      <title>update images/v14-live-halloween.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/d378ba4e24c1437c2835408a55eb3c5d49e4f0c3</link>
+      <guid isPermaLink="false">demo-sj88ai@d378ba4e24c1437c2835408a55eb3c5d49e4f0c3</guid>
+      <pubDate>Sat, 11 Jul 2026 07:43:32 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/v14-live-halloween.png]]></description>
+    </item>
+    <item>
+      <title>update images/04-runway.png</title>
+      <link>https://github.com/lnwsj/demo-sj88ai/commit/a4028b6ccb3dad7bec99011df1905ad3f1a6cd84</link>
+      <guid isPermaLink="false">demo-sj88ai@a4028b6ccb3dad7bec99011df1905ad3f1a6cd84</guid>
+      <pubDate>Sat, 11 Jul 2026 07:43:30 GMT</pubDate>
+      <author>159687225+lnwsj@users.noreply.github.com (lnwsj)</author>
+      <category>github</category>
+      <category>demo-sj88ai</category>
+      <description><![CDATA[📦 demo-sj88ai · update images/04-runway.png]]></description>
+    </item>
+    <item>
+      <title>v2.7 — Daily Report Card + Hall of Fame + Visitor Shop + Feedback Board + Custom Park Themes</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/5069680b3b286a3749df682a1e39813dba883576</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@5069680b3b286a3749df682a1e39813dba883576</guid>
+      <pubDate>Sat, 11 Jul 2026 04:49:16 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.7 — Daily Report Card + Hall of Fame + Visitor Shop + Feedback Board + Custom Park Themes]]></description>
+    </item>
+    <item>
+      <title>Merge pull request #3437 from lewri/clamp_ui_scales</title>
+      <link>https://github.com/lnwsj/CorsixTH/commit/f39f80140caa9b4b2d38c27cfe651b34eab5ad8e</link>
+      <guid isPermaLink="false">CorsixTH@f39f80140caa9b4b2d38c27cfe651b34eab5ad8e</guid>
+      <pubDate>Sat, 11 Jul 2026 01:56:19 GMT</pubDate>
+      <author>baker.stephen.e@gmail.com (Stephen E. Baker)</author>
+      <category>github</category>
+      <category>CorsixTH</category>
+      <description><![CDATA[📦 CorsixTH · Merge pull request #3437 from lewri/clamp_ui_scales
+
+Change UI scale documentation]]></description>
+    </item>
+    <item>
+      <title>🎢 v2.6.9 — 150+ procedural rides via 1 generator function</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/c9e24ccff13194fbe495a5b3dab52897c3f2b690</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@c9e24ccff13194fbe495a5b3dab52897c3f2b690</guid>
+      <pubDate>Fri, 10 Jul 2026 22:15:37 GMT</pubDate>
+      <author>Mavis@minimax.io (Mavis)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · 🎢 v2.6.9 — 150+ procedural rides via 1 generator function
+
+Add 150 new ride configs (50 per non-park map) using 1 procedural generator:
+
+**🚜 Farm (50 new)**: Tractor Tour, Hay Maze, Pumpkin Spin, Cow Train, Sheep Pen,
+Chicken Coop, Pig Splash, Corn Cob Coaster, Scarecrow Swing, Barn Dance, Apple Press,
+Wheat Spinner, Tractor Race, Beehive, Goat Mountain, Duck Pond, Corn Maze, Rooster,
+Turkey Trot, Flower Field, Silo Climb, Berry Picker, Cider Press, Veggie Race, Horse
+Trail, Cow Jump, Milk Bottl]]></description>
+    </item>
+    <item>
+      <title>🎢 v2.6.8 — 9 more map-specific rides (3 per non-park map)</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/e63f20db0409f5034f4455ac4d2a66b6020f5c7b</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@e63f20db0409f5034f4455ac4d2a66b6020f5c7b</guid>
+      <pubDate>Fri, 10 Jul 2026 22:03:34 GMT</pubDate>
+      <author>Mavis@minimax.io (Mavis)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · 🎢 v2.6.8 — 9 more map-specific rides (3 per non-park map)
+
+Each non-park map now has 6 total rides (was 3):
+
+🚜 Farm (3 new): Windmill, Corn Maze, Harvest Festival
+- Windmill: tall cylinder tower + rotating cross blades (animated)
+- Corn Maze: green wall maze with 8 yellow corn stalks inside
+- Harvest Festival: haystack + 8 pumpkins + banner posts + falling leaves
+
+🌲 Forest (3 new): Log Bridge, Rope Swing, Firefly Lantern
+- Log Bridge: 8 wood logs across blue river + side rails + trees
+- Rope Swi]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (31,603 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-video-editor/commit/9318927b42f81b7f65ea39132331ab1fb606f575</link>
+      <guid isPermaLink="false">sj88cute-video-editor@9318927b42f81b7f65ea39132331ab1fb606f575</guid>
+      <pubDate>Fri, 10 Jul 2026 21:59:29 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-video-editor</category>
+      <description><![CDATA[📦 sj88cute-video-editor · 🔄 Auto-sync from VPS (31,603 bytes)]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (191,163 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-quick-note/commit/e6621d5ce9e0748dcefac4d7eddcf03bbda24032</link>
+      <guid isPermaLink="false">sj88-quick-note@e6621d5ce9e0748dcefac4d7eddcf03bbda24032</guid>
+      <pubDate>Fri, 10 Jul 2026 21:59:27 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-quick-note</category>
+      <description><![CDATA[📦 sj88-quick-note · 🔄 Auto-sync from VPS (191,163 bytes)]]></description>
+    </item>
+    <item>
+      <title>🔄 Auto-sync from VPS (312,859 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-fps-cops-vs-robbers/commit/ea35d6acc72bcb4f4446c3e2b6ad0cff7c2a0a22</link>
+      <guid isPermaLink="false">sj88-fps-cops-vs-robbers@ea35d6acc72bcb4f4446c3e2b6ad0cff7c2a0a22</guid>
+      <pubDate>Fri, 10 Jul 2026 21:59:25 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-fps-cops-vs-robbers</category>
+      <description><![CDATA[📦 sj88-fps-cops-vs-robbers · 🔄 Auto-sync from VPS (312,859 bytes)]]></description>
+    </item>
+    <item>
+      <title>🎢 v2.6.7 — Map-specific ride offerings</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/1ff15ad6547a5e3703a90500a005e402664ce0a1</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@1ff15ad6547a5e3703a90500a005e402664ce0a1</guid>
+      <pubDate>Fri, 10 Jul 2026 21:43:27 GMT</pubDate>
+      <author>Mavis@minimax.io (Mavis)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · 🎢 v2.6.7 — Map-specific ride offerings
+
+Each map now has its own themed ride set (no more ferris wheels on every map!):
+
+🎢 Park: All 21 existing classic rides (ferris, coaster, etc.) — unchanged
+🚜 Farm (3 new): Tractor Tour, Hay Bale Jump, Pumpkin Carousel
+🌲 Forest (3 new): Zip Line, Tree House, Mushroom Bounce
+🏖️ Beach (3 new): Banana Boat, Water Slide, Wave Pool
+
+Changes:
+- Add mapId field to all RIDE_INFO entries
+- Add 9 new ride types with distinct 3D meshes (Babylon primitives)
+- renderRide]]></description>
+    </item>
+    <item>
+      <title>🌱 v2.6.6 — Map-specific farm crops</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/13f4e4d4f0ea5b31d26934a3551f9d1dfd1041f5</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@13f4e4d4f0ea5b31d26934a3551f9d1dfd1041f5</guid>
+      <pubDate>Fri, 10 Jul 2026 21:27:20 GMT</pubDate>
+      <author>Mavis@minimax.io (Mavis)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · 🌱 v2.6.6 — Map-specific farm crops
+
+Each map's farm_plot now produces different crops based on location:
+- 🎢 Park: 🌸 flowers (auto-replant, 15s, +$12, no seed cost)
+- 🚜 Farm: 🥕/🍅/🎃 original carrots/tomato/pumpkin (unchanged)
+- 🌲 Forest: 🍄 mushrooms (10s grow, $5 seed, +$15, purple mesh)
+- 🏖️ Beach: 🥥 coconuts (90s grow, $40 seed, +$100, brown mesh)
+
+Changes:
+- Add MAP_CROPS dict + getCropsForDeco/getMapCropLabel helpers
+- placeDecoration() records mapId in farm_plot state
+- openCropPickerModal()]]></description>
+    </item>
+    <item>
+      <title>0.70.0 post release bump (#3445)</title>
+      <link>https://github.com/lnwsj/CorsixTH/commit/c1d53dac47f6fd4e6c5d888e5de781be5faea223</link>
+      <guid isPermaLink="false">CorsixTH@c1d53dac47f6fd4e6c5d888e5de781be5faea223</guid>
+      <pubDate>Fri, 10 Jul 2026 18:57:02 GMT</pubDate>
+      <author>lewri@users.noreply.github.com (lewri)</author>
+      <category>github</category>
+      <category>CorsixTH</category>
+      <description><![CDATA[📦 CorsixTH · 0.70.0 post release bump (#3445)]]></description>
+    </item>
+    <item>
+      <title>v2.6 — Daily Challenges + Screenshot/Share + Staff Roles + Decoration Expansion + Multi-language</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/02f3563a9a94c8cac03c6582ef670175f712db5d</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@02f3563a9a94c8cac03c6582ef670175f712db5d</guid>
+      <pubDate>Fri, 10 Jul 2026 17:19:31 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.6 — Daily Challenges + Screenshot/Share + Staff Roles + Decoration Expansion + Multi-language]]></description>
+    </item>
+    <item>
+      <title>v2.5 — Analytics Dashboard + Custom Decoration Editor + NPC Names/Memory + Move/Drag Mode + Park Profile (Multiplayer Lite)</title>
+      <link>https://github.com/lnwsj/SJ88-Wonder-Park/commit/dbb0f4388edc034984d7dedf014bcc24f1cb2ec7</link>
+      <guid isPermaLink="false">SJ88-Wonder-Park@dbb0f4388edc034984d7dedf014bcc24f1cb2ec7</guid>
+      <pubDate>Fri, 10 Jul 2026 16:45:50 GMT</pubDate>
+      <author>sj88@sj88ai.com (SJ88)</author>
+      <category>github</category>
+      <category>SJ88-Wonder-Park</category>
+      <description><![CDATA[📦 SJ88-Wonder-Park · v2.5 — Analytics Dashboard + Custom Decoration Editor + NPC Names/Memory + Move/Drag Mode + Park Profile (Multiplayer Lite)]]></description>
+    </item>
+    <item>
+      <title>ci: Trigger website rebuild on more release events (#3444)</title>
+      <link>https://github.com/lnwsj/CorsixTH/commit/1910bea540617e02327177a8bcbeff209667b9dd</link>
+      <guid isPermaLink="false">CorsixTH@1910bea540617e02327177a8bcbeff209667b9dd</guid>
+      <pubDate>Fri, 10 Jul 2026 11:03:12 GMT</pubDate>
+      <author>66537460+rmnvgr@users.noreply.github.com (Romain)</author>
+      <category>github</category>
+      <category>CorsixTH</category>
+      <description><![CDATA[📦 CorsixTH · ci: Trigger website rebuild on more release events (#3444)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — venuehub (80,793 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-venuehub/commit/dcacdb32c8d726c06b619c4c475e4dfa1eafe32f</link>
+      <guid isPermaLink="false">sj88-venuehub@dcacdb32c8d726c06b619c4c475e4dfa1eafe32f</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:05 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-venuehub</category>
+      <description><![CDATA[📦 sj88-venuehub · 🌊 Initial commit — venuehub (80,793 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — tourlane (95,672 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-tourlane/commit/ff6e5b913b51d5b41a96e32d0b8fd1c9ac46d3c7</link>
+      <guid isPermaLink="false">sj88-tourlane@ff6e5b913b51d5b41a96e32d0b8fd1c9ac46d3c7</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:04 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-tourlane</category>
+      <description><![CDATA[📦 sj88-tourlane · 🌊 Initial commit — tourlane (95,672 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — studiobook (94,965 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-studiobook/commit/615349743f3a4560b74a1e7d2dade5a9901e6211</link>
+      <guid isPermaLink="false">sj88-studiobook@615349743f3a4560b74a1e7d2dade5a9901e6211</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:03 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-studiobook</category>
+      <description><![CDATA[📦 sj88-studiobook · 🌊 Initial commit — studiobook (94,965 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — stronghold (50,750 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-stronghold/commit/9a13534a93e25b5c768a0e7946fae9cebde6ff53</link>
+      <guid isPermaLink="false">sj88-stronghold@9a13534a93e25b5c768a0e7946fae9cebde6ff53</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:02 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-stronghold</category>
+      <description><![CDATA[📦 sj88-stronghold · 🌊 Initial commit — stronghold (50,750 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — street-fighter-thai (4,756,320 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-street-fighter-thai/commit/feba69069d0e729026049a4cbc3accb0fb9fcd47</link>
+      <guid isPermaLink="false">sj88-street-fighter-thai@feba69069d0e729026049a4cbc3accb0fb9fcd47</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:02 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-street-fighter-thai</category>
+      <description><![CDATA[📦 sj88-street-fighter-thai · 🌊 Initial commit — street-fighter-thai (4,756,320 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — stayhub (251,401 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-stayhub/commit/b52a390e99dbf4903f79f57f6d59437f6dc81bb2</link>
+      <guid isPermaLink="false">sj88-stayhub@b52a390e99dbf4903f79f57f6d59437f6dc81bb2</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:00 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-stayhub</category>
+      <description><![CDATA[📦 sj88-stayhub · 🌊 Initial commit — stayhub (251,401 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — squish (17,493 bytes)</title>
+      <link>https://github.com/lnwsj/sj88-squish/commit/94f98cdb720a4cc87c9bc1994704c7803b1fbe2d</link>
+      <guid isPermaLink="false">sj88-squish@94f98cdb720a4cc87c9bc1994704c7803b1fbe2d</guid>
+      <pubDate>Thu, 09 Jul 2026 14:10:00 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88-squish</category>
+      <description><![CDATA[📦 sj88-squish · 🌊 Initial commit — squish (17,493 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-thumbnail-maker (22,419 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-thumbnail-maker/commit/7432da66a33973d7d3fc98eebc942250ede04903</link>
+      <guid isPermaLink="false">sj88cute-thumbnail-maker@7432da66a33973d7d3fc98eebc942250ede04903</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:59 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-thumbnail-maker</category>
+      <description><![CDATA[📦 sj88cute-thumbnail-maker · 🌊 Initial commit — sj88cute-thumbnail-maker (22,419 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-voice-isolator (26,116 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-voice-isolator/commit/be9612b73b5d285c31c4f16f8297615985c083c8</link>
+      <guid isPermaLink="false">sj88cute-voice-isolator@be9612b73b5d285c31c4f16f8297615985c083c8</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:59 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-voice-isolator</category>
+      <description><![CDATA[📦 sj88cute-voice-isolator · 🌊 Initial commit — sj88cute-voice-isolator (26,116 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-subtitle-burner (25,771 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-subtitle-burner/commit/e2551ee88946239ba89c9eb04c933d670d0c65fe</link>
+      <guid isPermaLink="false">sj88cute-subtitle-burner@e2551ee88946239ba89c9eb04c933d670d0c65fe</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:59 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-subtitle-burner</category>
+      <description><![CDATA[📦 sj88cute-subtitle-burner · 🌊 Initial commit — sj88cute-subtitle-burner (25,771 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-safe-zones (18,827 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-safe-zones/commit/1391b3e1bc8df843b86a5edd18791a6c71737c35</link>
+      <guid isPermaLink="false">sj88cute-safe-zones@1391b3e1bc8df843b86a5edd18791a6c71737c35</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:57 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-safe-zones</category>
+      <description><![CDATA[📦 sj88cute-safe-zones · 🌊 Initial commit — sj88cute-safe-zones (18,827 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-lut-preview (22,931 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-lut-preview/commit/75221e90f5e07a81aeb3b1ae8e5e85393007799d</link>
+      <guid isPermaLink="false">sj88cute-lut-preview@75221e90f5e07a81aeb3b1ae8e5e85393007799d</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:57 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-lut-preview</category>
+      <description><![CDATA[📦 sj88cute-lut-preview · 🌊 Initial commit — sj88cute-lut-preview (22,931 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-frame-extractor (20,807 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-frame-extractor/commit/815110edbc81a011915b284a515fdb64ef8b7a64</link>
+      <guid isPermaLink="false">sj88cute-frame-extractor@815110edbc81a011915b284a515fdb64ef8b7a64</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:56 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-frame-extractor</category>
+      <description><![CDATA[📦 sj88cute-frame-extractor · 🌊 Initial commit — sj88cute-frame-extractor (20,807 bytes)]]></description>
+    </item>
+    <item>
+      <title>🌊 Initial commit — sj88cute-cps-calculator (24,252 bytes)</title>
+      <link>https://github.com/lnwsj/sj88cute-cps-calculator/commit/4efb70714e04c7b0c62ea39f36f1ae687ee7573d</link>
+      <guid isPermaLink="false">sj88cute-cps-calculator@4efb70714e04c7b0c62ea39f36f1ae687ee7573d</guid>
+      <pubDate>Thu, 09 Jul 2026 14:09:56 GMT</pubDate>
+      <author>Mavis@sj88ai.com (Mavis)</author>
+      <category>github</category>
+      <category>sj88cute-cps-calculator</category>
+      <description><![CDATA[📦 sj88cute-cps-calculator · 🌊 Initial commit — sj88cute-cps-calculator (24,252 bytes)]]></description>
+    </item>
+  </channel>
+</rss>
+<!--
+  ═══════════════════════════════════════════════════════════
+  ATOM 1.0 FEED (alternative format)
+  ═══════════════════════════════════════════════════════════
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>SJ88 Mission Control — Commits Feed (Atom)</title>
+  <subtitle>🚀 Real-time GitHub commits from lnwsj</subtitle>
+  <link href="https://git88.sj88ai.com/changelog.xml" rel="self"/>
+  <link href="https://git88.sj88ai.com/"/>
+  <id>tag:lnwsj.github.io,2026:sj88-changelog</id>
+  <updated>2026-07-27T22:34:04Z</updated>
+  <author><name>Mavis</name><email>bot@https://git88.sj88ai.com</email></author>
+  <rights>MIT</rights>
+  <generator uri="https://github.com/lnwsj/sj88-mission-control" version="v19.2">Mavis changelog.py</generator>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@4fdc210c6bcb3f518248688bf51335815fe51140</id>
+    <title>Phase 27: Bus System (5 bus stops, 50 yen fare, animated bus)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/4fdc210c6bcb3f518248688bf51335815fe51140"/>
+    <updated>2026-07-27T19:13:03Z</updated>
+    <published>2026-07-27T19:13:03Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 27: Bus System (5 bus stops, 50 yen fare, animated bus)
+
+A. Bus stop builder (buildBusStop):
+- Pole + blue sign with red dot (bus icon)
+- Wooden bench
+- Blue shelter roof with 2 poles
+- Tagged userData.isBusStop
+
+B. Bus vehicle builder (buildBus):
+- Yellow body with red stripe
+- 4 blue windows + windshield
+- 4 wheels (spinning)
+- Tagged userData.isBus
+
+C. Bus state (busState):
+- model, currentZone, targetZone
+- progress (0-1), isMoving
+- rideActive (player riding)
+
+D. 5 BUS_STOP_POSITIONS:]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@3bcae6925a33714ef180595d31de0743b3989dfb</id>
+    <title>Phase 26: BGM System (procedural ambient music, 4 time-of-day presets)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/3bcae6925a33714ef180595d31de0743b3989dfb"/>
+    <updated>2026-07-27T19:08:19Z</updated>
+    <published>2026-07-27T19:08:19Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 26: BGM System (procedural ambient music, 4 time-of-day presets)
+
+A. BGM state (bgmState):
+- enabled: whether BGM is on
+- currentTime: 'morning' | 'noon' | 'sunset' | 'night'
+- currentZone: per-zone variation (future)
+- isPlaying: scheduled or not
+
+B. BGM_PRESETS (4 time-of-day):
+- morning: C E G C arpeggio, sine wave, 4s interval
+- noon: D F# A D arpeggio, triangle wave, 3.5s interval
+- sunset: A C# E A arpeggio, sine wave, 5s interval
+- night: C G C E (low) arpeggio, sine wave, 6s interv]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@39ce45098fcfa939741d67bb2e449921c0a2d0f0</id>
+    <title>Phase 25: Tutorial Overlay (6-step first-run guide)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/39ce45098fcfa939741d67bb2e449921c0a2d0f0"/>
+    <updated>2026-07-27T19:06:12Z</updated>
+    <published>2026-07-27T19:06:12Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 25: Tutorial Overlay (6-step first-run guide)
+
+A. Tutorial state (tutorialState):
+- currentStep: 0-5 (6 steps total)
+- active: shows overlay
+- completed: tracks if user finished
+
+B. 6 TUTORIAL_STEPS:
+1. 🏠 Welcome to Home zone
+2. 🎮 WASD + E controls
+3. 🗺️ Zone switching (1-5 keys or buttons)
+4. ⏰ Time controls (2x, 4x)
+5. 🎯 Daily tasks (5 to complete day)
+6. 🎉 Ready to explore!
+
+C. startTutorial():
+- Checks localStorage 'tsl-tutorial-done'
+- Skips if already completed
+- Shows overlay at ste]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@f6e56d3a03673844b16a8af299e9918317fb6f61</id>
+    <title>Phase 24: Photo Mode (F2 + gallery)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/f6e56d3a03673844b16a8af299e9918317fb6f61"/>
+    <updated>2026-07-27T18:57:35Z</updated>
+    <published>2026-07-27T18:57:35Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 24: Photo Mode (F2 + gallery)
+
+A. Photo gallery (photoGallery):
+- Array of { id, dataURL, zone, zoneName, day, hour, minute, timestamp }
+- Cap at 30 photos in memory, 20 saved to localStorage
+- Loaded on boot from 'tsl-photos-v1' localStorage key
+
+B. takePhoto():
+- Forces a fresh render of current frame (interior or main)
+- Captures canvas via toDataURL('image/jpeg', 0.85)
+- Saves photo with zone/day/hour metadata
+- White flash effect (.photo-flash class)
+- Shutter sound (2-tone square wav]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@013650efc89c6ae20445fa1bb53803d8f0a45f04</id>
+    <title>Phase 23: Hunger/Eat System (fridge food + stamina drain)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/013650efc89c6ae20445fa1bb53803d8f0a45f04"/>
+    <updated>2026-07-27T12:47:51Z</updated>
+    <published>2026-07-27T12:47:51Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 23: Hunger/Eat System (fridge food + stamina drain)
+
+A. Stamina drain (tickTime):
+- Drains 1.2/s while walking, 0.3/s while riding bike
+- Only when !interiorState.active (no drain while sleeping)
+- &lt; 30 stamina triggers 'หิวแล้ว / Hungry' achievement toast
+
+B. Food items (FOODS):
+- onigiri 🍙 ¥80 (+25)
+- sandwich 🥪 ¥120 (+35)
+- bento 🍱 ¥250 (+60)
+- ramen 🍜 ¥450 (+90)
+- Bilingual names + icons + prices + stamina values
+
+C. buyFood(foodId):
+- Deducts yen, adds stamina (capped at 100, or 150 i]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@6eeb1fcd5475cca26584f71a8c8f0f7f016f5bbd</id>
+    <title>Phase 22: Sleep System (sleep in bed → next day)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/6eeb1fcd5475cca26584f71a8c8f0f7f016f5bbd"/>
+    <updated>2026-07-27T12:29:05Z</updated>
+    <published>2026-07-27T12:29:05Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 22: Sleep System (sleep in bed → next day)
+
+A. Bed marking (buildHomeInterior):
+- bedFrame + blanket + pillow all tagged userData.isBed = true
+- Bed position: x=-2.5, z=-3
+
+B. Sleep state (sleepState):
+- isSleeping: prevents re-trigger
+- canSleep: 2s cooldown after fade out
+- lastSleepDay: tracks last sleep day
+
+C. sleepAtBed():
+- Only works inside home interior
+- Plays yawn sound (low tones 220Hz, 180Hz)
+- Fade overlay shows 'อยู่ในความฝัน... / Day N / Sleeping...'
+- After 1.5s: advance d]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@e5fa27e8d41bbdb54c2124102f91ca963223b83b</id>
+    <title>Phase 21: Stray Cat system (10 cats, 2 per zone)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/e5fa27e8d41bbdb54c2124102f91ca963223b83b"/>
+    <updated>2026-07-27T12:26:38Z</updated>
+    <published>2026-07-27T12:26:38Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 21: Stray Cat system (10 cats, 2 per zone)
+
+A. Cat builder (buildCat):
+- Procedural cat mesh: body + head + 2 ears + 2 eyes + nose + tail + 4 legs
+- 6 cat names: Mochi, Sora, Yuki, Kuro, Mikan, Tama
+- 6 colors: orange, gray, white, black, ginger, tan
+- All cats use unique combination via index
+
+B. Spawn system (spawnCatsInZones):
+- 10 cats total: 2 per zone × 5 zones
+- Each zone has fixed positions
+- Cats are added only to their zone's scene
+- Spawned at boot via setTimeout 2000ms
+
+C. Cat ]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@586fa4c50256681974c828623b996d7b7b9ce828</id>
+    <title>🐛 v19.1: Fix GitHub Calendar — use /repos/.../commits API</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/586fa4c50256681974c828623b996d7b7b9ce828"/>
+    <updated>2026-07-27T12:19:46Z</updated>
+    <published>2026-07-27T12:19:46Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🐛 v19.1: Fix GitHub Calendar — use /repos/.../commits API
+
+CRITICAL BUG: GitHub Events API (/users/lnwsj/events/public) returns PushEvents
+WITHOUT commits[] field in payload (verified: 0/96 events had commits field).
+
+Result: Calendar showed 0 commits everywhere — wrong data!
+
+Fix: Switch from Events API to /repos/{owner}/{repo}/commits API:
+1. GET /users/lnwsj/repos?per_page=100&amp;sort=pushed (1 call)
+2. Filter: only repos pushed in last 90 days (~56 repos)
+3. For each repo: GET /repos/{owner}/{r]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@a2a2aa407349fddd666d98d827e2cfb9dbe3e3a1</id>
+    <title>Phase 20: Add Help button in HUD + Manual link in README</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/a2a2aa407349fddd666d98d827e2cfb9dbe3e3a1"/>
+    <updated>2026-07-27T11:22:58Z</updated>
+    <published>2026-07-27T11:22:58Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 20: Add Help button in HUD + Manual link in README
+
+- Added ❓ button next to time controls (top center)
+- Button opens manual in new tab: https://7wx5v6yixjcta.space.minimax.io
+- Updated README with Manual link (bilingual guide, 36 screenshots)
+
+New manual site (deployed):
+- 9 tabbed sections: Start, Zones, Day-Night, NPCs, Interior,
+  Features, Achievements, Shortcuts, FAQ
+- Bilingual Thai + English
+- 36 real gameplay screenshots
+- Mobile responsive
+- Ghibli-pastel design palette matching]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@49c5033e0260542f9bde01fbb24f1ea16a748c5f</id>
+    <title>Add User Manual — bilingual interactive guide</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/49c5033e0260542f9bde01fbb24f1ea16a748c5f"/>
+    <updated>2026-07-27T11:21:59Z</updated>
+    <published>2026-07-27T11:21:59Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Add User Manual — bilingual interactive guide
+
+Interactive single-page manual at manual/index.html
+- 9 sections with sticky tab navigation + hash routing:
+  1. Start (welcome + HUD + controls)
+  2. 5 Zones (Home/School/Station/Shop/Shrine)
+  3. Day-Night cycle (4 time-of-day variants)
+  4. NPCs &amp; dialogue (5 NPCs + schedule table)
+  5. Home Interior (3 time-of-day variants)
+  6. Features (vending, wardrobe 5 outfits, phone, bike, train)
+  7. Achievements (all 12 with icons + bilingual names)
+  8]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@830225ecb2c6ea2e2f47134b71cbc2f4e85d4167</id>
+    <title>📸 Upload all 19 screenshots to live (incl. 14_shortcuts.png)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/830225ecb2c6ea2e2f47134b71cbc2f4e85d4167"/>
+    <updated>2026-07-27T11:21:45Z</updated>
+    <published>2026-07-27T11:21:45Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 📸 Upload all 19 screenshots to live (incl. 14_shortcuts.png)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@c2b96a7bd2316c573329da604bcbd98e2d64deb7</id>
+    <title>📖 v19: Interactive User Manual + 19 screenshots</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/c2b96a7bd2316c573329da604bcbd98e2d64deb7"/>
+    <updated>2026-07-27T11:20:04Z</updated>
+    <published>2026-07-27T11:20:04Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 📖 v19: Interactive User Manual + 19 screenshots
+
+Built comprehensive guide.html covering all 6 views + 6 actions + 5 themes.
+
+Features:
+- 17 sections + sticky TOC nav with 12 anchors
+- 19 real screenshots captured via Playwright
+- Quick Tour style (no fake mockups — actual UI)
+- Live URL: https://git88.sj88ai.com/guide.html
+- Covers: Hero/Stats, Grid, Timeline, Category, Commits, Roadmap, Calendar, Actions, Shortcuts, Themes, Achievements, Chat, Search, Mobile, API
+- 19 PNG screenshots in guide_]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@51a824c64ab22fe78ec876cfb0891c91bdb27b7c</id>
+    <title>🗓️ v19: GitHub Activity Calendar (live from API)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/51a824c64ab22fe78ec876cfb0891c91bdb27b7c"/>
+    <updated>2026-07-27T10:32:14Z</updated>
+    <published>2026-07-27T10:32:14Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🗓️ v19: GitHub Activity Calendar (live from API)
+
+NEW VIEW: 'GitHub Calendar' button + 'L' keyboard shortcut
+
+Features:
+- 🐙 Live fetch from https://api.github.com/users/lnwsj/events/public
+- 📅 Month grid (7-col) with day cells, today highlight, weekend-aware
+- 🔥 Heatmap levels (0-4) based on commit count per day
+- 📊 4 KPI cards: Today / This Month / Active Days / Best Day
+- 🖱️ Click any day → modal with full commit list (repo, time, sha, msg, GitHub link)
+- ◀ ▶ month navigation + 'Today' jump bu]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:Tokyo-Student-Life-@b13e9c6cda6a1142f85c536aef524c8ce07483f9</id>
+    <title>Phase 19: README update for Phase 16-18 (NPC Schedule, Phone, Home Interior)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/Tokyo-Student-Life-/commit/b13e9c6cda6a1142f85c536aef524c8ce07483f9"/>
+    <updated>2026-07-27T10:25:21Z</updated>
+    <published>2026-07-27T10:25:21Z</published>
+    <author><name>Mavis</name></author>
+    <category term="Tokyo-Student-Life-" label="Tokyo-Student-Life-"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>Tokyo-Student-Life-</b> · Phase 19: README update for Phase 16-18 (NPC Schedule, Phone, Home Interior)
+
+Updated sections:
+- Phase count: 0-6 (6/13) → 0-18 (19/19)
+- Live demo URL: latest Phase 18
+- Phase 16: NPC Schedule System (full section + test results)
+- Phase 17: Phone/Messages System (full section + test results)
+- Phase 18: Home Interior (full section + test results)
+- All 3 phases documented with test results tables
+
+Features documented:
+- Phase 16: 6 NPCs with time-based movement, per-NPC schedules
+- Phase 17: ]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@2a4d3b8c8be3038cb015ce2539bdfef69cd1e9a9</id>
+    <title>v2.8.3 — Modal animation + light theme + 3D tilt (32/32 PASS)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/2a4d3b8c8be3038cb015ce2539bdfef69cd1e9a9"/>
+    <updated>2026-07-17T02:27:22Z</updated>
+    <published>2026-07-17T02:27:22Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.8.3 — Modal animation + light theme + 3D tilt (32/32 PASS)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@490ae52272438523fde6a1a91fea4333a46c72da</id>
+    <title>test(TC-39): re-verify all TCs after live deployment fixes</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/490ae52272438523fde6a1a91fea4333a46c72da"/>
+    <updated>2026-07-17T01:55:54Z</updated>
+    <published>2026-07-17T01:55:54Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · test(TC-39): re-verify all TCs after live deployment fixes
+
+- TC-39 re-verification folder with full SUMMARY + DETAILED_REPORT
+- 11 TCs passed 100%, 5 TCs with caveats (test code issues)
+- 5 TCs had env/test issues (documented)
+- Live system: v3.5.1, healthy, all endpoints 200
+
+Fixes verified:
+- settings.py: fernet fingerprint import
+- crypto.py: fingerprint() function
+- llm_keys.py: get_user_key_status()
+- Live deployment: all settings endpoints work
+
+Common test issues found (not system bugs):]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@ab43b40ff791dec6a9dded1d22b60b25b6577d98</id>
+    <title>TC-38: Post-merge + deploy verification - 15/16 PASSED</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/ab43b40ff791dec6a9dded1d22b60b25b6577d98"/>
+    <updated>2026-07-17T00:52:30Z</updated>
+    <published>2026-07-17T00:52:30Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-38: Post-merge + deploy verification - 15/16 PASSED
+
+TC-38 verifies that the chatgpt_56_sol merge + deploy succeeded:
+- Smoke test: 10/11 PASSED (only failure is outdated selector)
+- Stage 2 full pipeline: 5/5 PASSED
+
+Found and fixed critical regression: Character Bible endpoint missing
+- Restored resolve_character_bible() + DEFAULT_CHARACTERS
+- Added GET/PUT /api/llm/character-bible/{project_id}
+
+Deployed to production: 22 backend + 265 ChatGPTsite + 22 frontend files
+
+Production verified:
+-]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@4b63e977859f086bb004795e68ac93a2bdd352d0</id>
+    <title>TC-37: Update final.json with Stage 1+2 complete results</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/4b63e977859f086bb004795e68ac93a2bdd352d0"/>
+    <updated>2026-07-16T13:47:22Z</updated>
+    <published>2026-07-16T13:47:22Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-37: Update final.json with Stage 1+2 complete results
+
+Stage 1: 6/6 scenes (LLM decided from 10 idea scenes)
+Stage 2: 6/6 Veo prompts generated (~5s)
+Stage 3: 4 videos in progress (Veo slow, &gt;10 min wait)
+
+The test is still polling for Stage 3 completion in background.]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@7cb04dcbeab6686cc76d40cd7317bde107af7ab0</id>
+    <title>TC-37: Full Pipeline UI test + Thai User Manual</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/7cb04dcbeab6686cc76d40cd7317bde107af7ab0"/>
+    <updated>2026-07-16T13:44:24Z</updated>
+    <published>2026-07-16T13:44:24Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-37: Full Pipeline UI test + Thai User Manual
+
+✅ Verified: Full pipeline works end-to-end through real UI (Playwright + Chromium-1223)
+- 1 เรื่อง 1 EP, 6 scenes (LLM decided 6 from 10 idea scenes)
+- 6/6 Veo prompts generated
+- ≥3/4 videos completed (2-5 min/ฉาก)
+
+🐛 Found + Fixed 2 critical bugs (production):
+1. worker_active=0 - get_veo_system_prompt was undefined
+   - Fix: get_veo_system_prompt_single(refs, project_meta, max_chars=1500)
+   - File: backend/services/llm_service.py line 1177
+2. ]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@baebb6532ce277240d62800e89c1f67212bb8a71</id>
+    <title>INDEX: add TC-35 (continuity + dialogue v3.5.1)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/baebb6532ce277240d62800e89c1f67212bb8a71"/>
+    <updated>2026-07-16T10:59:48Z</updated>
+    <published>2026-07-16T10:59:48Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · INDEX: add TC-35 (continuity + dialogue v3.5.1)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@265ac01ebb1ace14762cf6850930016b69a15110</id>
+    <title>TC-35: Scene Continuity + Dialogue Quality v3.5.1</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/265ac01ebb1ace14762cf6850930016b69a15110"/>
+    <updated>2026-07-16T10:59:47Z</updated>
+    <published>2026-07-16T10:59:47Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-35: Scene Continuity + Dialogue Quality v3.5.1
+
+- 4-rule continuity validator verified through real UI
+- HTML report: side-by-side v3.5.0 baseline vs v3.5.1
+- Before/After scores: 29 → 44 (improvement visible)
+- Time: 100% pass (17:32 → 17:41 → 17:55 → 18:09 → 18:14)
+- Live: https://directorstudio.sj88ai.com/tc35-continuity/]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@e3b74f85804380040853d0c7ca53033ce6d865a8</id>
+    <title>TC-34: Character Bible v3.5 verified through real UI</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/e3b74f85804380040853d0c7ca53033ce6d865a8"/>
+    <updated>2026-07-16T10:51:26Z</updated>
+    <published>2026-07-16T10:51:26Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-34: Character Bible v3.5 verified through real UI
+
+- 3-layer cascade: default (4 chars) / project_explicit / extracted_from_ep
+- 4 default specs locked: น้ำ/เจ/ยาย/ผี (full appearance + voice + sample_lines)
+- LLM respects LOCKED specs:
+  * Default bible: น้ำ's 'เปีย' appeared in 2/3 EP1 scenes
+  * Custom bible (มานี/พ่อ): LLM used 'นักเรียนชุดขาวผมหางม้า' + 'ชายวัย 50 สูทดำผมสั้น' verbatim
+- 2 new endpoints: GET + PUT /api/llm/character-bible/{project_id}
+- Script modal now shows 🔒 Character]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@afc9ccd1f1675ea8d5f470477ec02737d2c86bcd</id>
+    <title>TC-28 v3: 3/3 v3.3 features PASS through real UI</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/afc9ccd1f1675ea8d5f470477ec02737d2c86bcd"/>
+    <updated>2026-07-16T09:02:46Z</updated>
+    <published>2026-07-16T09:02:46Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-28 v3: 3/3 v3.3 features PASS through real UI
+
+- F1 (Suggest): added Scene 6 'เสียงหัวเราะเด็ก' with continuity
+- F2 (Auto-Continue): added Scene 7 'ประตูห้องยาย' with continuity
+- F3 (Story Mode): generated 7/7 Veo prompts (1058-1276 chars each)
+- Fixed 2 critical bugs:
+  * showSuggestionModal didn't remove 'hidden' class
+  * story-mode 'list assignment index out of range' on ep.timeline
+- INDEX.md updated]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@8e433b67b289ad4d515add983b8bc6e890dc2dc3</id>
+    <title>TC-32 + TC-33: VDO Gallery live + v3.3 endpoints implemented</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/8e433b67b289ad4d515add983b8bc6e890dc2dc3"/>
+    <updated>2026-07-16T07:04:12Z</updated>
+    <published>2026-07-16T07:04:12Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-32 + TC-33: VDO Gallery live + v3.3 endpoints implemented
+
+TC-32: VDO Gallery deployment
+- https://directorstudio.sj88ai.com/vdo-gallery/
+- 8 TC-27 v2 videos in responsive grid
+- 14/14 PASS in real UI (Playwright + Chromium-1223)
+- All 8 videos load (readyState=4) and play
+- Mobile 390x844 responsive
+- 0 JS errors
+
+TC-33: v3.3 AI Story Tools endpoints
+- 4 new endpoints implemented:
+  - POST /api/llm/suggest-next-scene (16.5s, 29 scene keys)
+  - POST /api/llm/continue-story (27.5s, saves new s]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-Test-Cases@6dc99f721b4a4099641573cf2cc303246980b022</id>
+    <title>TC-32: VDO Gallery deployment test (14/14 PASS)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-Test-Cases/commit/6dc99f721b4a4099641573cf2cc303246980b022"/>
+    <updated>2026-07-16T06:57:30Z</updated>
+    <published>2026-07-16T06:57:30Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-Test-Cases" label="SJ88-Director-Studio-Test-Cases"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-Test-Cases</b> · TC-32: VDO Gallery deployment test (14/14 PASS)
+
+Real UI test of https://directorstudio.sj88ai.com/vdo-gallery/:
+- Page loads 200 in 0.4s
+- 8 &lt;video&gt; elements found
+- All 8 videos readyState=4 (fully loaded)
+- Video 1 plays on click (currentTime=1.6s)
+- Mobile 390×844 responsive
+- 0 JS errors
+- 0 failed video loads
+
+Live URL: https://directorstudio.sj88ai.com/vdo-gallery/
+Total size: 33.5 MB across 8 videos
+Story: 'จดหมายจากยาย' 5-Act arc with full [ref1] continuity]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Director-Studio-v33-Guides@6d1baaefde93015857ce01f388a75dba17cbd363</id>
+    <title>feat: v3.3 AI Story Tools — 3 UI guides with real screenshots</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Director-Studio-v33-Guides/commit/6d1baaefde93015857ce01f388a75dba17cbd363"/>
+    <updated>2026-07-15T14:43:31Z</updated>
+    <published>2026-07-15T14:43:31Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="SJ88-Director-Studio-v33-Guides" label="SJ88-Director-Studio-v33-Guides"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Director-Studio-v33-Guides</b> · feat: v3.3 AI Story Tools — 3 UI guides with real screenshots
+
+Each guide has step-by-step instructions with real UI screenshots captured
+through Playwright + Chromium-1223, with every click + type logged.
+
+🤖 AI Suggest Next Scene (v33-suggest/)
+  - LLM analyzes scenes → suggests next with Location/Time/Action
+  - User reviews 'Why this next?' → clicks Apply
+  - 5 screenshots, 4 steps, full backend spec
+
+📖 Auto-Continue Story (v33-continue/)
+  - 1 click → LLM generates + saves scene automaticall]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@e26cbf0c24139a5c951a0dd30494dfb89cfeed2a</id>
+    <title>v2.8.2 — Premium Ride Detail Modal: hero+glow+pills+roadmap+ribbon (41/41 PASS)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/e26cbf0c24139a5c951a0dd30494dfb89cfeed2a"/>
+    <updated>2026-07-13T20:30:32Z</updated>
+    <published>2026-07-13T20:30:32Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.8.2 — Premium Ride Detail Modal: hero+glow+pills+roadmap+ribbon (41/41 PASS)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@2cef9e6d4a78e51b36d831751e5d1f0461fdf1fb</id>
+    <title>📊 v18: Repo Radar Chart + Tag Combos (multi-tag filter)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/2cef9e6d4a78e51b36d831751e5d1f0461fdf1fb"/>
+    <updated>2026-07-13T19:31:30Z</updated>
+    <published>2026-07-13T19:31:30Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 📊 v18: Repo Radar Chart + Tag Combos (multi-tag filter)
+
+- Repo Radar Chart: 6-dim compare (Activity / Stars / Clean Code / Maturity / Live / Stack)
+  - SVG hexagon with 4 grid rings + data polygon + 6 axis lines + 6 dots
+  - Linear gradient fill (accent → indigo, 0.4 → 0.2 opacity)
+  - Repo picker to switch primary; score 0-100 per dim + total /100
+  - Log-scaled activity (commits) and maturity (age)
+  - Inverse size score (small = clean = 100)
+  - 📊 Radar button added to every repo modal (next]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@3358893f410356e4464673fb7705b02e4b667a22</id>
+    <title>📖 v1.4.5 Manual — complete 20-feature guide</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/3358893f410356e4464673fb7705b02e4b667a22"/>
+    <updated>2026-07-13T19:28:57Z</updated>
+    <published>2026-07-13T19:28:57Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 📖 v1.4.5 Manual — complete 20-feature guide
+
+- Replaces v1.3 manual with v1.4.5 (107KB, 27 sections, 20 features)
+- Adds bilingual TH/EN + dark/light theme (matching app)
+- Includes all 11 new v1.4.0-v1.4.5 feature tutorials:
+  - File Tabs, Apply to All, Export All, Drag-Drop Tabs
+  - Close with Confirm, Reset Badge, Tab Segment Badges
+  - Project Save, Progress Bar, Video Multi-File, Parallel Decode
+- TOC with scroll-spy, sticky nav, print-friendly CSS
+- Keeps v1.3 manual as backup (manual/inde]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@dac6f040fafad9c1b8a87250ffa1665dc84456ab</id>
+    <title>📱 v17: PWA Install + Global Search</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/dac6f040fafad9c1b8a87250ffa1665dc84456ab"/>
+    <updated>2026-07-13T18:42:40Z</updated>
+    <published>2026-07-13T18:42:40Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 📱 v17: PWA Install + Global Search
+
+- PWA Install: manifest + theme-color + apple-mobile-web-app meta
+  - Service Worker: cache-first for static, network-first for API/GitHub
+  - Install button (floating bottom-right, gradient + glow) auto-shows on beforeinstallprompt
+  - Cmd+K to install, fallback toast if browser doesn't support
+- Global Search: full-text search across all 59 repos
+  - Searches: name + desc + desc_full + highlights + stack + lang + tags + category
+  - 6-tier scoring (exact=100]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@70b7deabbe73578406f0b8cd57d9a42c41674e79</id>
+    <title>🧪 Dark/Light theme toggle (v1.4.5)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/70b7deabbe73578406f0b8cd57d9a42c41674e79"/>
+    <updated>2026-07-13T13:47:42Z</updated>
+    <published>2026-07-13T13:47:42Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 🧪 Dark/Light theme toggle (v1.4.5)
+
+- ปุ่ม 🌙/☀️ ใน top nav (ข้างๆ ⚙️ Settings)
+- :root[data-theme="light"] overrides CSS vars → light mode
+- Body gradient + shadow + line colors สลับโดยอัตโนมัติ
+- color-scheme: dark|light เพื่อให้ scrollbar/inputs adapt
+- localStorage 'dar_theme_v1' persist theme ข้าม session
+- Transition 0.25s ease บน background + color
+- คลิก toggle → toast 1.2s + เปลี่ยน icon]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@bc5661c0ac72eaeaa63a580e4d21c6aac1f3b0e9</id>
+    <title>⚡ Parallel audio decode + perf test (v1.4.4)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/bc5661c0ac72eaeaa63a580e4d21c6aac1f3b0e9"/>
+    <updated>2026-07-13T13:46:37Z</updated>
+    <published>2026-07-13T13:46:37Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · ⚡ Parallel audio decode + perf test (v1.4.4)
+
+- Audio decodes ใน applyToAll เป็น parallel (Promise.all)
+- Video decodes sequential (แต่ละไฟล์ต้องการ video element)
+- 10 ไฟล์ audio 8s = 10× เร็วขึ้นเมื่อเทียบ sequential
+- เพิ่ม test_perf.py: 10 ไฟล์ decode + applyToAll + exportAll benchmark
+- เพิ่ม progress label update ระหว่าง decode แต่ละไฟล์]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@9ee7f566d2a4af5ce124c3eee9ff69c2dfab3f37</id>
+    <title>🐛 fix: extra closing brace in exportAll (v1.4.3.1)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/9ee7f566d2a4af5ce124c3eee9ff69c2dfab3f37"/>
+    <updated>2026-07-13T13:44:50Z</updated>
+    <published>2026-07-13T13:44:50Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 🐛 fix: extra closing brace in exportAll (v1.4.3.1)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@e6e7af5de17688596469e53e5fc60ef39882e241</id>
+    <title>🎬 Video multi-file export (v1.4.3)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/e6e7af5de17688596469e53e5fc60ef39882e241"/>
+    <updated>2026-07-13T13:43:34Z</updated>
+    <published>2026-07-13T13:43:34Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 🎬 Video multi-file export (v1.4.3)
+
+- exportAll รองรับ video files (export audio-only WAV)
+- ชื่อไฟล์ video ได้ suffix '_no-dead-air_audio.wav' เพื่อให้รู้ว่าเป็นแค่ audio
+- Toast บอกจำนวน video ที่ export + คำแนะนำใช้ ffmpeg mux กับ video เดิม
+- Video full export (seek-based) ยังต้อง export ทีละไฟล์ผ่าน exportCurrent
+- Audio files ใช้ behavior เดิม]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@b94b636f38ab1263cdacdb8fd781ef342fd26b01</id>
+    <title>⏱️ Progress bar ตอน Apply to All (v1.4.2)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/b94b636f38ab1263cdacdb8fd781ef342fd26b01"/>
+    <updated>2026-07-13T13:42:38Z</updated>
+    <published>2026-07-13T13:42:38Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · ⏱️ Progress bar ตอน Apply to All (v1.4.2)
+
+- แสดง progress bar เดียวกับ Export All
+- Label: 'Decoding 1/3…' → 'Analyzing 1/3 · filename'
+- Yield to UI ระหว่าง process (setTimeout 10ms) เพื่อ update UI
+- Reuse setExporting() pattern จาก Export All]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@16aa0522e83d6773f7c0d2f72e11b7cbde6809b1</id>
+    <title>💾 Project Save — save settings + file list (v1.4.1)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/16aa0522e83d6773f7c0d2f72e11b7cbde6809b1"/>
+    <updated>2026-07-13T13:42:04Z</updated>
+    <published>2026-07-13T13:42:04Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 💾 Project Save — save settings + file list (v1.4.1)
+
+- ปุ่ม 📁 Project ใน preset row (ข้างๆ 💾 Save)
+- Save: threshold/minDur/pad/fade + รายชื่อไฟล์ + ขนาด (ไม่ save file data)
+- Apply project: ใส่ค่า settings + toast แสดงชื่อไฟล์ที่ต้อง re-upload
+- ใช้ preset list เดียวกัน แต่แสดง icon ต่าง (📁 project vs ⚡ preset)
+- รองรับ existing preset เดิม (back-compat)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@ddb3b23a164f1bb1f8ff5049d1aea2a2e8217e23</id>
+    <title>🔀 Drag-drop files เข้ามาใน tab bar (v1.4.0)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/ddb3b23a164f1bb1f8ff5049d1aea2a2e8217e23"/>
+    <updated>2026-07-13T13:40:53Z</updated>
+    <published>2026-07-13T13:40:53Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 🔀 Drag-drop files เข้ามาใน tab bar (v1.4.0)
+
+- Drop files บน fileTabs เมื่อมีไฟล์อยู่แล้ว → เพิ่มเข้า queue (ไม่ replace)
+- Drag-over highlight: dashed orange border + glow
+- Document-level preventDefault กัน browser navigate to file เวลา drop ผิดที่
+- Stop propagation ที่ tabs เพื่อไม่ให้ drop ไป trigger dz]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@1f50af02cd350e5db26c2b793c4a9ac8c0e63e96</id>
+    <title>🏷️ v16: Tag Explorer + Custom Accent + Star History + Activity Feed + PWA</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/1f50af02cd350e5db26c2b793c4a9ac8c0e63e96"/>
+    <updated>2026-07-13T13:40:18Z</updated>
+    <published>2026-07-13T13:40:18Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🏷️ v16: Tag Explorer + Custom Accent + Star History + Activity Feed + PWA
+
+- Tag Explorer: 14 tag chips in filter row, 293 #tag-mini on cards (5 per card)
+  - Tags auto-derived from cat+stack+lang+size+live+fork
+  - Click #tag to filter, click #tag-mini on card to jump to filter
+- Custom Accent Color Picker: 7th hero button (🌈), 14 color presets + hex input
+  - Z key shortcut, persists in localStorage sj88-accent
+  - Apply CSS var --accent to all themes
+- Star History modal: click ⭐ on card to s]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@fa7f1fc52326627983d79206a239d002c9d2632e</id>
+    <title>📊 Badge จำนวน segments บน tab แต่ละอัน (v1.3.3)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/fa7f1fc52326627983d79206a239d002c9d2632e"/>
+    <updated>2026-07-13T13:40:03Z</updated>
+    <published>2026-07-13T13:40:03Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 📊 Badge จำนวน segments บน tab แต่ละอัน (v1.3.3)
+
+- แสดงจำนวน segments ที่ตรวจเจอในแต่ละ tab
+- 🟢 เขียว: decoded (มี segments)
+- 🟠 ส้ม pulse: pending/decoding (กำลัง decode)
+- 🔴 แดง: error (decode fail)
+- Auto update เมื่อ renderFileTabs() รัน]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:dead-air-remover@191309382561cf2b14806c93ecb5bd898aadef9d</id>
+    <title>🔢 Badge จำนวนไฟล์บน resetBtn (v1.3.2)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/dead-air-remover/commit/191309382561cf2b14806c93ecb5bd898aadef9d"/>
+    <updated>2026-07-13T13:39:41Z</updated>
+    <published>2026-07-13T13:39:41Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="dead-air-remover" label="dead-air-remover"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>dead-air-remover</b> · 🔢 Badge จำนวนไฟล์บน resetBtn (v1.3.2)
+
+- แสดงตัวเลขจำนวนไฟล์ใน queue บนปุ่ม resetBtn
+- Animation scale-in เมื่อมีไฟล์
+- Title tooltip บอก 'Replace all files · N file(s)' (TH/EN)
+- Auto update ทุกครั้งที่ renderFileTabs() รัน]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@cb1e62fb18d1d019e375aa365355b19e68ca30c8</id>
+    <title>🔍 v15: Combined filter search (multi-criteria)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/cb1e62fb18d1d019e375aa365355b19e68ca30c8"/>
+    <updated>2026-07-13T13:18:35Z</updated>
+    <published>2026-07-13T13:18:35Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🔍 v15: Combined filter search (multi-criteria)
+
+User feedback: add multi-criteria filter system
+
+Phase 27 — Combined filters:
+- New state: langFilter, sizeFilter, liveOnly, forkOnly
+- filteredRepos() supports all combinations
+
+Filter chips (organized in 3 rows):
+- Row 1: Category (All, Favorites, 3D Games, 2D Games, Booking, Creator Tools, Productivity, AI Apps, Python Desktop, etc)
+- Row 2: Language (top 6: HTML 48, Python 5, JavaScript 1, C++ 1, etc) + Size (Small/Medium/Large with KB ranges)
+]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control-api@d9aa795778bed4877f3cfafab005f43b93610399</id>
+    <title>🚀 v14: POST /api/repos/{name}/deploy — real ship.py integration</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control-api/commit/d9aa795778bed4877f3cfafab005f43b93610399"/>
+    <updated>2026-07-13T13:14:07Z</updated>
+    <published>2026-07-13T13:14:07Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control-api" label="sj88-mission-control-api"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control-api</b> · 🚀 v14: POST /api/repos/{name}/deploy — real ship.py integration
+
+New endpoint POST /api/repos/{name}/deploy:
+- Fetches main HTML from GitHub (tries index.html, demo.html, etc on main+master)
+- Falls back to stub HTML if not found
+- Sanitizes slug (lowercase, strip -, only valid chars)
+- Calls /opt/sj88-mission-control/ship.py via subprocess
+- Returns JSON with: ok, slug, url, title, techs, size_kb, path, version
+
+Old GET endpoint kept (returns deploy info without running it)
+ship.py added at /op]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@e2961c82dc09b67830017d5f7ff5519a3f8f0b35</id>
+    <title>🚀 v14: Auto-deploy to shipyard via ship.py</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/e2961c82dc09b67830017d5f7ff5519a3f8f0b35"/>
+    <updated>2026-07-13T13:14:06Z</updated>
+    <published>2026-07-13T13:14:06Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🚀 v14: Auto-deploy to shipyard via ship.py
+
+User feedback: make the 🚀 Deploy button actually deploy
+
+Phase 26 — Real auto-deploy:
+- New POST /api/repos/{name}/deploy endpoint
+- Backend fetches main HTML from GitHub (index.html/demo.html/etc on main+master)
+- Falls back to stub HTML if no source file
+- Calls /opt/sj88-mission-control/ship.py
+- Returns: ok, slug, url, title, techs, size_kb, path, version, etc
+- Slug sanitization (lowercase, strip -, only valid chars)
+
+New ship.py deploy script (/o]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control@387ecfe1a75feacc4b73cb3b8ead81aba4e45d92</id>
+    <title>🗺️ v13: Roadmap view (Kanban-style planning board)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control/commit/387ecfe1a75feacc4b73cb3b8ead81aba4e45d92"/>
+    <updated>2026-07-13T13:02:30Z</updated>
+    <published>2026-07-13T13:02:30Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control" label="sj88-mission-control"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control</b> · 🗺️ v13: Roadmap view (Kanban-style planning board)
+
+Phase 25 — Roadmap tab in view toggle:
+- 5th view tab: 🗺️ Roadmap
+- O key shortcut to open
+- Kanban-style 4-column board:
+  * ✅ SHIPPED (54 repos with ✓ Live badge)
+  * 🚧 IN PROGRESS (1 repo with commit in last 7 days)
+  * 📋 BACKLOG (4 repos with no commits)
+  * 💡 IDEAS (0 repos with 'idea' in description)
+- Each card shows: emoji, name, desc, date, live status, size
+- Click any card → opens full repo modal
+- Sort by last commit date (newest fi]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:crm-dashboard@11b71404363ed21f62efe0da4d794e2c765e4580</id>
+    <title>feat: add 3 new data-dimension tabs - Product Analysis, Geo Map, Recurring Revenue</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/crm-dashboard/commit/11b71404363ed21f62efe0da4d794e2c765e4580"/>
+    <updated>2026-07-13T11:52:25Z</updated>
+    <published>2026-07-13T11:52:25Z</published>
+    <author><name>Mavis</name></author>
+    <category term="crm-dashboard" label="crm-dashboard"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>crm-dashboard</b> · feat: add 3 new data-dimension tabs - Product Analysis, Geo Map, Recurring Revenue
+
+- Product Analysis: 12 auto-detected categories, Premium Plan leads (28.3%)
+- Geo Map: 21 provinces visualized as SVG with BKK concentration 34.9%
+- Recurring Revenue: 20 subscribers, MRR 221,530 ฿, ARR 2.66M ฿
+- 24-month historical backfill (18 months synthesized)
+- AI Chat supports new queries: recurring/geo/channel/category
+- Anonymized names preserved (ลูกค้า SaaS #001-020 for synthetic subs)
+- Live: http://1]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control-api@217717e6aa6a9321f15037055aec1b2e0b2f3fde</id>
+    <title>🚀 v9: 3 new achievements (Goal Crusher, Streak Legend, Halfway Hero) + 15→18 total</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control-api/commit/217717e6aa6a9321f15037055aec1b2e0b2f3fde"/>
+    <updated>2026-07-13T11:44:13Z</updated>
+    <published>2026-07-13T11:44:13Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control-api" label="sj88-mission-control-api"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control-api</b> · 🚀 v9: 3 new achievements (Goal Crusher, Streak Legend, Halfway Hero) + 15→18 total
+
+New achievements:
+- 💎 Goal Crusher: Hit 200 commits in July
+- 🌟 Streak Legend: 30-day commit streak
+- ⭐ Halfway Hero: Unlock 7/18 (auto-computed from total unlocked)
+
+Backend changes:
+- Added timedelta import
+- Moved conn.close() AFTER July/streak queries (was failing on closed db)
+- Compute july_commits + current_streak in /api/achievements
+- Recompute halfway_hero based on actual unlocked count]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:crm-dashboard@217ab575b0ef190113ec089dcfd7ffdc39b7698e</id>
+    <title>feat: add AI Chat Assistant + Customer Notes + Predictive Forecast</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/crm-dashboard/commit/217ab575b0ef190113ec089dcfd7ffdc39b7698e"/>
+    <updated>2026-07-13T11:35:29Z</updated>
+    <published>2026-07-13T11:35:29Z</published>
+    <author><name>Mavis</name></author>
+    <category term="crm-dashboard" label="crm-dashboard"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>crm-dashboard</b> · feat: add AI Chat Assistant + Customer Notes + Predictive Forecast
+
+3 new features that complete the CRM workflow:
+
+1. 🤖 AI Chat Assistant (floating widget, bottom-right)
+   - Rule-based pattern matching, no LLM needed
+   - 8 query types: VIP, At-Risk, Top N, Q1 vs Q2, Month query, Channel, Revenue, Customers
+   - Quick-suggestion buttons
+   - Real-time answer with formatted tables
+   - Examples: 'VIP มีกี่คน', 'At-Risk คือใคร', 'Top 5', 'Q1 vs Q2', 'รายได้เดือน พ.ค.'
+
+2. 📝 Customer Notes + Acti]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:crm-dashboard@0d9eeb1370ff3f5e61ba611a01878cc0c8e70a15</id>
+    <title>feat: add 3 comprehensive report tabs (Executive, Tax, Comparison) + Print CSS + 7-page PDF</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/crm-dashboard/commit/0d9eeb1370ff3f5e61ba611a01878cc0c8e70a15"/>
+    <updated>2026-07-13T11:16:21Z</updated>
+    <published>2026-07-13T11:16:21Z</published>
+    <author><name>Mavis</name></author>
+    <category term="crm-dashboard" label="crm-dashboard"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>crm-dashboard</b> · feat: add 3 comprehensive report tabs (Executive, Tax, Comparison) + Print CSS + 7-page PDF
+
+Report-focused additions (5 features):
+
+1. 📋 Executive Summary tab
+   - 4 headline KPIs (revenue, LTV, customers, Q1→Q2 growth)
+   - 3 summary cards (VIP, Risk, Best Month)
+   - Top 3 urgent actions inline
+   - Top 5 customers (anonymous)
+   - Segment chart + trend chart
+   - Print button (window.print())
+
+2. 💰 Tax Report tab
+   - 4 tax KPIs (Revenue, Net after VAT, VAT 7%, WHT 3%)
+   - Monthly tax table]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control-api@2cdd29e17c715c25464a16d19c328605d8032923</id>
+    <title>🚀 v7: messages endpoint now includes author field</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control-api/commit/2cdd29e17c715c25464a16d19c328605d8032923"/>
+    <updated>2026-07-13T11:08:21Z</updated>
+    <published>2026-07-13T11:08:21Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control-api" label="sj88-mission-control-api"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control-api</b> · 🚀 v7: messages endpoint now includes author field
+
+GET /api/commits messages now include 'author' (author_name or author_login)
+For the This Month highlight on the front page that breaks down by author.
+
+Schema change: SELECT adds author_name, author_login columns
+Backward compatible: existing fields unchanged]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:crm-dashboard@320ba4d7fc1d9c681ac66608252f92fa396d69d2</id>
+    <title>feat: CRM dashboard with 10 smart tools</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/crm-dashboard/commit/320ba4d7fc1d9c681ac66608252f92fa396d69d2"/>
+    <updated>2026-07-13T10:46:41Z</updated>
+    <published>2026-07-13T10:46:41Z</published>
+    <author><name>Mavis</name></author>
+    <category term="crm-dashboard" label="crm-dashboard"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>crm-dashboard</b> · feat: CRM dashboard with 10 smart tools
+
+Complete CRM dashboard for analyzing bank statement deposits (incoming money only).
+
+Features:
+1. Export CSV/Excel (per tab) - customers, actions, LTV, MoM, B2B, anomalies
+2. PDF Report - 5-page formatted report with summary + top 10 + actions
+3. MoM Comparison - month-over-month growth with delta indicators
+4. Customer LTV (1Y/3Y) - lifetime value prediction with churn risk
+5. Cohort Heatmap Matrix - 6 months x 6 periods retention %
+6. Smart Action Items]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control-api@ae3dc816b92e783a6b44a24d584c59554b8cbfbc</id>
+    <title>v6 update</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control-api/commit/ae3dc816b92e783a6b44a24d584c59554b8cbfbc"/>
+    <updated>2026-07-13T10:46:14Z</updated>
+    <published>2026-07-13T10:46:14Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control-api" label="sj88-mission-control-api"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control-api</b> · v6 update]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-mission-control-api@e2c23f0daf7a77a7606be42914e6d57daef113ba</id>
+    <title>🚀 Initial commit: SJ88 Mission Control API v6</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-mission-control-api/commit/e2c23f0daf7a77a7606be42914e6d57daef113ba"/>
+    <updated>2026-07-13T10:46:07Z</updated>
+    <published>2026-07-13T10:46:07Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-mission-control-api" label="sj88-mission-control-api"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-mission-control-api</b> · 🚀 Initial commit: SJ88 Mission Control API v6]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@bd7f8e0ee944fe3df84c8f350e87aa39789b9b60</id>
+    <title>🔄 Auto-sync from VPS (26,284 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/bd7f8e0ee944fe3df84c8f350e87aa39789b9b60"/>
+    <updated>2026-07-11T23:00:18Z</updated>
+    <published>2026-07-11T23:00:18Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · 🔄 Auto-sync from VPS (26,284 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@ad11f421a4243ee699dce462a53cf25f6b8806b7</id>
+    <title>v2.8 — Ride Shop: SVG previews for 21 rides + paging 6/page + fixed prevDay bug</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/ad11f421a4243ee699dce462a53cf25f6b8806b7"/>
+    <updated>2026-07-11T21:55:59Z</updated>
+    <published>2026-07-11T21:55:59Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.8 — Ride Shop: SVG previews for 21 rides + paging 6/page + fixed prevDay bug]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@6e3feefa76a8a365987e1d28901166633a87be60</id>
+    <title>🔄 Auto-sync from VPS (35,290 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/6e3feefa76a8a365987e1d28901166633a87be60"/>
+    <updated>2026-07-11T17:00:19Z</updated>
+    <published>2026-07-11T17:00:19Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · 🔄 Auto-sync from VPS (35,290 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@bed411a16b43154d097e133757d8ec761e708307</id>
+    <title>fix: remove vendor brand mentions from landing page</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/bed411a16b43154d097e133757d8ec761e708307"/>
+    <updated>2026-07-11T15:13:09Z</updated>
+    <published>2026-07-11T15:13:09Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · fix: remove vendor brand mentions from landing page]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@871f28683a92ec3b2d4007ed7658670165ce41dd</id>
+    <title>docs: rewrite README — make it repo-consistent and remove vendor brand</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/871f28683a92ec3b2d4007ed7658670165ce41dd"/>
+    <updated>2026-07-11T15:13:08Z</updated>
+    <published>2026-07-11T15:13:08Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · docs: rewrite README — make it repo-consistent and remove vendor brand]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@844cdd594af709a9f18114d8bc0d60dccf0acd1e</id>
+    <title>🔄 Auto-sync from VPS (35,290 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/844cdd594af709a9f18114d8bc0d60dccf0acd1e"/>
+    <updated>2026-07-11T11:00:13Z</updated>
+    <published>2026-07-11T11:00:13Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · 🔄 Auto-sync from VPS (35,290 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-portfolio@a2b4dcabae1df7d351f40b82bef93c9fe1e13cf6</id>
+    <title>🌟 Initial portfolio site with live GitHub API integration</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-portfolio/commit/a2b4dcabae1df7d351f40b82bef93c9fe1e13cf6"/>
+    <updated>2026-07-11T08:11:00Z</updated>
+    <published>2026-07-11T08:11:00Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-portfolio" label="sj88-portfolio"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-portfolio</b> · 🌟 Initial portfolio site with live GitHub API integration]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@cc997cc12b21cf9b357e3ae0458e5a3df6c7cdbd</id>
+    <title>🔄 Auto-sync from VPS (31,672 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/cc997cc12b21cf9b357e3ae0458e5a3df6c7cdbd"/>
+    <updated>2026-07-11T08:09:54Z</updated>
+    <published>2026-07-11T08:09:54Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · 🔄 Auto-sync from VPS (31,672 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-quick-note@04e7ba3e914e27844479440e92d2906cebfb2062</id>
+    <title>🔄 Auto-sync from VPS (201,752 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-quick-note/commit/04e7ba3e914e27844479440e92d2906cebfb2062"/>
+    <updated>2026-07-11T08:09:52Z</updated>
+    <published>2026-07-11T08:09:52Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-quick-note" label="sj88-quick-note"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-quick-note</b> · 🔄 Auto-sync from VPS (201,752 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-fps-cops-vs-robbers@5107ae66ba2f19726d0ff4a364ed1f68118f85a9</id>
+    <title>🔄 Auto-sync from VPS (327,697 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-fps-cops-vs-robbers/commit/5107ae66ba2f19726d0ff4a364ed1f68118f85a9"/>
+    <updated>2026-07-11T08:09:47Z</updated>
+    <published>2026-07-11T08:09:47Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-fps-cops-vs-robbers" label="sj88-fps-cops-vs-robbers"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-fps-cops-vs-robbers</b> · 🔄 Auto-sync from VPS (327,697 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:lnwsj@ad1050a52ad835798f9369c110f99b0a8391dfdd</id>
+    <title>🌟 Profile README with portfolio + featured apps</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/lnwsj/commit/ad1050a52ad835798f9369c110f99b0a8391dfdd"/>
+    <updated>2026-07-11T08:09:10Z</updated>
+    <published>2026-07-11T08:09:10Z</published>
+    <author><name>Mavis</name></author>
+    <category term="lnwsj" label="lnwsj"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>lnwsj</b> · 🌟 Profile README with portfolio + featured apps]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@fca07af693ec5d304368a097ba6dfd2d9f35e826</id>
+    <title>update images/karaoke-mock.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/fca07af693ec5d304368a097ba6dfd2d9f35e826"/>
+    <updated>2026-07-11T07:45:54Z</updated>
+    <published>2026-07-11T07:45:54Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/karaoke-mock.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@e3b363e41a414bd56ae0461fe434706d0bbb5ff4</id>
+    <title>update images/v14-live-halloween.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/e3b363e41a414bd56ae0461fe434706d0bbb5ff4"/>
+    <updated>2026-07-11T07:45:53Z</updated>
+    <published>2026-07-11T07:45:53Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/v14-live-halloween.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@a64bcf14034ff6cfbe45d66a6d5a67bdf355231a</id>
+    <title>update images/04-runway.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/a64bcf14034ff6cfbe45d66a6d5a67bdf355231a"/>
+    <updated>2026-07-11T07:45:52Z</updated>
+    <published>2026-07-11T07:45:52Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/04-runway.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@c69a1af8221aff49f3e815900ffb7dfab8d58385</id>
+    <title>update images/01-ui.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/c69a1af8221aff49f3e815900ffb7dfab8d58385"/>
+    <updated>2026-07-11T07:45:51Z</updated>
+    <published>2026-07-11T07:45:51Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/01-ui.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@27f5370f7d61caa48f7eeee9ecd5dd2210b91df6</id>
+    <title>update spec.md</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/27f5370f7d61caa48f7eeee9ecd5dd2210b91df6"/>
+    <updated>2026-07-11T07:45:50Z</updated>
+    <published>2026-07-11T07:45:50Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update spec.md]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@8a4494ac8ac612e50963879f4c5c7ee05c474060</id>
+    <title>update README.md</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/8a4494ac8ac612e50963879f4c5c7ee05c474060"/>
+    <updated>2026-07-11T07:45:49Z</updated>
+    <published>2026-07-11T07:45:49Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update README.md]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@c3552085bccff4f16ca6a9a9fd5400e89b5f3656</id>
+    <title>update index.html</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/c3552085bccff4f16ca6a9a9fd5400e89b5f3656"/>
+    <updated>2026-07-11T07:45:42Z</updated>
+    <published>2026-07-11T07:45:42Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update index.html]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@07914da593dc351789c4a1bd7dafe449c5bcda4e</id>
+    <title>update images/karaoke-mock.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/07914da593dc351789c4a1bd7dafe449c5bcda4e"/>
+    <updated>2026-07-11T07:43:32Z</updated>
+    <published>2026-07-11T07:43:32Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/karaoke-mock.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@d378ba4e24c1437c2835408a55eb3c5d49e4f0c3</id>
+    <title>update images/v14-live-halloween.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/d378ba4e24c1437c2835408a55eb3c5d49e4f0c3"/>
+    <updated>2026-07-11T07:43:32Z</updated>
+    <published>2026-07-11T07:43:32Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/v14-live-halloween.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:demo-sj88ai@a4028b6ccb3dad7bec99011df1905ad3f1a6cd84</id>
+    <title>update images/04-runway.png</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/demo-sj88ai/commit/a4028b6ccb3dad7bec99011df1905ad3f1a6cd84"/>
+    <updated>2026-07-11T07:43:30Z</updated>
+    <published>2026-07-11T07:43:30Z</published>
+    <author><name>lnwsj</name></author>
+    <category term="demo-sj88ai" label="demo-sj88ai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>demo-sj88ai</b> · update images/04-runway.png]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@5069680b3b286a3749df682a1e39813dba883576</id>
+    <title>v2.7 — Daily Report Card + Hall of Fame + Visitor Shop + Feedback Board + Custom Park Themes</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/5069680b3b286a3749df682a1e39813dba883576"/>
+    <updated>2026-07-11T04:49:16Z</updated>
+    <published>2026-07-11T04:49:16Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.7 — Daily Report Card + Hall of Fame + Visitor Shop + Feedback Board + Custom Park Themes]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:CorsixTH@f39f80140caa9b4b2d38c27cfe651b34eab5ad8e</id>
+    <title>Merge pull request #3437 from lewri/clamp_ui_scales</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/CorsixTH/commit/f39f80140caa9b4b2d38c27cfe651b34eab5ad8e"/>
+    <updated>2026-07-11T01:56:19Z</updated>
+    <published>2026-07-11T01:56:19Z</published>
+    <author><name>Stephen E. Baker</name></author>
+    <category term="CorsixTH" label="CorsixTH"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>CorsixTH</b> · Merge pull request #3437 from lewri/clamp_ui_scales
+
+Change UI scale documentation]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@c9e24ccff13194fbe495a5b3dab52897c3f2b690</id>
+    <title>🎢 v2.6.9 — 150+ procedural rides via 1 generator function</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/c9e24ccff13194fbe495a5b3dab52897c3f2b690"/>
+    <updated>2026-07-10T22:15:37Z</updated>
+    <published>2026-07-10T22:15:37Z</published>
+    <author><name>Mavis</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · 🎢 v2.6.9 — 150+ procedural rides via 1 generator function
+
+Add 150 new ride configs (50 per non-park map) using 1 procedural generator:
+
+**🚜 Farm (50 new)**: Tractor Tour, Hay Maze, Pumpkin Spin, Cow Train, Sheep Pen,
+Chicken Coop, Pig Splash, Corn Cob Coaster, Scarecrow Swing, Barn Dance, Apple Press,
+Wheat Spinner, Tractor Race, Beehive, Goat Mountain, Duck Pond, Corn Maze, Rooster,
+Turkey Trot, Flower Field, Silo Climb, Berry Picker, Cider Press, Veggie Race, Horse
+Trail, Cow Jump, Milk Bottl]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@e63f20db0409f5034f4455ac4d2a66b6020f5c7b</id>
+    <title>🎢 v2.6.8 — 9 more map-specific rides (3 per non-park map)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/e63f20db0409f5034f4455ac4d2a66b6020f5c7b"/>
+    <updated>2026-07-10T22:03:34Z</updated>
+    <published>2026-07-10T22:03:34Z</published>
+    <author><name>Mavis</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · 🎢 v2.6.8 — 9 more map-specific rides (3 per non-park map)
+
+Each non-park map now has 6 total rides (was 3):
+
+🚜 Farm (3 new): Windmill, Corn Maze, Harvest Festival
+- Windmill: tall cylinder tower + rotating cross blades (animated)
+- Corn Maze: green wall maze with 8 yellow corn stalks inside
+- Harvest Festival: haystack + 8 pumpkins + banner posts + falling leaves
+
+🌲 Forest (3 new): Log Bridge, Rope Swing, Firefly Lantern
+- Log Bridge: 8 wood logs across blue river + side rails + trees
+- Rope Swi]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-video-editor@9318927b42f81b7f65ea39132331ab1fb606f575</id>
+    <title>🔄 Auto-sync from VPS (31,603 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-video-editor/commit/9318927b42f81b7f65ea39132331ab1fb606f575"/>
+    <updated>2026-07-10T21:59:29Z</updated>
+    <published>2026-07-10T21:59:29Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-video-editor" label="sj88cute-video-editor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-video-editor</b> · 🔄 Auto-sync from VPS (31,603 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-quick-note@e6621d5ce9e0748dcefac4d7eddcf03bbda24032</id>
+    <title>🔄 Auto-sync from VPS (191,163 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-quick-note/commit/e6621d5ce9e0748dcefac4d7eddcf03bbda24032"/>
+    <updated>2026-07-10T21:59:27Z</updated>
+    <published>2026-07-10T21:59:27Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-quick-note" label="sj88-quick-note"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-quick-note</b> · 🔄 Auto-sync from VPS (191,163 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-fps-cops-vs-robbers@ea35d6acc72bcb4f4446c3e2b6ad0cff7c2a0a22</id>
+    <title>🔄 Auto-sync from VPS (312,859 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-fps-cops-vs-robbers/commit/ea35d6acc72bcb4f4446c3e2b6ad0cff7c2a0a22"/>
+    <updated>2026-07-10T21:59:25Z</updated>
+    <published>2026-07-10T21:59:25Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-fps-cops-vs-robbers" label="sj88-fps-cops-vs-robbers"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-fps-cops-vs-robbers</b> · 🔄 Auto-sync from VPS (312,859 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@1ff15ad6547a5e3703a90500a005e402664ce0a1</id>
+    <title>🎢 v2.6.7 — Map-specific ride offerings</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/1ff15ad6547a5e3703a90500a005e402664ce0a1"/>
+    <updated>2026-07-10T21:43:27Z</updated>
+    <published>2026-07-10T21:43:27Z</published>
+    <author><name>Mavis</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · 🎢 v2.6.7 — Map-specific ride offerings
+
+Each map now has its own themed ride set (no more ferris wheels on every map!):
+
+🎢 Park: All 21 existing classic rides (ferris, coaster, etc.) — unchanged
+🚜 Farm (3 new): Tractor Tour, Hay Bale Jump, Pumpkin Carousel
+🌲 Forest (3 new): Zip Line, Tree House, Mushroom Bounce
+🏖️ Beach (3 new): Banana Boat, Water Slide, Wave Pool
+
+Changes:
+- Add mapId field to all RIDE_INFO entries
+- Add 9 new ride types with distinct 3D meshes (Babylon primitives)
+- renderRide]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@13f4e4d4f0ea5b31d26934a3551f9d1dfd1041f5</id>
+    <title>🌱 v2.6.6 — Map-specific farm crops</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/13f4e4d4f0ea5b31d26934a3551f9d1dfd1041f5"/>
+    <updated>2026-07-10T21:27:20Z</updated>
+    <published>2026-07-10T21:27:20Z</published>
+    <author><name>Mavis</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · 🌱 v2.6.6 — Map-specific farm crops
+
+Each map's farm_plot now produces different crops based on location:
+- 🎢 Park: 🌸 flowers (auto-replant, 15s, +$12, no seed cost)
+- 🚜 Farm: 🥕/🍅/🎃 original carrots/tomato/pumpkin (unchanged)
+- 🌲 Forest: 🍄 mushrooms (10s grow, $5 seed, +$15, purple mesh)
+- 🏖️ Beach: 🥥 coconuts (90s grow, $40 seed, +$100, brown mesh)
+
+Changes:
+- Add MAP_CROPS dict + getCropsForDeco/getMapCropLabel helpers
+- placeDecoration() records mapId in farm_plot state
+- openCropPickerModal()]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:CorsixTH@c1d53dac47f6fd4e6c5d888e5de781be5faea223</id>
+    <title>0.70.0 post release bump (#3445)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/CorsixTH/commit/c1d53dac47f6fd4e6c5d888e5de781be5faea223"/>
+    <updated>2026-07-10T18:57:02Z</updated>
+    <published>2026-07-10T18:57:02Z</published>
+    <author><name>lewri</name></author>
+    <category term="CorsixTH" label="CorsixTH"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>CorsixTH</b> · 0.70.0 post release bump (#3445)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@02f3563a9a94c8cac03c6582ef670175f712db5d</id>
+    <title>v2.6 — Daily Challenges + Screenshot/Share + Staff Roles + Decoration Expansion + Multi-language</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/02f3563a9a94c8cac03c6582ef670175f712db5d"/>
+    <updated>2026-07-10T17:19:31Z</updated>
+    <published>2026-07-10T17:19:31Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.6 — Daily Challenges + Screenshot/Share + Staff Roles + Decoration Expansion + Multi-language]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:SJ88-Wonder-Park@dbb0f4388edc034984d7dedf014bcc24f1cb2ec7</id>
+    <title>v2.5 — Analytics Dashboard + Custom Decoration Editor + NPC Names/Memory + Move/Drag Mode + Park Profile (Multiplayer Lite)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/SJ88-Wonder-Park/commit/dbb0f4388edc034984d7dedf014bcc24f1cb2ec7"/>
+    <updated>2026-07-10T16:45:50Z</updated>
+    <published>2026-07-10T16:45:50Z</published>
+    <author><name>SJ88</name></author>
+    <category term="SJ88-Wonder-Park" label="SJ88-Wonder-Park"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>SJ88-Wonder-Park</b> · v2.5 — Analytics Dashboard + Custom Decoration Editor + NPC Names/Memory + Move/Drag Mode + Park Profile (Multiplayer Lite)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:CorsixTH@1910bea540617e02327177a8bcbeff209667b9dd</id>
+    <title>ci: Trigger website rebuild on more release events (#3444)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/CorsixTH/commit/1910bea540617e02327177a8bcbeff209667b9dd"/>
+    <updated>2026-07-10T11:03:12Z</updated>
+    <published>2026-07-10T11:03:12Z</published>
+    <author><name>Romain</name></author>
+    <category term="CorsixTH" label="CorsixTH"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>CorsixTH</b> · ci: Trigger website rebuild on more release events (#3444)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-venuehub@dcacdb32c8d726c06b619c4c475e4dfa1eafe32f</id>
+    <title>🌊 Initial commit — venuehub (80,793 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-venuehub/commit/dcacdb32c8d726c06b619c4c475e4dfa1eafe32f"/>
+    <updated>2026-07-09T14:10:05Z</updated>
+    <published>2026-07-09T14:10:05Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-venuehub" label="sj88-venuehub"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-venuehub</b> · 🌊 Initial commit — venuehub (80,793 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-tourlane@ff6e5b913b51d5b41a96e32d0b8fd1c9ac46d3c7</id>
+    <title>🌊 Initial commit — tourlane (95,672 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-tourlane/commit/ff6e5b913b51d5b41a96e32d0b8fd1c9ac46d3c7"/>
+    <updated>2026-07-09T14:10:04Z</updated>
+    <published>2026-07-09T14:10:04Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-tourlane" label="sj88-tourlane"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-tourlane</b> · 🌊 Initial commit — tourlane (95,672 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-studiobook@615349743f3a4560b74a1e7d2dade5a9901e6211</id>
+    <title>🌊 Initial commit — studiobook (94,965 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-studiobook/commit/615349743f3a4560b74a1e7d2dade5a9901e6211"/>
+    <updated>2026-07-09T14:10:03Z</updated>
+    <published>2026-07-09T14:10:03Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-studiobook" label="sj88-studiobook"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-studiobook</b> · 🌊 Initial commit — studiobook (94,965 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-stronghold@9a13534a93e25b5c768a0e7946fae9cebde6ff53</id>
+    <title>🌊 Initial commit — stronghold (50,750 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-stronghold/commit/9a13534a93e25b5c768a0e7946fae9cebde6ff53"/>
+    <updated>2026-07-09T14:10:02Z</updated>
+    <published>2026-07-09T14:10:02Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-stronghold" label="sj88-stronghold"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-stronghold</b> · 🌊 Initial commit — stronghold (50,750 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-street-fighter-thai@feba69069d0e729026049a4cbc3accb0fb9fcd47</id>
+    <title>🌊 Initial commit — street-fighter-thai (4,756,320 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-street-fighter-thai/commit/feba69069d0e729026049a4cbc3accb0fb9fcd47"/>
+    <updated>2026-07-09T14:10:02Z</updated>
+    <published>2026-07-09T14:10:02Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-street-fighter-thai" label="sj88-street-fighter-thai"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-street-fighter-thai</b> · 🌊 Initial commit — street-fighter-thai (4,756,320 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-stayhub@b52a390e99dbf4903f79f57f6d59437f6dc81bb2</id>
+    <title>🌊 Initial commit — stayhub (251,401 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-stayhub/commit/b52a390e99dbf4903f79f57f6d59437f6dc81bb2"/>
+    <updated>2026-07-09T14:10:00Z</updated>
+    <published>2026-07-09T14:10:00Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-stayhub" label="sj88-stayhub"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-stayhub</b> · 🌊 Initial commit — stayhub (251,401 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88-squish@94f98cdb720a4cc87c9bc1994704c7803b1fbe2d</id>
+    <title>🌊 Initial commit — squish (17,493 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88-squish/commit/94f98cdb720a4cc87c9bc1994704c7803b1fbe2d"/>
+    <updated>2026-07-09T14:10:00Z</updated>
+    <published>2026-07-09T14:10:00Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88-squish" label="sj88-squish"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88-squish</b> · 🌊 Initial commit — squish (17,493 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-thumbnail-maker@7432da66a33973d7d3fc98eebc942250ede04903</id>
+    <title>🌊 Initial commit — sj88cute-thumbnail-maker (22,419 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-thumbnail-maker/commit/7432da66a33973d7d3fc98eebc942250ede04903"/>
+    <updated>2026-07-09T14:09:59Z</updated>
+    <published>2026-07-09T14:09:59Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-thumbnail-maker" label="sj88cute-thumbnail-maker"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-thumbnail-maker</b> · 🌊 Initial commit — sj88cute-thumbnail-maker (22,419 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-voice-isolator@be9612b73b5d285c31c4f16f8297615985c083c8</id>
+    <title>🌊 Initial commit — sj88cute-voice-isolator (26,116 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-voice-isolator/commit/be9612b73b5d285c31c4f16f8297615985c083c8"/>
+    <updated>2026-07-09T14:09:59Z</updated>
+    <published>2026-07-09T14:09:59Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-voice-isolator" label="sj88cute-voice-isolator"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-voice-isolator</b> · 🌊 Initial commit — sj88cute-voice-isolator (26,116 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-subtitle-burner@e2551ee88946239ba89c9eb04c933d670d0c65fe</id>
+    <title>🌊 Initial commit — sj88cute-subtitle-burner (25,771 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-subtitle-burner/commit/e2551ee88946239ba89c9eb04c933d670d0c65fe"/>
+    <updated>2026-07-09T14:09:59Z</updated>
+    <published>2026-07-09T14:09:59Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-subtitle-burner" label="sj88cute-subtitle-burner"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-subtitle-burner</b> · 🌊 Initial commit — sj88cute-subtitle-burner (25,771 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-safe-zones@1391b3e1bc8df843b86a5edd18791a6c71737c35</id>
+    <title>🌊 Initial commit — sj88cute-safe-zones (18,827 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-safe-zones/commit/1391b3e1bc8df843b86a5edd18791a6c71737c35"/>
+    <updated>2026-07-09T14:09:57Z</updated>
+    <published>2026-07-09T14:09:57Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-safe-zones" label="sj88cute-safe-zones"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-safe-zones</b> · 🌊 Initial commit — sj88cute-safe-zones (18,827 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-lut-preview@75221e90f5e07a81aeb3b1ae8e5e85393007799d</id>
+    <title>🌊 Initial commit — sj88cute-lut-preview (22,931 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-lut-preview/commit/75221e90f5e07a81aeb3b1ae8e5e85393007799d"/>
+    <updated>2026-07-09T14:09:57Z</updated>
+    <published>2026-07-09T14:09:57Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-lut-preview" label="sj88cute-lut-preview"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-lut-preview</b> · 🌊 Initial commit — sj88cute-lut-preview (22,931 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-frame-extractor@815110edbc81a011915b284a515fdb64ef8b7a64</id>
+    <title>🌊 Initial commit — sj88cute-frame-extractor (20,807 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-frame-extractor/commit/815110edbc81a011915b284a515fdb64ef8b7a64"/>
+    <updated>2026-07-09T14:09:56Z</updated>
+    <published>2026-07-09T14:09:56Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-frame-extractor" label="sj88cute-frame-extractor"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-frame-extractor</b> · 🌊 Initial commit — sj88cute-frame-extractor (20,807 bytes)]]></summary>
+  </entry>
+  <entry>
+    <id>tag:lnwsj.github.io,2026:sj88cute-cps-calculator@4efb70714e04c7b0c62ea39f36f1ae687ee7573d</id>
+    <title>🌊 Initial commit — sj88cute-cps-calculator (24,252 bytes)</title>
+    <link rel="alternate" type="text/html" href="https://github.com/lnwsj/sj88cute-cps-calculator/commit/4efb70714e04c7b0c62ea39f36f1ae687ee7573d"/>
+    <updated>2026-07-09T14:09:56Z</updated>
+    <published>2026-07-09T14:09:56Z</published>
+    <author><name>Mavis</name></author>
+    <category term="sj88cute-cps-calculator" label="sj88cute-cps-calculator"/>
+    <category term="github" label="GitHub"/>
+    <summary type="html"><![CDATA[📦 <b>sj88cute-cps-calculator</b> · 🌊 Initial commit — sj88cute-cps-calculator (24,252 bytes)]]></summary>
+  </entry>
+</feed>
