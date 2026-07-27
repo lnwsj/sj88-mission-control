@@ -4634,16 +4634,22 @@
     }).join('');
   }
 
-  /* === GitHub Calendar View (v19) — Live from GitHub API === */
-  let ghEvents = null;          // raw events from GitHub /users/lnwsj/events/public
-  let ghEventsFetchedAt = 0;    // ms timestamp
-  let ghEventsError = null;
+  /* === GitHub Calendar View (v19.1) — Real commits via /repos/.../commits === */
+  let ghCommits = null;         // [{repo, msg, date, time, sha, url}] — real commits
+  let ghRepos = null;           // list of repos used
+  let ghCommitsFetchedAt = 0;   // ms timestamp
+  let ghCommitsError = null;
   let calMonth = null;          // Date object for the month being viewed
+  const CACHE_TTL_MS = 30 * 60 * 1000;  // 30 min
+
+  function isRateLimitError(msg) {
+    return /403|rate.?limit/i.test(msg || '');
+  }
 
   async function loadGitHubCalendar() {
     const now = Date.now();
-    // Cache 2 min
-    if (ghEvents && (now - ghEventsFetchedAt) < 120000) {
+    // Cache 30 min
+    if (ghCommits && (now - ghCommitsFetchedAt) < CACHE_TTL_MS) {
       renderCalendarView();
       return;
     }
@@ -4652,61 +4658,104 @@
       calMonth.setDate(1);
     }
     const calView = document.getElementById('calendarView');
-    if (!ghEvents) {
-      calView.innerHTML = `
-        <div class="commits-loading">
-          <div class="emoji">🐙</div>
-          <div>Fetching events from <code>api.github.com/users/lnwsj/events/public</code>...</div>
-          <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">⏳ Direct GitHub API · 60 req/hr limit</div>
-        </div>
-      `;
-    }
+
+    // Show progress UI
+    const progressId = 'gh-progress-' + Date.now();
+    calView.innerHTML = `
+      <div class="commits-loading">
+        <div class="emoji">🐙</div>
+        <div>Fetching repositories from <code>api.github.com/users/lnwsj/repos</code>...</div>
+        <div id="${progressId}" style="font-size: 12px; margin-top: 12px; color: var(--slate-3);">⏳ Step 1/2: loading repo list</div>
+        <div style="font-size: 11px; margin-top: 8px; color: var(--slate-3);">Real commits via <code>/repos/&lt;owner&gt;/&lt;repo&gt;/commits</code> · 60 req/hr limit</div>
+      </div>
+    `;
+
     try {
-      const res = await fetch('https://api.github.com/users/lnwsj/events/public?per_page=100');
-      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-      ghEvents = await res.json();
-      ghEventsFetchedAt = Date.now();
-      ghEventsError = null;
+      // STEP 1: Get list of all repos
+      const reposRes = await fetch('https://api.github.com/users/lnwsj/repos?per_page=100&sort=pushed');
+      if (!reposRes.ok) throw new Error(`GitHub API ${reposRes.status}`);
+      const repos = await reposRes.json();
+      ghRepos = repos;
+
+      // Filter: only repos pushed in last 90 days
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - 90);
+      const activeRepos = repos.filter(r => new Date(r.pushed_at) >= cutoff);
+      const total = activeRepos.length;
+
+      // STEP 2: Fetch commits per repo (sequential to respect rate limit)
+      const allCommits = [];
+      const since = new Date();
+      since.setDate(since.getDate() - 90);
+      const sinceStr = since.toISOString().slice(0, 10);
+
+      for (let i = 0; i < total; i++) {
+        const r = activeRepos[i];
+        const progressEl = document.getElementById(progressId);
+        if (progressEl) {
+          progressEl.textContent = `⏳ Step 2/2: fetching commits (${i+1}/${total} repos: ${r.name})`;
+        }
+        try {
+          const cRes = await fetch(`https://api.github.com/repos/${r.full_name}/commits?per_page=30&since=${sinceStr}T00:00:00Z`);
+          if (!cRes.ok) {
+            if (cRes.status === 403) throw new Error('rate limited (60 req/hr)');
+            continue;
+          }
+          const commits = await cRes.json();
+          if (Array.isArray(commits)) {
+            commits.forEach(c => {
+              if (!c.commit?.author?.date) return;
+              allCommits.push({
+                repo: r.name,
+                repoFull: r.full_name,
+                msg: c.commit.message || '(no message)',
+                date: c.commit.author.date.slice(0, 10),
+                time: c.commit.author.date.slice(11, 16),
+                sha: c.sha.slice(0, 7),
+                url: c.html_url
+              });
+            });
+          }
+        } catch (e) {
+          // Skip individual repo errors
+          console.warn(`Skip ${r.name}:`, e.message);
+        }
+      }
+
+      ghCommits = allCommits;
+      ghCommitsFetchedAt = Date.now();
+      ghCommitsError = null;
       renderCalendarView();
     } catch (e) {
-      ghEventsError = e.message;
+      ghCommitsError = e.message;
+      const isRate = isRateLimitError(e.message);
       calView.innerHTML = `
         <div class="commits-loading">
           <div class="emoji">⚠️</div>
           <div style="color: var(--coral);">${e.message}</div>
-          <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">GitHub API may be rate-limited (60 req/hr). Try again in a few minutes.</div>
+          <div style="font-size: 12px; margin-top: 8px; color: var(--slate-3);">
+            ${isRate ? '🚨 GitHub API rate-limited (60 req/hr). รอ 1 ชม. หรือใส่ PAT.' : 'GitHub API error. ตรวจสอบ network หรือ token.'}
+          </div>
         </div>
       `;
     }
   }
 
-  function getCommitsByDay(events) {
-    // Returns Map<dateString (YYYY-MM-DD), [{repo, msg, time, sha, url}]>
+  function getCommitsByDay(commits) {
+    // Returns Map<dateString (YYYY-MM-DD), [...]>
     const byDay = new Map();
-    if (!Array.isArray(events)) return byDay;
-    events.forEach(ev => {
-      if (ev.type !== 'PushEvent') return;
-      const repo = ev.repo?.name?.replace(/^lnwsj\//, '') || '?';
-      const date = ev.created_at?.slice(0, 10);
-      if (!date) return;
-      const time = ev.created_at?.slice(11, 16) || '';
-      const commits = ev.payload?.commits || [];
-      if (!byDay.has(date)) byDay.set(date, []);
-      commits.forEach(c => {
-        byDay.get(date).push({
-          repo, msg: c.message || '(no message)', time,
-          sha: c.sha?.slice(0, 7) || '',
-          url: `https://github.com/${ev.repo.name}/commit/${c.sha}`
-        });
-      });
+    if (!Array.isArray(commits)) return byDay;
+    commits.forEach(c => {
+      if (!byDay.has(c.date)) byDay.set(c.date, []);
+      byDay.get(c.date).push(c);
     });
     return byDay;
   }
 
   function renderCalendarView() {
-    if (!ghEvents) return;
+    if (!ghCommits) return;
     const calView = document.getElementById('calendarView');
-    const byDay = getCommitsByDay(ghEvents);
+    const byDay = getCommitsByDay(ghCommits);
     const today = new Date();
     const todayStr = today.toISOString().slice(0, 10);
     const month = calMonth;
@@ -4775,11 +4824,12 @@
     }
 
     // Source pill
-    const ago = Math.round((Date.now() - ghEventsFetchedAt) / 1000);
-    const sourceClass = ghEventsError ? 'error' : (ghEvents && ghEventsFetchedAt ? 'live' : 'cache');
-    const sourceText = ghEventsError
-      ? `⚠ ${ghEventsError}`
-      : `🐙 GitHub API · ${ago}s ago · ${ghEvents.length} events`;
+    const ago = Math.round((Date.now() - ghCommitsFetchedAt) / 1000);
+    const agoStr = ago < 60 ? `${ago}s ago` : `${Math.round(ago/60)}m ago`;
+    const sourceClass = ghCommitsError ? 'error' : 'live';
+    const sourceText = ghCommitsError
+      ? `⚠ ${ghCommitsError}`
+      : `🐙 GitHub API · ${agoStr} · ${ghCommits.length} real commits from ${ghRepos ? ghRepos.filter(r => new Date(r.pushed_at) >= new Date(Date.now() - 90*86400000)).length : '?'} repos`;
 
     calView.innerHTML = `
       <div class="calendar-wrap">
@@ -4844,8 +4894,8 @@
   }
 
   function showDayDetail(dateStr) {
-    if (!ghEvents) return;
-    const byDay = getCommitsByDay(ghEvents);
+    if (!ghCommits) return;
+    const byDay = getCommitsByDay(ghCommits);
     const commits = byDay.get(dateStr) || [];
     const d = new Date(dateStr + 'T00:00:00');
     const dateLabel = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
