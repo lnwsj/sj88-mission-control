@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="kawaii">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SJ88 Mission Control — คู่มือการใช้งาน</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <style>
+    :root {
+      --pink: #ec4899;
+      --indigo: #6366f1;
+      --bg: #fdf2f8;
+      --bg-2: #fce7f3;
+      --card: #ffffff;
+      --card-border: #fbcfe8;
+      --slate: #1e293b;
+      --slate-2: #475569;
+      --slate-3: #94a3b8;
+      --gold: #f59e0b;
+      --green: #10b981;
+      --blue: #3b82f6;
+      --purple: #a855f7;
+      --red: #ef4444;
+      --shadow: 0 4px 12px -4px rgba(236, 72, 153, 0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Sarabun', sans-serif;
+      background: var(--bg); color: var(--slate);
+      line-height: 1.6;
+    }
+    .hero {
+      background: linear-gradient(135deg, #fce7f3 0%, #ede9fe 50%, #dbeafe 100%);
+      padding: 60px 20px 80px; text-align: center; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.15), transparent 40%),
+                  radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.15), transparent 40%);
+    }
+    .hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
+    .hero h1 {
+      font-size: 48px; font-weight: 900; margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--pink), var(--indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { font-size: 18px; color: var(--slate-2); margin-bottom: 24px; }
+    .hero-meta {
+      display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      padding: 12px 20px; background: rgba(255, 255, 255, 0.7);
+      border-radius: 999px; backdrop-filter: blur(10px);
+    }
+    .hero-meta a { color: var(--pink); text-decoration: none; font-weight: 700; }
+    .hero-meta a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    .toc {
+      position: sticky; top: 16px; z-index: 10;
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 16px 20px; margin: -40px 20px 40px; max-width: 1060px;
+      box-shadow: var(--shadow);
+    }
+    .toc-title { font-size: 12px; font-weight: 700; color: var(--slate-3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .toc-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .toc-list a {
+      padding: 6px 12px; background: var(--bg-2); border-radius: 999px;
+      color: var(--slate-2); text-decoration: none; font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .toc-list a:hover { background: var(--pink); color: white; }
+
+    section { padding: 40px 0; }
+    section h2 {
+      font-size: 32px; font-weight: 800; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    section h2 .emoji { font-size: 36px; }
+    section h3 {
+      font-size: 20px; font-weight: 700; margin: 24px 0 12px;
+      padding-left: 12px; border-left: 4px solid var(--pink);
+    }
+    section .lead { font-size: 16px; color: var(--slate-2); margin-bottom: 24px; }
+    section p { margin-bottom: 12px; color: var(--slate-2); }
+    section ul, section ol { padding-left: 24px; margin-bottom: 16px; }
+    section li { color: var(--slate-2); margin-bottom: 6px; }
+
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin-top: 16px;
+    }
+    .feature-card {
+      padding: 20px; background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 14px; box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-2px); }
+    .feature-card .icon { font-size: 32px; margin-bottom: 8px; }
+    .feature-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .feature-card p { font-size: 13px; color: var(--slate-2); margin: 0; }
+
+    .screenshot {
+      margin: 24px 0; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--card-border); background: white;
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
+    }
+    .screenshot img { width: 100%; height: auto; display: block; }
+    .screenshot-caption {
+      padding: 12px 16px; background: var(--bg-2);
+      font-size: 13px; color: var(--slate-2); font-weight: 600;
+      border-top: 1px solid var(--card-border);
+    }
+
+    kbd {
+      display: inline-block; padding: 2px 8px; font-size: 12px;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      color: var(--slate); background: white;
+      border: 1px solid var(--card-border); border-bottom-width: 2px;
+      border-radius: 6px;
+    }
+    code {
+      padding: 2px 6px; font-size: 13px; font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-2); color: var(--pink); border-radius: 4px;
+    }
+
+    .shortcuts-table {
+      width: 100%; border-collapse: collapse; margin-top: 16px;
+      background: white; border-radius: 12px; overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .shortcuts-table th, .shortcuts-table td {
+      padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--card-border);
+    }
+    .shortcuts-table th {
+      background: var(--bg-2); font-size: 12px; color: var(--slate-3);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .shortcuts-table td:first-child { width: 100px; }
+    .shortcuts-table tr:last-child td { border-bottom: none; }
+    .shortcuts-table tr:hover { background: var(--bg); }
+
+    .callout {
+      padding: 16px 20px; border-radius: 12px; margin: 16px 0;
+      border-left: 4px solid;
+    }
+    .callout.tip { background: #f0f9ff; border-color: var(--blue); }
+    .callout.warn { background: #fef3c7; border-color: var(--gold); }
+    .callout.info { background: #f0fdf4; border-color: var(--green); }
+    .callout.danger { background: #fef2f2; border-color: var(--red); }
+    .callout .title { font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .callout p { margin: 0; font-size: 14px; }
+
+    .step {
+      display: flex; gap: 16px; margin: 16px 0;
+      padding: 16px; background: white; border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+    .step-num {
+      flex-shrink: 0; width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--pink), var(--indigo));
+      color: white; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-weight: 800; font-size: 16px;
+    }
+    .step-content h5 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; margin: 0; }
+
+    .footer {
+      padding: 40px 20px; text-align: center;
+      background: linear-gradient(135deg, var(--pink), var(--indigo));
+      color: white; margin-top: 60px;
+    }
+    .footer h3 { font-size: 24px; margin-bottom: 8px; }
+    .footer p { opacity: 0.9; }
+    .footer a { color: white; text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      section h2 { font-size: 24px; }
+      .toc { margin: -20px 12px 24px; padding: 12px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>🚀 SJ88 Mission Control</h1>
+    <p>คู่มือการใช้งานฉบับสมบูรณ์ · v19 · มี.ค. 2026</p>
+    <div class="hero-meta">
+      🌐 <a href="https://git88.sj88ai.com/">เปิดเว็บหลัก</a>
+      📦 <a href="https://github.com/lnwsj/sj88-mission-control">GitHub</a>
+      🐙 <a href="https://github.com/lnwsj">github.com/lnwsj</a>
+    </div>
+  </div>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">📖 สารบัญ — 12 หัวข้อ</div>
+  <div class="toc-list">
+    <a href="#overview">🏠 ภาพรวม</a>
+    <a href="#views">📊 6 Views</a>
+    <a href="#hero">🌅 Hero + Stats</a>
+    <a href="#grid">▦ Grid</a>
+    <a href="#timeline">📅 Timeline</a>
+    <a href="#category">📂 Category</a>
+    <a href="#commits">📊 Commits</a>
+    <a href="#roadmap">🗺️ Roadmap</a>
+    <a href="#calendar">🗓️ Calendar</a>
+    <a href="#actions">⚡ 6 Actions</a>
+    <a href="#shortcuts">⌨️ Shortcuts</a>
+    <a href="#themes">🎨 Themes</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- 1. OVERVIEW -->
+  <section id="overview">
+    <h2><span class="emoji">🏠</span> ภาพรวม</h2>
+    <p class="lead">SJ88 Mission Control คือ dashboard ที่รวม <strong>59 repos</strong> จาก <code>github.com/lnwsj</code> — Mavis AI agent ที่ ship โปรเจกต์ตั้งแต่เกม 3D, booking apps, ไปจนถึง multiplayer Sims</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h4>6 Views</h4>
+        <p>Grid · Timeline · Category · Commits · Roadmap · Calendar</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h4>6 Actions</h4>
+        <p>Compare · Radar · Bug Hunter · Recommend · AI Review · Auto-PR</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎨</div>
+        <h4>5 Themes</h4>
+        <p>Kawaii · Ocean · Sunset · Neon · Dark + custom accent</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🏆</div>
+        <h4>15 Achievements</h4>
+        <p>ปลดล็อคตามการใช้งาน — Century Club, Streak Master, etc.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🐙</div>
+        <h4>Live GitHub API</h4>
+        <p>Calendar view ดึง events ตรงจาก api.github.com</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⌨️</div>
+        <h4>Keyboard-first</h4>
+        <p>G/T/V/M/O/L/D/A/C ทุก view เข้าถึงได้ด้วยคีย์ลัด</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. HERO + STATS -->
+  <section id="hero">
+    <h2><span class="emoji">🌅</span> Hero + Stats</h2>
+    <p class="lead">ด้านบนสุดของเว็บ — ชื่อโปรเจกต์, ปุ่มเครื่องมือ 8 ปุ่ม, stats cards และ live indicator</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/19_hero_stats.png" alt="Hero + Stats">
+      <div class="screenshot-caption">📸 Hero section — ชื่อ, ปุ่มเครื่องมือ, live API pill, stats cards</div>
+    </div>
+
+    <h3>ปุ่มเครื่องมือ 8 ปุ่ม (เรียงจากซ้ายไปขวา)</h3>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="icon">🌙</div><h4>Dark Mode</h4><p>สลับ light/dark (กด <kbd>D</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">⌨️</div><h4>Shortcuts</h4><p>ดูคีย์ลัดทั้งหมด (กด <kbd>?</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">🏆</div><h4>Achievements</h4><p>ดู 15 achievements (กด <kbd>A</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">💬</div><h4>Chat</h4><p>คุยกับ Mavis (กด <kbd>C</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">🔗</div><h4>Share</h4><p>Copy link ของ view ปัจจุบัน</p></div>
+      <div class="feature-card"><div class="icon">🎨</div><h4>Theme</h4><p>เลือก theme 5 แบบ (กด <kbd>T</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">🌈</div><h4>Accent</h4><p>เลือกสี accent เอง (กด <kbd>Z</kbd>)</p></div>
+      <div class="feature-card"><div class="icon">🔍</div><h4>Search</h4><p>Global search (กด <kbd>/</kbd> หรือ <kbd>Cmd+K</kbd>)</p></div>
+    </div>
+  </section>
+
+  <!-- 3. GRID -->
+  <section id="grid">
+    <h2><span class="emoji">▦</span> Grid View (default)</h2>
+    <p class="lead">มุมมองหลัก — repo card แต่ละใบ พร้อม mini heatmap 13 สัปดาห์ + sparkline การเติบโต + ปุ่ม action 6 ปุ่ม</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/01_grid_view.png" alt="Grid view">
+      <div class="screenshot-caption">📸 Grid view — repo cards 60 ใบ พร้อม mini heatmap + tags + live badges</div>
+    </div>
+
+    <h3>โครงสร้าง Repo Card</h3>
+    <ol>
+      <li><strong>Header</strong> — emoji + ชื่อ repo + category chip + "LIVE" badge (ถ้า deploy แล้ว)</li>
+      <li><strong>Tags</strong> — คลิกได้, ใช้ filter (เช่น 3d · game · html · live)</li>
+      <li><strong>Description</strong> — คำอธิบายสั้น (desc)</li>
+      <li><strong>Mini heatmap</strong> — 13 weeks × 7 days (commits per day)</li>
+      <li><strong>Sparkline</strong> — กราฟเส้นการเติบโตของ stars</li>
+      <li><strong>Meta</strong> — size · lang · created date</li>
+      <li><strong>Click card</strong> → เปิด modal พร้อม actions 6 ปุ่ม</li>
+    </ol>
+
+    <div class="callout tip">
+      <div class="title">💡 Tip</div>
+      <p>คลิก tag เพื่อ filter ทันที · Shift+click tag เพื่อเพิ่ม combo (สูงสุด 3 tags)</p>
+    </div>
+  </section>
+
+  <!-- 4. TIMELINE -->
+  <section id="timeline">
+    <h2><span class="emoji">📅</span> Timeline View</h2>
+    <p class="lead">มุมมองตามลำดับเวลา — repos จัดกลุ่มตามวันที่สร้าง พร้อม timeline visualization</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/02_timeline_view.png" alt="Timeline view">
+      <div class="screenshot-caption">📸 Timeline view — เรียงตามวันที่ พร้อม category dots</div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h5>กด <kbd>T</kbd> เพื่อเข้า Timeline</h5>
+        <p>หรือคลิกปุ่ม "📅 Timeline" ใน nav</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h5>เลื่อนดู repos ตามวันที่</h5>
+        <p>ล่าสุดอยู่บนสุด เรียงตาม created date</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h5>คลิก repo card เพื่อ drilldown</h5>
+        <p>เปิด modal พร้อม full details + actions</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CATEGORY -->
+  <section id="category">
+    <h2><span class="emoji">📂</span> Category View</h2>
+    <p class="lead">จัดกลุ่ม repos ตาม category — เห็นภาพรวมว่ามีกี่ประเภท ประเภทไหนเยอะสุด</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/03_category_view.png" alt="Category view">
+      <div class="screenshot-caption">📸 Category view — 11 หมวด: 3D Games, 2D Games, Booking, Creator Tools, AI Apps, etc.</div>
+    </div>
+
+    <h3>11 Categories</h3>
+    <ul>
+      <li>🎮 <strong>3D Games</strong> · 🕹️ <strong>2D Games / Sim</strong></li>
+      <li>📅 <strong>Booking Apps</strong> · 🎬 <strong>Creator Tools (sj88cute)</strong></li>
+      <li>🛠️ <strong>Productivity</strong> · 🤖 <strong>AI Apps</strong></li>
+      <li>🐍 <strong>Python Desktop</strong> · 🎞️ <strong>Video Editor</strong></li>
+      <li>🏗️ <strong>Infrastructure</strong> · 🍴 <strong>Forks</strong></li>
+      <li>🎨 <strong>Portfolio</strong></li>
+    </ul>
+  </section>
+
+  <!-- 6. COMMITS -->
+  <section id="commits">
+    <h2><span class="emoji">📊</span> Commits View</h2>
+    <p class="lead">Analytics ของ commit — heatmap 365 วัน, top repos, top words, velocity, AI summary</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/04_commits_view.png" alt="Commits view">
+      <div class="screenshot-caption">📸 Commits view — heatmap 365 วัน + bar chart + AI summary</div>
+    </div>
+
+    <h3>ข้อมูลที่แสดง</h3>
+    <ul>
+      <li>📅 <strong>Full-year heatmap</strong> — 365 days (5 levels สีชมพู)</li>
+      <li>📈 <strong>Bar chart</strong> — commits per day/week/month</li>
+      <li>🍩 <strong>Donut</strong> — สัดส่วน lnwsj vs contributors อื่น</li>
+      <li>🏆 <strong>Top repos</strong> — repos ที่ commit เยอะสุด</li>
+      <li>💬 <strong>Top words</strong> — คำที่ใช้บ่อยใน commit message</li>
+      <li>🤖 <strong>AI summary</strong> — สรุป patterns ที่ backend วิเคราะห์</li>
+    </ul>
+  </section>
+
+  <!-- 7. ROADMAP -->
+  <section id="roadmap">
+    <h2><span class="emoji">🗺️</span> Roadmap View</h2>
+    <p class="lead">มุมมองแบบ Kanban — จัดกลุ่ม repos เป็น "ทำแล้ว · กำลังทำ · วางแผน"</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/05_roadmap_view.png" alt="Roadmap view">
+      <div class="screenshot-caption">📸 Roadmap view — Kanban board 3 columns</div>
+    </div>
+  </section>
+
+  <!-- 8. CALENDAR (NEW v19) -->
+  <section id="calendar">
+    <h2><span class="emoji">🗓️</span> GitHub Calendar (NEW v19)</h2>
+    <p class="lead">มุมมองปฏิทิน — ดึง commit activity <strong>ตรงจาก GitHub API</strong> (<code>api.github.com/users/lnwsj/events/public</code>) — แสดงทุก commit แยกตามวัน</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/06_calendar_view.png" alt="Calendar view">
+      <div class="screenshot-caption">📸 Calendar view — month grid + 4 KPI cards + source pill</div>
+    </div>
+
+    <h3>4 KPI Cards</h3>
+    <ul>
+      <li>📅 <strong>Today</strong> — gradient pink→indigo, จำนวน commit วันนี้</li>
+      <li>📆 <strong>This Month</strong> — commit ทั้งเดือน + เดือน/ปี</li>
+      <li>🔥 <strong>Active Days</strong> — X/Y วัน + %</li>
+      <li>🏆 <strong>Best Day</strong> — peak single day (commits สูงสุดในเดือน)</li>
+    </ul>
+
+    <h3>Calendar Grid (7-col)</h3>
+    <ul>
+      <li>🔥 <strong>Heatmap levels 0-4</strong> — สีชมพูเข้มตามจำนวน commit</li>
+      <li>✨ <strong>Today</strong> — border pink + gradient bg + "TODAY" badge</li>
+      <li>📅 <strong>Future days</strong> — dim + non-clickable</li>
+      <li>🖱️ <strong>Click any past day</strong> → modal แสดง commits ทั้งหมด</li>
+      <li>◀ ▶ <strong>Month nav</strong> + Today jump</li>
+      <li>🔄 <strong>Refresh</strong> — manual reload</li>
+    </ul>
+
+    <h3>Day Detail Modal (click วันไหนก็ได้)</h3>
+
+    <div class="screenshot">
+      <img src="guide_screens/07_day_detail_modal.png" alt="Day detail modal">
+      <div class="screenshot-caption">📸 Day modal — full commit list w/ repo, time, sha, GitHub link</div>
+    </div>
+
+    <p>Modal แสดง:</p>
+    <ul>
+      <li>📅 <strong>Date label</strong> — วันเต็ม เช่น "Wednesday, July 1, 2026"</li>
+      <li>📊 <strong>Stats</strong> — "X commits across Y repos"</li>
+      <li>📦 <strong>Repos touched</strong> — chips ของ repos</li>
+      <li>📝 <strong>Commit list</strong> — repo + time + sha + message + link ไป GitHub</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="title">⚠️ Rate limit</div>
+      <p>GitHub API จำกัด 60 req/hr ต่อ IP — มี in-memory cache 2 นาที ถ้าโดน rate-limited จะขึ้น error pill</p>
+    </div>
+  </section>
+
+  <!-- 9. ACTIONS -->
+  <section id="actions">
+    <h2><span class="emoji">⚡</span> 6 Actions ต่อ Repo</h2>
+    <p class="lead">เมื่อคลิก repo card → modal เปิดขึ้นพร้อมปุ่ม actions 6 ปุ่ม</p>
+
+    <h3>1. ⚖️ Compare</h3>
+    <div class="screenshot">
+      <img src="guide_screens/10_compare_modal.png" alt="Compare modal">
+      <div class="screenshot-caption">📸 Compare modal — 2 repos side-by-side</div>
+    </div>
+
+    <h3>2. 📊 Radar Chart</h3>
+    <div class="screenshot">
+      <img src="guide_screens/09_radar_chart.png" alt="Radar chart">
+      <div class="screenshot-caption">📸 Radar Chart — 6 dimensions (Activity / Stars / Clean Code / Maturity / Live / Stack)</div>
+    </div>
+
+    <h3>3-6. AI Actions (Bug Hunter / Recommend / AI Review / Auto-PR)</h3>
+    <p>ปุ่ม AI 4 ปุ่มเรียก backend API เพื่อวิเคราะห์ repo:</p>
+    <ul>
+      <li>🐛 <strong>Bug Hunter</strong> — pattern-based bug detection</li>
+      <li>💡 <strong>Recommend</strong> — แนะนำ features ที่ควรเพิ่ม</li>
+      <li>🤖 <strong>AI Code Review</strong> — quality score 0-100 + issues + suggestions</li>
+      <li>🔧 <strong>Auto-PR</strong> — generate diff + 7-step instructions</li>
+    </ul>
+
+    <div class="screenshot">
+      <img src="guide_screens/08_repo_modal.png" alt="Repo modal">
+      <div class="screenshot-caption">📸 Repo modal — README, files, actions 6 ปุ่ม, comments</div>
+    </div>
+  </section>
+
+  <!-- 10. SHORTCUTS -->
+  <section id="shortcuts">
+    <h2><span class="emoji">⌨️</span> Keyboard Shortcuts</h2>
+    <p class="lead">กด <kbd>?</kbd> ตอนไหนก็ได้เพื่อเปิดหน้านี้</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/14_shortcuts.png" alt="Shortcuts">
+      <div class="screenshot-caption">📸 Shortcuts modal — คีย์ลัดครบทุกตัว</div>
+    </div>
+
+    <h3>คีย์ลัดทั้งหมด</h3>
+    <table class="shortcuts-table">
+      <thead><tr><th>คีย์</th><th>การกระทำ</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>G</kbd></td><td>Grid view</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Timeline view</td></tr>
+        <tr><td><kbd>V</kbd></td><td>Category view</td></tr>
+        <tr><td><kbd>M</kbd></td><td>Commits view</td></tr>
+        <tr><td><kbd>O</kbd></td><td>Roadmap view</td></tr>
+        <tr><td><kbd>L</kbd></td><td>GitHub Calendar 🆕</td></tr>
+        <tr><td><kbd>D</kbd></td><td>Toggle Dark mode</td></tr>
+        <tr><td><kbd>A</kbd></td><td>Achievements</td></tr>
+        <tr><td><kbd>C</kbd></td><td>Chat with Mavis</td></tr>
+        <tr><td><kbd>F</kbd></td><td>Favorites only</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Share link</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Refresh data</td></tr>
+        <tr><td><kbd>/</kbd></td><td>Focus search</td></tr>
+        <tr><td><kbd>?</kbd></td><td>Show shortcuts</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Close modal</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 11. THEMES -->
+  <section id="themes">
+    <h2><span class="emoji">🎨</span> Themes & Custom Accent</h2>
+    <p class="lead">5 themes พร้อม custom accent color picker</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/12_theme_picker.png" alt="Theme picker">
+      <div class="screenshot-caption">📸 Theme picker — 5 themes (Kawaii, Ocean, Sunset, Neon, Dark)</div>
+    </div>
+
+    <h3>5 Themes</h3>
+    <ul>
+      <li>🌸 <strong>Kawaii</strong> (default) — pink + indigo, สดใส</li>
+      <li>🌊 <strong>Ocean</strong> — cyan + teal, สงบ</li>
+      <li>🌅 <strong>Sunset</strong> — orange + pink, อบอุ่น</li>
+      <li>⚡ <strong>Neon</strong> — magenta + cyan, cyberpunk</li>
+      <li>🌙 <strong>Dark</strong> — subtle dark, easy on the eyes</li>
+    </ul>
+
+    <h3>Custom Accent</h3>
+    <div class="screenshot">
+      <img src="guide_screens/17_custom_accent.png" alt="Custom accent">
+      <div class="screenshot-caption">📸 Custom accent picker — เลือกสี accent เองได้</div>
+    </div>
+
+    <h3>Dark Mode</h3>
+    <div class="screenshot">
+      <img src="guide_screens/13_dark_mode.png" alt="Dark mode">
+      <div class="screenshot-caption">📸 Dark mode — สลับโหมด</div>
+    </div>
+  </section>
+
+  <!-- 12. ACHIEVEMENTS -->
+  <section>
+    <h2><span class="emoji">🏆</span> Achievements</h2>
+    <p class="lead">15 achievements ปลดล็อคตามการใช้งาน — เก็บสะสม ดู progress</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/11_achievements.png" alt="Achievements">
+      <div class="screenshot-caption">📸 Achievements modal — 15 badges</div>
+    </div>
+  </section>
+
+  <!-- BONUS: Chat -->
+  <section>
+    <h2><span class="emoji">💬</span> Chat with Mavis</h2>
+    <p class="lead">ถามอะไรก็ได้เกี่ยวกับ repos — Mavis จะตอบด้วย pattern-based AI</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/15_chat.png" alt="Chat">
+      <div class="screenshot-caption">📸 Chat modal — ถามเกี่ยวกับ repos</div>
+    </div>
+
+    <h3>ตัวอย่างคำถาม</h3>
+    <ul>
+      <li>"Which repo should I work on?"</li>
+      <li>"Show me the most buggy repos"</li>
+      <li>"What's the deploy status?"</li>
+      <li>"Best 3D game?"</li>
+      <li>"Most starred"</li>
+    </ul>
+  </section>
+
+  <!-- BONUS: Search -->
+  <section>
+    <h2><span class="emoji">🔍</span> Global Search</h2>
+    <p class="lead">กด <kbd>/</kbd> หรือ <kbd>Cmd+K</kbd> เพื่อเปิด search</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/16_global_search.png" alt="Global search">
+      <div class="screenshot-caption">📸 Global search — fuzzy match ทุก field</div>
+    </div>
+  </section>
+
+  <!-- BONUS: Mobile -->
+  <section>
+    <h2><span class="emoji">📱</span> Mobile View</h2>
+    <p class="lead">Responsive — ใช้งานได้ทั้งมือถือและ tablet</p>
+
+    <div class="screenshot">
+      <img src="guide_screens/20_mobile.png" alt="Mobile view">
+      <div class="screenshot-caption">📸 Mobile (390×844) — responsive layout</div>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section>
+    <h2><span class="emoji">🔌</span> Backend API (19 endpoints)</h2>
+    <p class="lead">Backend FastAPI + SQLite ที่ port 8200 — ดูเพิ่มที่ <a href="https://github.com/lnwsj/sj88-mission-control-api">github.com/lnwsj/sj88-mission-control-api</a></p>
+
+    <table class="shortcuts-table">
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/health</code></td><td>Health check</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos</code></td><td>All repos (60+)</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/all-meta</code></td><td>With real issues cache (24h TTL)</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}</code></td><td>Single repo detail</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/repos/{name}/refresh</code></td><td>Refresh from GitHub</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/repos/{name}/bugs</code></td><td>Run bug hunter</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/repos/{name}/recommend</code></td><td>Get feature recommendations</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/readme</code></td><td>README content</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/files</code></td><td>List files</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/files/{path}</code></td><td>File content (max 1MB)</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/deploy</code></td><td>Deploy info</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/review</code></td><td>AI Code Review</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/repos/{name}/autopr</code></td><td>Auto-PR diff</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/categorize</code></td><td>Auto-categorize</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/stats</code></td><td>Aggregate stats</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/commits</code></td><td>Commit analytics</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/commits/refresh</code></td><td>Re-fetch commits</td></tr>
+        <tr><td><kbd>GET</kbd></td><td><code>/api/achievements</code></td><td>Achievements state</td></tr>
+        <tr><td><kbd>POST</kbd></td><td><code>/api/chat</code></td><td>Chat with Mavis</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TIPS -->
+  <section>
+    <h2><span class="emoji">💡</span> Tips & Tricks</h2>
+
+    <div class="callout tip">
+      <div class="title">🔍 Search + Filter</div>
+      <p>ใช้ tag filter + text search + sort ร่วมกัน — เช่น filter "live" + search "game" → เห็นแค่ games ที่ deploy แล้ว</p>
+    </div>
+
+    <div class="callout info">
+      <div class="title">📱 PWA Install</div>
+      <p>เปิดเมนู browser → "Add to Home Screen" เพื่อ install เป็น app — ใช้ได้แบบ offline</p>
+    </div>
+
+    <div class="callout warn">
+      <div class="title">⚠️ GitHub Rate Limit</div>
+      <p>Calendar view เรียก GitHub API ตรง — จำกัด 60 req/hr ต่อ IP มี in-memory cache 2 นาที</p>
+    </div>
+
+    <div class="callout danger">
+      <div class="title">🔥 Backups</div>
+      <p>Backend cache database เก็บที่ <code>/opt/sj88-mission-control/data/cache.db</code> — backup เป็น cron job</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <h3>🚀 SJ88 Mission Control</h3>
+  <p>Made with 💖 by Mavis — your AI agent for shipping</p>
+  <p style="margin-top: 12px;">
+    <a href="https://git88.sj88ai.com/">เปิดเว็บหลัก</a> ·
+    <a href="https://github.com/lnwsj/sj88-mission-control">GitHub</a> ·
+    v19 · 27 ก.ค. 2026
+  </p>
+</footer>
+
+</body>
+</html>
