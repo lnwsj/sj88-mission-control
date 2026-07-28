@@ -1432,6 +1432,147 @@
     .calendar-summary { grid-template-columns: repeat(2, 1fr); }
     .calendar-day { min-height: 52px; }
   }
+
+  /* === Productivity View (v19.3) === */
+  .prod-wrap { padding: 20px 0 40px; }
+  .prod-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .prod-title { font-size: 22px; font-weight: 800; color: var(--slate); }
+  html[data-theme="dark"] .prod-title { color: white; }
+  .prod-sub { font-size: 12px; color: var(--slate-3); margin-top: 4px; }
+  .prod-loading { text-align: center; padding: 80px 20px; color: var(--slate-3); }
+  .prod-loading .emoji { font-size: 64px; margin-bottom: 16px; }
+  .prod-loading .sub { font-size: 13px; margin-top: 8px; }
+
+  .prod-section { margin: 24px 0; }
+  .prod-section h3 {
+    font-size: 20px; font-weight: 800; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .prod-section h3 .num {
+    font-size: 12px; padding: 2px 8px; background: var(--bg-2);
+    color: var(--slate-2); border-radius: 999px; font-weight: 600;
+  }
+
+  /* Activity Rings */
+  .rings-wrap {
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    padding: 24px; background: var(--card); border-radius: 16px;
+    border: 1px solid var(--card-border);
+  }
+  .rings-svg { flex-shrink: 0; }
+  .rings-stats { flex: 1; min-width: 220px; }
+  .ring-stat { margin-bottom: 12px; }
+  .ring-stat-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .ring-stat-name { font-size: 13px; font-weight: 700; color: var(--slate); }
+  html[data-theme="dark"] .ring-stat-name { color: white; }
+  .ring-stat-val { font-size: 13px; font-weight: 700; }
+  .ring-stat-bar { height: 6px; background: var(--bg-2); border-radius: 3px; overflow: hidden; }
+  .ring-stat-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .ring-stat-target { font-size: 11px; color: var(--slate-3); margin-top: 2px; }
+
+  /* Achievements */
+  .achv-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .achv-card {
+    padding: 20px 16px; background: var(--card); border: 2px solid var(--card-border);
+    border-radius: 14px; text-align: center; transition: all 0.2s;
+    position: relative;
+  }
+  .achv-card.unlocked { border-color: var(--gold); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--card) 100%); }
+  .achv-card.locked { opacity: 0.5; filter: grayscale(0.5); }
+  .achv-emoji { font-size: 40px; margin-bottom: 6px; }
+  .achv-name { font-size: 14px; font-weight: 800; color: var(--slate); margin-bottom: 4px; }
+  html[data-theme="dark"] .achv-name { color: white; }
+  .achv-req { font-size: 11px; color: var(--slate-3); }
+  .achv-status {
+    position: absolute; top: 8px; right: 8px;
+    font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700;
+  }
+  .achv-status.unlocked { background: var(--gold); color: white; }
+  .achv-status.locked { background: var(--bg-2); color: var(--slate-3); }
+
+  /* You vs Average */
+  .vs-grid {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px;
+    padding: 24px; background: var(--card); border-radius: 16px;
+    border: 1px solid var(--card-border); align-items: center;
+  }
+  .vs-col { text-align: center; }
+  .vs-label { font-size: 11px; color: var(--slate-3); text-transform: uppercase; letter-spacing: 0.5px; }
+  .vs-num { font-size: 36px; font-weight: 900; color: var(--pink); margin: 8px 0; }
+  .vs-col.you .vs-num { color: var(--pink); }
+  .vs-col.avg .vs-num { color: var(--slate-3); }
+  .vs-sub { font-size: 12px; color: var(--slate-3); }
+  .vs-vs { font-size: 32px; font-weight: 900; color: var(--indigo); }
+  .vs-multiplier {
+    display: inline-block; padding: 6px 16px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--pink), var(--indigo));
+    color: white; font-size: 18px; font-weight: 900; margin-top: 8px;
+  }
+  .vs-bars { margin-top: 16px; }
+  .vs-bar { margin-bottom: 8px; }
+  .vs-bar-head { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 2px; }
+  .vs-bar-track { height: 8px; background: var(--bg-2); border-radius: 4px; overflow: hidden; position: relative; }
+  .vs-bar-fill { height: 100%; border-radius: 4px; }
+  .vs-bar-fill.you { background: linear-gradient(90deg, var(--pink), var(--indigo)); }
+  .vs-bar-fill.avg { background: var(--slate-3); }
+
+  /* Productive Hour */
+  .hour-chart {
+    display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px;
+    padding: 20px; background: var(--card); border-radius: 16px;
+    border: 1px solid var(--card-border);
+  }
+  .hour-bar {
+    aspect-ratio: 1; min-height: 30px; border-radius: 4px;
+    background: var(--bg-2); position: relative; cursor: default;
+    transition: transform 0.2s;
+  }
+  .hour-bar:hover { transform: scale(1.1); z-index: 1; }
+  .hour-bar .hour-num {
+    position: absolute; bottom: -16px; left: 0; right: 0;
+    text-align: center; font-size: 9px; color: var(--slate-3);
+  }
+  .hour-bar.peak { box-shadow: 0 0 0 2px var(--gold); }
+  .hour-peak-badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold), #f59e0b);
+    color: white; font-weight: 800; font-size: 14px; margin-top: 12px;
+  }
+  .hour-axis { display: flex; justify-content: space-between; padding: 0 8px; margin-top: 8px; font-size: 10px; color: var(--slate-3); }
+
+  /* Word Cloud */
+  .word-cloud {
+    padding: 24px; background: var(--card); border-radius: 16px;
+    border: 1px solid var(--card-border); min-height: 200px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 8px;
+  }
+  .word-tag {
+    padding: 6px 12px; border-radius: 999px; background: var(--bg-2);
+    color: var(--slate); font-weight: 600; transition: all 0.2s;
+  }
+  .word-tag:hover { background: var(--pink); color: white; transform: scale(1.05); }
+
+  /* World Map */
+  .map-wrap {
+    padding: 16px; background: var(--card); border-radius: 16px;
+    border: 1px solid var(--card-border);
+  }
+  .map-svg { width: 100%; height: auto; max-height: 400px; }
+  .map-tooltip {
+    position: absolute; padding: 6px 10px; background: var(--slate); color: white;
+    border-radius: 6px; font-size: 12px; pointer-events: none; z-index: 100;
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .vs-grid { grid-template-columns: 1fr; }
+    .hour-chart { grid-template-columns: repeat(12, 1fr); }
+    .rings-wrap { flex-direction: column; align-items: stretch; }
+  }
   .heatmap-cell.l5 { background: var(--pink); }
   .heatmap-legend {
     display: flex; align-items: center; gap: 6px;
@@ -2273,6 +2414,7 @@
       <button class="view-btn" data-view="commits">📊 Commits</button>
       <button class="view-btn" data-view="roadmap">🗺️ Roadmap</button>
       <button class="view-btn" data-view="calendar">🗓️ GitHub Calendar</button>
+      <button class="view-btn" data-view="productivity">🏆 Productivity</button>
     </div>
   </div>
 </div>
@@ -2289,6 +2431,7 @@
       </div>
     </div>
     <div class="commits-view" id="calendarView"></div>
+    <div class="commits-view" id="productivityView"></div>
   </div>
 </section>
 
@@ -2727,6 +2870,7 @@
     else if (key === 'm') document.querySelector('[data-view="commits"]')?.click();
     else if (key === 'o') document.querySelector('[data-view="roadmap"]')?.click();
     else if (key === 'l') document.querySelector('[data-view="calendar"]')?.click();
+    else if (key === 'p') document.querySelector('[data-view="productivity"]')?.click();
     else if (key === 'f') {
       state.filter = 'favorites';
       renderChips(); render();
@@ -5037,6 +5181,408 @@
     document.getElementById('modal').classList.add('active');
   }
 
+  /* === Productivity View (v19.3) — 5 features === */
+
+  async function loadProductivityView() {
+    const view = document.getElementById('productivityView');
+    if (!ghCommits) {
+      view.innerHTML = `
+        <div class="prod-loading">
+          <div class="emoji">🏆</div>
+          <div>Loading commits data first...</div>
+          <div class="sub">⏳ Go to GitHub Calendar (L) to fetch, then come back here</div>
+        </div>
+      `;
+      return;
+    }
+    renderProductivityView();
+  }
+
+  // 1. Activity Rings
+  function calcActivityRings(commits) {
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthCommits = commits.filter(c => new Date(c.date + 'T00:00:00') >= monthStart);
+    // Ring 1: Commits this month (target: 30)
+    const commitCount = monthCommits.length;
+    const commitTarget = 30;
+    // Ring 2: Active days this month (target: 15)
+    const activeDays = new Set(monthCommits.map(c => c.date)).size;
+    const dayTarget = 15;
+    // Ring 3: Unique repos touched this month (target: 10)
+    const reposTouched = new Set(monthCommits.map(c => c.repo)).size;
+    const repoTarget = 10;
+    return [
+      { name: 'Commits', val: commitCount, target: commitTarget, color: '#ec4899', pct: Math.min(100, commitCount / commitTarget * 100) },
+      { name: 'Active Days', val: activeDays, target: dayTarget, color: '#f59e0b', pct: Math.min(100, activeDays / dayTarget * 100) },
+      { name: 'Repos Touched', val: reposTouched, target: repoTarget, color: '#6366f1', pct: Math.min(100, reposTouched / repoTarget * 100) }
+    ];
+  }
+
+  function renderRingsSVG(rings, size = 160) {
+    const cx = size / 2, cy = size / 2;
+    const strokeW = 14;
+    const radii = [size/2 - 18, size/2 - 18 - 22, size/2 - 18 - 44];
+    let svg = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" class="rings-svg" xmlns="http://www.w3.org/2000/svg">`;
+    // Background circles
+    rings.forEach((r, i) => {
+      const r_ = radii[i];
+      svg += `<circle cx="${cx}" cy="${cy}" r="${r_}" fill="none" stroke="var(--bg-2)" stroke-width="${strokeW}"/>`;
+    });
+    // Progress arcs
+    rings.forEach((r, i) => {
+      const r_ = radii[i];
+      const circumference = 2 * Math.PI * r_;
+      const offset = circumference * (1 - r.pct / 100);
+      svg += `<circle cx="${cx}" cy="${cy}" r="${r_}" fill="none" stroke="${r.color}" stroke-width="${strokeW}"
+        stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"
+        stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/>`;
+    });
+    // Center text
+    const total = rings.reduce((s, r) => s + r.val, 0);
+    svg += `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="28" font-weight="900" fill="var(--slate)">${total}</text>`;
+    svg += `<text x="${cx}" y="${cy + 16}" text-anchor="middle" font-size="11" fill="var(--slate-3)">this month</text>`;
+    svg += '</svg>';
+    return svg;
+  }
+
+  // 2. Achievement Tiers
+  const ACHIEVEMENT_TIERS = [
+    { id: 'bronze',   name: 'Bronze Builder',   emoji: '🥉', threshold: 50,   color: '#cd7f32', desc: '50+ commits' },
+    { id: 'silver',   name: 'Silver Shipper',   emoji: '🥈', threshold: 100,  color: '#c0c0c0', desc: '100+ commits' },
+    { id: 'gold',     name: 'Gold Grinder',     emoji: '🥇', threshold: 200,  color: '#ffd700', desc: '200+ commits' },
+    { id: 'diamond',  name: 'Diamond Dev',      emoji: '💎', threshold: 500,  color: '#b9f2ff', desc: '500+ commits' },
+    { id: 'legend',   name: 'Legendary lnwsj',  emoji: '👑', threshold: 1000, color: '#ff6b9d', desc: '1000+ commits' }
+  ];
+
+  function calcAchievements(commits) {
+    const total = commits.length;
+    return ACHIEVEMENT_TIERS.map(tier => ({
+      ...tier,
+      unlocked: total >= tier.threshold,
+      progress: Math.min(100, total / tier.threshold * 100)
+    }));
+  }
+
+  // 3. You vs Average Dev
+  // Stack Overflow 2024 survey: average dev pushes ~5 commits/week (per working time)
+  function calcYouVsAverage(commits) {
+    if (!commits.length) return null;
+    const dates = [...new Set(commits.map(c => c.date))].sort();
+    const firstDate = new Date(dates[0]);
+    const lastDate = new Date(dates[dates.length - 1]);
+    const weeks = Math.max(1, (lastDate - firstDate) / (7 * 86400000));
+    const yourWeeklyAvg = commits.length / weeks;
+    const avgWeeklyAvg = 5;  // SO 2024 survey
+    const multiplier = (yourWeeklyAvg / avgWeeklyAvg).toFixed(1);
+    return {
+      yourWeeklyAvg: yourWeeklyAvg.toFixed(1),
+      avgWeeklyAvg,
+      multiplier,
+      totalCommits: commits.length,
+      weeksActive: weeks.toFixed(1),
+      activeDays: dates.length
+    };
+  }
+
+  // 4. Most Productive Hour
+  function calcProductiveHour(commits) {
+    const hours = new Array(24).fill(0);
+    commits.forEach(c => {
+      const h = parseInt(c.time?.split(':')[0] || '0', 10);
+      if (h >= 0 && h < 24) hours[h]++;
+    });
+    const max = Math.max(...hours);
+    const peakHour = hours.indexOf(max);
+    return { hours, peakHour, max, total: commits.length };
+  }
+
+  // 5. Favorite Commit Word
+  const STOP_WORDS = new Set([
+    'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'to', 'of', 'in', 'on', 'at', 'by', 'for', 'with', 'as', 'from',
+    'and', 'or', 'but', 'if', 'then', 'else', 'this', 'that', 'these', 'those',
+    'it', 'its', 'i', 'we', 'you', 'they', 'he', 'she', 'my', 'our', 'your',
+    'do', 'does', 'did', 'has', 'have', 'had', 'will', 'would', 'can', 'could',
+    'should', 'may', 'might', 'must', 'shall', 'not', 'no', 'so', 'up', 'down',
+    'add', 'fix', 'update', 'test', 'merge', 'bump', 'chore', 'docs', 'doc',
+    'feat', 'feature', 'bug', 'refactor', 'style', 'perf', 'wip', 'tmp'
+  ]);
+  function calcFavoriteWord(commits) {
+    const counts = new Map();
+    commits.forEach(c => {
+      const words = c.msg.toLowerCase()
+        .replace(/[^\w\s]/g, ' ')
+        .split(/\s+/)
+        .filter(w => w.length >= 3 && !STOP_WORDS.has(w) && !/^v?\d/.test(w));
+      words.forEach(w => counts.set(w, (counts.get(w) || 0) + 1));
+    });
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 25)
+      .map(([word, count]) => ({ word, count, size: Math.min(28, 12 + Math.log2(count + 1) * 4) }));
+  }
+
+  // 6. World Map (deterministic hash → coords on stylized world)
+  function hashCode(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i);
+    return Math.abs(h);
+  }
+  function getRepoCoords(repoName) {
+    const h = hashCode(repoName);
+    // Map to 10-90% of width, 20-80% of height (avoid edges)
+    const x = 10 + (h % 800) / 10;  // 10-90
+    const y = 20 + ((h / 800) % 700) / 10;  // 20-90
+    return { x, y };
+  }
+  // Category → region hint
+  function getRegion(repo) {
+    const r = repo.toLowerCase();
+    if (/tokyo|wonder|stronghold|rpg|street|fps|noodle|mars|color|click|booking|medbook|stayhub|eventtix|dinebook|tour|studio|med|cospace|drive|glow|fitbook|venue/.test(r)) return 'asia';
+    if (/director|cutout|ai|video|cps|waveform|frame|thumb|voice|lut|safe|subtitle|engagement/.test(r)) return 'na';
+    if (/flowboard|note|palette|squish|mavis/.test(r)) return 'eu';
+    return 'sa';
+  }
+
+  function renderProductivityView() {
+    const view = document.getElementById('productivityView');
+    if (!ghCommits) {
+      view.innerHTML = `
+        <div class="prod-loading">
+          <div class="emoji">🏆</div>
+          <div>Need commit data first</div>
+          <div class="sub">⏳ Click 🗓️ GitHub Calendar (L) to load, then come back here</div>
+        </div>
+      `;
+      return;
+    }
+    const commits = ghCommits;
+    const rings = calcActivityRings(commits);
+    const achievements = calcAchievements(commits);
+    const vs = calcYouVsAverage(commits);
+    const hour = calcProductiveHour(commits);
+    const words = calcFavoriteWord(commits);
+
+    // Active days (streak)
+    const dates = [...new Set(commits.map(c => c.date))].sort();
+    const today = new Date().toISOString().slice(0, 10);
+    let currentStreak = 0;
+    let bestStreak = 0;
+    let runStreak = 0;
+    let prev = null;
+    for (const d of dates) {
+      if (prev === null) runStreak = 1;
+      else {
+        const diff = (new Date(d) - new Date(prev)) / 86400000;
+        runStreak = diff === 1 ? runStreak + 1 : 1;
+      }
+      bestStreak = Math.max(bestStreak, runStreak);
+      prev = d;
+    }
+    // current streak: count back from today
+    const todayDate = new Date(today);
+    let cs = 0;
+    for (let i = dates.length - 1; i >= 0; i--) {
+      const diff = (todayDate - new Date(dates[i])) / 86400000;
+      if (diff === cs) cs++;
+      else if (diff > cs) break;
+    }
+    currentStreak = cs;
+
+    // World map: repos
+    const repoSet = new Set(commits.map(c => c.repo));
+    const repoList = Array.from(repoSet).sort();
+    const mapDots = repoList.map(r => {
+      const c = getRepoCoords(r);
+      const count = commits.filter(x => x.repo === r).length;
+      const region = getRegion(r);
+      return { name: r, x: c.x, y: c.y, count, region };
+    });
+
+    // Hour max for color scale
+    const maxHour = Math.max(1, ...hour.hours);
+
+    // Achievement cards
+    const achvHtml = achievements.map(a => {
+      const cls = a.unlocked ? 'unlocked' : 'locked';
+      const status = a.unlocked ? '✓ UNLOCKED' : `${Math.round(a.progress)}%`;
+      return `<div class="achv-card ${cls}">
+        <div class="achv-status ${cls}">${status}</div>
+        <div class="achv-emoji">${a.emoji}</div>
+        <div class="achv-name">${a.name}</div>
+        <div class="achv-req">${a.desc}</div>
+      </div>`;
+    }).join('');
+
+    // Word cloud
+    const maxWord = Math.max(...words.map(w => w.count), 1);
+    const wordHtml = words.map(w => {
+      const weight = w.count / maxWord;
+      const colors = ['#ec4899', '#6366f1', '#10b981', '#f59e0b', '#a855f7', '#06b6d4', '#ef4444'];
+      const color = colors[w.word.length % colors.length];
+      return `<span class="word-tag" style="font-size: ${w.size}px; background: ${color}22; color: ${color};">${w.word}<sub style="opacity:0.6;font-size:9px;margin-left:2px;">${w.count}</sub></span>`;
+    }).join('');
+
+    // Hour bars
+    const hourHtml = hour.hours.map((count, h) => {
+      const pct = count / maxHour;
+      const isPeak = h === hour.peakHour && count > 0;
+      const opacity = 0.15 + pct * 0.85;
+      return `<div class="hour-bar ${isPeak ? 'peak' : ''}" 
+        style="background: rgba(236, 72, 153, ${opacity});" 
+        title="${h}:00 - ${count} commits"></div>`;
+    }).join('');
+
+    // World map SVG (stylized continents)
+    const mapHtml = `<svg viewBox="0 0 100 100" class="map-svg" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <!-- background ocean -->
+      <rect width="100" height="100" fill="#e0f2fe"/>
+      <!-- North America -->
+      <path d="M 8,18 Q 12,15 22,16 L 28,22 Q 30,30 26,40 L 18,46 Q 10,42 8,30 Z" fill="#86efac" opacity="0.6"/>
+      <!-- South America -->
+      <path d="M 22,52 Q 28,50 30,55 L 28,75 Q 24,82 20,80 L 18,68 Z" fill="#86efac" opacity="0.6"/>
+      <!-- Europe -->
+      <path d="M 44,18 Q 52,15 56,20 L 54,28 Q 48,30 44,26 Z" fill="#86efac" opacity="0.6"/>
+      <!-- Africa -->
+      <path d="M 48,32 Q 56,32 58,42 L 56,60 Q 52,68 48,66 L 46,50 Z" fill="#86efac" opacity="0.6"/>
+      <!-- Asia -->
+      <path d="M 58,16 Q 76,14 86,22 L 88,40 Q 80,48 70,46 L 62,40 Q 58,28 58,16 Z" fill="#86efac" opacity="0.6"/>
+      <!-- Australia -->
+      <path d="M 76,58 Q 86,58 88,66 L 84,72 Q 78,72 76,66 Z" fill="#86efac" opacity="0.6"/>
+      <!-- Dots (repos) -->
+      ${mapDots.map(d => `<g class="map-dot" data-repo="${escapeHtml(d.name)}" data-count="${d.count}">
+        <circle cx="${d.x}" cy="${d.y}" r="${1 + Math.min(3, Math.log2(d.count + 1))}" 
+          fill="#ec4899" stroke="white" stroke-width="0.3" opacity="0.85">
+          <title>${escapeHtml(d.name)} (${d.count} commits)</title>
+        </circle>
+      </g>`).join('')}
+      <!-- Region labels -->
+      <text x="16" y="14" font-size="2.5" fill="#475569" font-weight="700">🌎 AMERICAS</text>
+      <text x="50" y="14" font-size="2.5" fill="#475569" font-weight="700">🌍 EU/AFRICA</text>
+      <text x="72" y="14" font-size="2.5" fill="#475569" font-weight="700">🌏 ASIA</text>
+    </svg>`;
+
+    // HTML output
+    view.innerHTML = `
+      <div class="prod-wrap">
+        <div class="prod-head">
+          <div>
+            <div class="prod-title">🏆 Productivity Dashboard</div>
+            <div class="prod-sub">Real stats from ${commits.length} commits across ${repoList.length} repos (last 90 days)</div>
+          </div>
+          <button onclick="loadProductivityView()" style="padding: 6px 14px; background: var(--card); border: 1px solid var(--card-border); border-radius: 8px; color: var(--slate); font-weight: 600; cursor: pointer; font-size: 12px;">🔄 Refresh</button>
+        </div>
+
+        <!-- 1. ACTIVITY RINGS + STREAK HALL OF FAME -->
+        <div class="prod-section">
+          <h3>🍎 Activity Rings <span class="num">${rings.reduce((s,r)=>s+r.val,0)} this month</span></h3>
+          <div class="rings-wrap">
+            ${renderRingsSVG(rings)}
+            <div class="rings-stats">
+              ${rings.map(r => `<div class="ring-stat">
+                <div class="ring-stat-head">
+                  <span class="ring-stat-name" style="color: ${r.color}">${r.name}</span>
+                  <span class="ring-stat-val">${r.val} <span style="color: var(--slate-3); font-weight: 400;">/ ${r.target}</span></span>
+                </div>
+                <div class="ring-stat-bar">
+                  <div class="ring-stat-fill" style="width: ${r.pct}%; background: ${r.color};"></div>
+                </div>
+                <div class="ring-stat-target">${Math.round(r.pct)}% of monthly target</div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px;">
+            <div style="padding: 16px; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; text-align: center;">
+              <div style="font-size: 32px; margin-bottom: 4px;">🔥</div>
+              <div style="font-size: 24px; font-weight: 900; color: var(--orange, #f59e0b);">${currentStreak}</div>
+              <div style="font-size: 11px; color: var(--slate-3); margin-top: 2px;">CURRENT STREAK<br><span style="font-size: 9px;">consecutive days</span></div>
+            </div>
+            <div style="padding: 16px; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; text-align: center;">
+              <div style="font-size: 32px; margin-bottom: 4px;">🏆</div>
+              <div style="font-size: 24px; font-weight: 900; color: var(--gold, #f59e0b);">${bestStreak}</div>
+              <div style="font-size: 11px; color: var(--slate-3); margin-top: 2px;">BEST STREAK<br><span style="font-size: 9px;">all-time record</span></div>
+            </div>
+            <div style="padding: 16px; background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; text-align: center;">
+              <div style="font-size: 32px; margin-bottom: 4px;">📅</div>
+              <div style="font-size: 24px; font-weight: 900; color: var(--pink);">${dates.length}</div>
+              <div style="font-size: 11px; color: var(--slate-3); margin-top: 2px;">ACTIVE DAYS<br><span style="font-size: 9px;">${vs ? vs.weeksActive : '0'} weeks</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. ACHIEVEMENTS -->
+        <div class="prod-section">
+          <h3>🏅 Achievement Showcase <span class="num">${achievements.filter(a=>a.unlocked).length} / ${achievements.length}</span></h3>
+          <div class="achv-grid">${achvHtml}</div>
+        </div>
+
+        <!-- 3. YOU VS AVERAGE -->
+        ${vs ? `<div class="prod-section">
+          <h3>📊 You vs Average Dev <span class="num">SO 2024 survey</span></h3>
+          <div class="vs-grid">
+            <div class="vs-col you">
+              <div class="vs-label">You (lnwsj)</div>
+              <div class="vs-num">${vs.yourWeeklyAvg}</div>
+              <div class="vs-sub">commits / week</div>
+            </div>
+            <div class="vs-vs">vs</div>
+            <div class="vs-col avg">
+              <div class="vs-label">Average Dev</div>
+              <div class="vs-num">${vs.avgWeeklyAvg}</div>
+              <div class="vs-sub">commits / week</div>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 12px;">
+            <div class="vs-multiplier">⚡ ${vs.multiplier}x more productive</div>
+            <div style="font-size: 12px; color: var(--slate-3); margin-top: 8px;">
+              Total: <strong>${vs.totalCommits}</strong> commits in <strong>${vs.weeksActive}</strong> weeks
+            </div>
+          </div>
+          <div class="vs-bars">
+            <div class="vs-bar">
+              <div class="vs-bar-head">
+                <span style="color: var(--pink); font-weight: 700;">You</span>
+                <span>${vs.yourWeeklyAvg} commits/wk</span>
+              </div>
+              <div class="vs-bar-track"><div class="vs-bar-fill you" style="width: ${Math.min(100, vs.yourWeeklyAvg / 30 * 100)}%;"></div></div>
+            </div>
+            <div class="vs-bar">
+              <div class="vs-bar-head">
+                <span style="color: var(--slate-3); font-weight: 700;">Average</span>
+                <span>${vs.avgWeeklyAvg} commits/wk</span>
+              </div>
+              <div class="vs-bar-track"><div class="vs-bar-fill avg" style="width: ${vs.avgWeeklyAvg / 30 * 100}%;"></div></div>
+            </div>
+          </div>
+        </div>` : ''}
+
+        <!-- 4. PRODUCTIVE HOUR -->
+        <div class="prod-section">
+          <h3>⏰ Most Productive Hour <span class="num">${hour.max > 0 ? `peak ${hour.peakHour}:00` : 'no data'}</span></h3>
+          <div class="hour-chart">${hourHtml}</div>
+          <div class="hour-axis">
+            <span>0</span><span>6</span><span>12</span><span>18</span><span>23</span>
+          </div>
+          ${hour.max > 0 ? `<div style="text-align: center;"><span class="hour-peak-badge">🕐 ${hour.peakHour}:00 — ${hour.hours[hour.peakHour]} commits</span></div>` : ''}
+        </div>
+
+        <!-- 5. FAVORITE WORDS -->
+        <div class="prod-section">
+          <h3>💬 Favorite Commit Words <span class="num">${words.length} words</span></h3>
+          <div class="word-cloud">${wordHtml || '<div style="color: var(--slate-3);">No words yet</div>'}</div>
+        </div>
+
+        <!-- 6. WORLD MAP -->
+        <div class="prod-section">
+          <h3>🌍 Repo World Map <span class="num">${repoList.length} dots</span></h3>
+          <div class="map-wrap">${mapHtml}</div>
+        </div>
+
+      </div>
+    `;
+  }
+
   /* === Roadmap view (Phase 25) === */
   function renderRoadmap() {
     if (!commitsData) return;
@@ -5180,6 +5726,13 @@
       const calView = document.getElementById('calendarView');
       calView.classList.add('active');
       loadGitHubCalendar();
+    } else if (state.view === 'productivity') {
+      document.getElementById('reposGrid').style.display = 'none';
+      document.getElementById('timelineView').classList.remove('active');
+      document.getElementById('commitsView').classList.remove('active');
+      const prodView = document.getElementById('productivityView');
+      prodView.classList.add('active');
+      loadProductivityView();
     }
   }
 
